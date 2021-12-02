@@ -1,0 +1,60 @@
+/*自訂 MaoBook*/
+
+/*文字顏色*/
+
+/*背景色*/
+.bg-mao-primary{
+    background: #E4DAC8;
+    color: #524362;
+}
+.bg-mao-secondary{
+    background: #524362;
+    color: #FBD8DC;
+    border: #524362;
+    transition: .4s;
+}
+
+.bg-mao-secondary:hover{
+    background: #79638d;
+    color: #ffe8eb;
+}
+.bg-Morandi{
+    background: #E4DAC8;
+    color:#D1BE99;
+
+}
+.bg-Morandi-second{
+    background: #F0DAD6;
+}
+
+.bg-search-admin{
+    background: #F5EFE4;
+    border: 1px solid #F5EFE4 ;
+}
+.bg-search-admin:hover{
+    background: snow;
+    border: 1px solid #F5EFE4 ;
+}
+.bg-search-admin:focus{
+    background: snow;
+    border: 1px solid #F5EFE4 ;
+}
+/*按鈕設計*/
+.btn-mao-primary{
+    background: #F5EFE4;
+    color: #F0DAD6;
+}
+.btn-mao-primary:hover{
+    background: snow;
+    color: #F0DAD6;
+}
+
+/*圖示*/
+.admin-logo img{
+    width: 170px;
+    filter: drop-shadow(1px 1px 4px gainsboro)
+}
+.admin-logo img:hover{
+    width: 170px;
+    filter: drop-shadow(1px 1px 3px snow)
+}
