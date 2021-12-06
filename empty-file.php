@@ -18,7 +18,13 @@ require_once("domain-pdo-connect.php"); //連線到遠端資料庫
 
     <title>板模</title>
 
+<!--  板模的css、BS5、fontawesome  -->
     <?php require_once("style.php"); ?>
+    <!--  板模end  -->
+
+    <!-- 此處新增css檔 -->
+    <!-- Css檔 end   -->
+
 
 </head>
 <body class="sb-nav-fixed">
