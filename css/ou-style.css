@@ -1,0 +1,31 @@
+.cover-fit{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.form-check-input:disabled {
+    pointer-events: none;
+    filter: none;
+    opacity: 1;
+}
+.form-check-input[disabled] ~ .form-check-label, .form-check-input:disabled ~ .form-check-label {
+    opacity: 1;
+}
+.data-time{
+    font-size: 14px;
+    vertical-align: center;
+    padding: 2px 8px;
+    background: #ccc;
+    border-radius: 3px;
+}
+.avatar figure{
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 10px 10px 10px #ccc;
+}
+.main-pet{
+    width: 200px;
+}
+.main-user, .sub-pet{
+    width: 100px;
+}
