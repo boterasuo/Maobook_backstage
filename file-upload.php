@@ -1,5 +1,5 @@
 <?php
-require_once ("../pdo-connect.php");
+require_once("../pdo-connect.php");
 if(isset($_SESSION["user"])):
     $sql="SELECT * FROM user_upload WHERE user_id =? AND valid=1 ORDER BY id DESC";
     $stmt=$db_host->prepare($sql);

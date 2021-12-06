@@ -620,7 +620,7 @@
                     }));
                     a.data = r, a.data.length ? (this.rebuild(), a.update()) : (a.clear(), a.hasRows = !1, a.setMessage(a.options.labels.noRows)), s || a.emit("datatable.sort", t, e)
                 }
-
+                //類型
                 sort(e, s, i) {
                     const a = this.dt;
                     if (a.hasHeadings && (e < 0 || e > a.headings.length)) return !1;
@@ -953,7 +953,7 @@
                 fixHeight() {
                     this.options.fixedHeight && (this.container.style.height = null, this.rect = this.container.getBoundingClientRect(), this.container.style.height = `${this.rect.height}px`)
                 }
-
+                //搜尋欄
                 search(t) {
                     return !!this.hasRows && (t = t.toLowerCase(), this.currentPage = 1, this.searching = !0, this.searchData = [], t.length ? (this.clear(), this.data.forEach(((e, s) => {
                         const i = this.searchData.includes(e);
@@ -967,7 +967,7 @@
                         }), !0) && !i ? (e.searchIndex = s, this.searchData.push(s)) : e.searchIndex = null
                     })), this.wrapper.classList.add("search-results"), this.searchData.length ? this.update() : (this.wrapper.classList.remove("search-results"), this.setMessage(this.options.labels.noResults)), void this.emit("datatable.search", t, this.searchData)) : (this.searching = !1, this.update(), this.emit("datatable.search", t, this.searchData), this.wrapper.classList.remove("search-results"), !1))
                 }
-
+                //頁數
                 page(t) {
                     return t != this.currentPage && (isNaN(t) || (this.currentPage = parseInt(t, 10)), !(t > this.pages.length || t < 0) && (this.render("page"), this.render("pager"), void this.emit("datatable.page", t)))
                 }

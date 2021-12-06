@@ -2,11 +2,8 @@
     * Start Bootstrap - SB Admin v7.0.4 (https://startbootstrap.com/template/sb-admin)
     * Copyright 2013-2021 Start Bootstrap
     * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
-    */
-    // 
-// Scripts
-// 
-
+*/
+//菜單收合按鈕
 window.addEventListener('DOMContentLoaded', event => {
 
     // Toggle the side navigation
@@ -25,3 +22,9 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+
+
+
+
+

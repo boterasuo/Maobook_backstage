@@ -1,60 +1,151 @@
+
+:root {
+    --bs-blue: #0d6efd;
+    --bs-indigo: #6610f2;
+    --bs-purple: #6f42c1;
+    --bs-pink: #d63384;
+    --bs-red: #dc3545;
+    --bs-orange: #fd7e14;
+    --bs-yellow: #ffc107;
+    --bs-green: #198754;
+    --bs-teal: #20c997;
+    --bs-cyan: #0dcaf0;
+    --bs-white: #fff;
+    --bs-gray: #6c757d;
+    --bs-gray-dark: #343a40;
+    --bs-gray-100: #f8f9fa;
+    --bs-gray-200: #e9ecef;
+    --bs-gray-300: #dee2e6;
+    --bs-gray-400: #ced4da;
+    --bs-gray-500: #adb5bd;
+    --bs-gray-600: #6c757d;
+    --bs-gray-700: #495057;
+    --bs-gray-800: #343a40;
+    --bs-gray-900: #212529;
+    --bs-primary: #0d6efd;
+    --bs-secondary: #6c757d;
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #f8f9fa;
+    --bs-dark: #212529;
+    --bs-primary-rgb: 13, 110, 253;
+    --bs-secondary-rgb: 108, 117, 125;
+    --bs-success-rgb: 25, 135, 84;
+    --bs-info-rgb: 13, 202, 240;
+    --bs-warning-rgb: 255, 193, 7;
+    --bs-danger-rgb: 220, 53, 69;
+    --bs-light-rgb: 248, 249, 250;
+    --bs-dark-rgb: 33, 37, 41;
+    --bs-white-rgb: 255, 255, 255;
+    --bs-black-rgb: 0, 0, 0;
+    --bs-body-color-rgb: 33, 37, 41;
+    --bs-body-bg-rgb: 255, 255, 255;
+    --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    --bs-body-font-family: var(--bs-font-sans-serif);
+    --bs-body-font-size: 1rem;
+    --bs-body-font-weight: 400;
+    --bs-body-line-height: 1.5;
+    --bs-body-color: #212529;
+    --bs-body-bg: #fff;
+
+    /* Maobook root */
+    /*網站主色調*/
+    --bg-mao-primary: #8a8066;
+    --bg-mao-primary-light: hsla(39, 90%, 75%, 1);
+    /*輔色*/
+    --bg-mao-secondary: #F6BC54;
+    --bg-mao--secondary-light: hsla(43, 15%, 57%, 1);
+
+    /*Logo色碼*/
+    /* 橘色貓 */
+    --mao-cat-oranger: #F6BC54;
+    --mao-cat-oranger-light: hsla(39, 90%, 75%, 1);
+    /* 咖啡狗 */
+    --mao-dog-brown: #8a8066;
+    --mao-dog-brown-light: hsla(43, 15%, 57%, 1);
+
+
+}
+
 /*自訂 MaoBook*/
 
-/*文字顏色*/
-
 /*背景色*/
-.bg-mao-primary{
-    background: #E4DAC8;
+
+.bg-main-dog {
+    background: var(--mao-dog-brown);
+    color: var(--mao-cat-oranger);
+}
+
+.bg-main-cat {
+    background: var(--mao-cat-oranger);
+    color: var(--mao-dog-brown);
+}
+
+.bg-mao-primary {
+    background: var(--mao-nav-top);
     color: #524362;
 }
-.bg-mao-secondary{
-    background: #524362;
-    color: #FBD8DC;
-    border: #524362;
-    transition: .4s;
-}
 
-.bg-mao-secondary:hover{
-    background: #79638d;
-    color: #ffe8eb;
-}
-.bg-Morandi{
-    background: #E4DAC8;
-    color:#D1BE99;
 
-}
-.bg-Morandi-second{
-    background: #F0DAD6;
-}
 
-.bg-search-admin{
-    background: #F5EFE4;
-    border: 1px solid #F5EFE4 ;
-}
-.bg-search-admin:hover{
-    background: snow;
-    border: 1px solid #F5EFE4 ;
-}
-.bg-search-admin:focus{
-    background: snow;
-    border: 1px solid #F5EFE4 ;
-}
 /*按鈕設計*/
-.btn-mao-primary{
-    background: #F5EFE4;
-    color: #F0DAD6;
+.btn-mao-primary {
+    background: var(--mao-cat-oranger);
+    color: var(--mao-dog-brown);
 }
-.btn-mao-primary:hover{
-    background: snow;
-    color: #F0DAD6;
+
+.btn-mao-primary:hover {
+    background: var(--mao-cat-oranger-light);
+    color: var(--mao-dog-brown-light);
+}
+
+.btn-mao-primary:active {
+    background: var(--bg-mao--secondary-light);
+
+}
+
+
+.btn-mao-icon {
+    height: 38px;
+    width: 40px;
 }
 
 /*圖示*/
-.admin-logo img{
+.admin-logo img {
     width: 170px;
-    filter: drop-shadow(1px 1px 4px gainsboro)
+    filter: drop-shadow(1px 1px 4px rgba(255, 250, 250, .6))
 }
-.admin-logo img:hover{
+
+.admin-logo img:hover {
     width: 170px;
-    filter: drop-shadow(1px 1px 3px snow)
+    filter: drop-shadow(1px 1px 5px rgba(255, 250, 250, .8));
 }
+
+/* 文字選取反白顏色*/
+::-moz-selection {
+    background: var(--mao-dog-brown);
+    color: var(--mao-cat-oranger);
+}
+
+::selection {
+    background: var(--mao-dog-brown);
+    color: var(--mao-cat-oranger);
+}
+
+/* arrow*/
+.arrow-action {
+    transition: .4s;
+}
+
+.btn-mao-primary:hover .arrow-action {
+    transform: translate(-4px);
+}
+
+a > .btn:focus {
+    outline: none;
+}
+

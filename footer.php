@@ -1,6 +1,6 @@
 <!--註腳-->
-<footer class="py-4 bg-light mt-auto">
-    <div class="container-fluid px-4">
+<footer class="py-4 bg-light mt-auto footer">
+    <div class="container px-4">
         <div class="d-flex align-items-center justify-content-between small">
             <div class="text-muted">毛Book &copy; It's mao life!</div>
             <div>

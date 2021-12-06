@@ -1,69 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Login - SB Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-    </head>
-    <body class="bg-primary">
-        <div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-5">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
-                                    <div class="card-body">
-                                        <form>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                                <label for="inputEmail">Email address</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
-                                                <label for="inputPassword">Password</label>
-                                            </div>
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                                <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.php">Forgot Password?</a>
-                                                <a class="btn btn-primary" href="index.php">Login</a>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.php">Need an account? Sign up!</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
+<head>
+    <title>Sign in</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.0.2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body{
+            background: radial-gradient(#CCC,#EEEEF1);
+            background-size: cover;
+        }
+        .logo{
+            width: 70%;
+        }
+        .login-panel{
+            width: 300px;
+        }
+        .form-control{
+            position: relative;
+        }
+        .form-control:focus{
+            z-index: 1;
+        }
+        .form-floating>label{
+            z-index: 2;
+        }
+        .input-up .form-control{
+            border-radius: .25rem .25rem 0 0;
+        }
+        .input-bottom .form-control{
+            border-top: none;
+            border-radius: 0 0 .25rem .25rem ;
+        }
+        .submit{
+            background: rgba(78,170,233);
+
+        }
+        .register{
+            background: rgba(251,164,127);
+        }
+        .card{
+            width: 400px;
+        }
+    </style>
+</head>
+<body >
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+<div class="card align-items-center ">
+    <div class="login-panel  text-center">
+    <form action="doLogin.php" method="post">
+        <div class="">
+            <img class="logo" src="images/logo.png" alt="">
+            <h1 class="h3 pt-4 mb-3">Please sign in</h1>
+            <div class="form-floating input-up">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
+                <label for="floatingInput">Email address</label>
             </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+            <div class="form-floating input-bottom">
+                <input type="password" class="form-control" id="password" placeholder="name@example.com" name="password" required>
+                <label for="password">Password</label>
             </div>
+            <div class="d-grid gap-2 mb-5 mt-3">
+                <button class="btn submit btn-info text-white" type="submit">Sign in</button>
+                <button class="btn register btn-info text-white" type="submit">Sign in</button>
+            </div>
+            <div class="text-muted">© 2017–2021</div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-    </body>
+    </form>
+</div>
+</div>
+</div>
+</body>
 </html>

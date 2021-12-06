@@ -14,3 +14,5 @@
 <script src="js/datatables-jQuery.js"></script>
 <!--<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>-->
 <script src="js/datatables-simple-demo.js"></script>
+
+<script src="js/jquery-3.6.0.slim.min.js"></script>

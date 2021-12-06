@@ -16,7 +16,7 @@ require_once("domain-pdo-connect.php"); //連線到遠端資料庫
     <link rel="shortcut icon" type="image/png" href="images/logo-nbg.png"/>
     <link rel="mask-icon" type="image/png" href="images/logo-nbg.png"/>
 
-    <title>板模</title>
+    <title>商品描述板模</title>
 
     <?php require_once("style.php"); ?>
 
@@ -28,10 +28,10 @@ require_once("domain-pdo-connect.php"); //連線到遠端資料庫
     <div class="container px-0">
         <main class="main px-5">
             <div class="container-fluid px-4">
-                <h1 class="mt-4">板模</h1>
+                <h1 class="mt-4">商品描述板模</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
-                    <li class="breadcrumb-item active">板模</li>
+                    <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
+                    <li class="breadcrumb-item active">商品描述板模</li>
                 </ol>
             </div>
 

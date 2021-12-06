@@ -1,5 +1,5 @@
 <?php
-require_once ("../pdo-connect.php");
+require_once ("domain-pdo-connect.php");
 $id=$_GET["id"]; //user id
 $sqlUser="SELECT * FROM users WHERE id=?";
 $stmtUser=$db_host->prepare($sqlUser);
@@ -13,10 +13,7 @@ try{
 if(isset($_GET["start"])){
     $start=$_GET["start"];
     $end=$_GET["end"];
-//    選擇特定一天
 //    $sqlOrderList="SELECT * FROM user_order WHERE user_id=? AND DATE(order_time)=? ORDER BY order_time DESC";
-
-//    設定時間區間
     $sqlOrderList="SELECT * FROM user_order WHERE user_id=? AND DATE(order_time) BETWEEN ? AND ? ORDER BY order_time DESC";
 
     $stmtOrderList=$db_host->prepare($sqlOrderList);
@@ -69,9 +66,12 @@ if(isset($_GET["start"])){
         <form action="user-order.php" method="get">
             <div class="d-flex align-items-center">
                 <input type="hidden" name="id" value="<?=$id?>">
-                <input type="date" class="form-control me-2" name="start" value="<?php if(isset($start))echo$start?>">
+                <input type="date" class="form-control me-2" name="start"
+                       value="<?php if(isset($start))echo $start; ?>"
+                >
                 <div class="me-2">~</div>
-                <input type="date" class="form-control me-2" name="end" value="<?php if(isset($end))echo$end?>">
+                <input type="date" class="form-control me-2" name="end"
+                       value="<?php if(isset($end))echo $end; ?>">
                 <button type="submit" class="btn btn-primary text-nowrap">篩選</button>
             </div>
         </form>

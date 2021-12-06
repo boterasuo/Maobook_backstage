@@ -25,7 +25,7 @@
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-mao-primary">
     <!-- Navbar 主圖示-->
-    <a class="navbar-brand admin-logo ps-3" href="index.php" title="管理平台"><img src="mao-logo.png" alt=""></a>
+    <a class="navbar-brand admin-logo ps-3" href="home.php" title="管理平台"><img src="mao-logo.png" alt=""></a>
     <!--  上層選單  -->
     <!-- Sidebar toggle 收拉式選單 -->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 text-secondary" id="sidebarToggle" href="#!"><i
@@ -121,7 +121,7 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">首頁</div>
-                    <a class="nav-link" href="index.php">
+                    <a class="nav-link" href="home.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         儀錶板 dashboard
                     </a>
@@ -192,7 +192,7 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4">內容標題</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="home.php">Dashboard</a></li>
                     <li class="breadcrumb-item active">內容標題</li>
                 </ol>
                 <div class="card mb-4">

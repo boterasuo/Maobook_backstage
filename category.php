@@ -1,5 +1,5 @@
 <?php
-require_once("domain-pdo-connect.php");
+require_once("domain-db-connect.php");
 $sql = "SELECT * FROM users WHERE valid=1";
 //$sql="SELECT id, account, name FROM users";
 
@@ -20,7 +20,7 @@ $userCount = $result->num_rows;
     <link rel="shortcut icon" type="image/png" href="images/logo-nbg.png"/>
     <link rel="mask-icon" type="image/png" href="images/logo-nbg.png"/>
 
-    <title>首頁</title>
+    <title>分類管理</title>
 
     <?php require_once("style.php"); ?>
 
@@ -32,10 +32,10 @@ $userCount = $result->num_rows;
     <div class="container px-0">
         <main class="main px-5">
             <div class="container-fluid px-4">
-                <h1 class="mt-4">板模</h1>
+                <h1 class="mt-4">分類管理</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
-                    <li class="breadcrumb-item active">板模</li>
+                    <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
+                    <li class="breadcrumb-item active">分類管理</li>
                 </ol>
             </div>
 
