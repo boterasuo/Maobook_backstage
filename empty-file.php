@@ -33,7 +33,7 @@ require_once("domain-pdo-connect.php"); //連線到遠端資料庫
 <div id="layoutSidenav_content">
     <div class="container px-0">
         <main class="main px-5">
-            <div class="container-fluid px-4">
+            <div class="container-fluid px-0">
                 <h1 class="mt-4">板模</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
