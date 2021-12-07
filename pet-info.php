@@ -33,7 +33,7 @@ try{
 }
 
 $user_id=$rowUser["id"];
-$sqlOtherPet="SELECT pets.id, pets.name, pets.img FROM pets WHERE user_id=?";
+$sqlOtherPet="SELECT pets.id, pets.name, pets.img FROM pets WHERE user_id=? AND valid=1";
 $stmtOtherPet=$db_host->prepare($sqlOtherPet);
 try{
     $stmtOtherPet->execute([$user_id]);
@@ -62,7 +62,7 @@ $petCount=$stmtOtherPet->rowCount();
     <title><?=$rowPet["name"]?>的資料</title>
 
     <?php require_once("style.php"); ?>
-    <link rel="stylesheet" href="css/ou-style.css">
+    <link rel="stylesheet" href="css/ou-style.css?time=<?=time()?>">
 
 </head>
 <body class="sb-nav-fixed">
@@ -75,7 +75,7 @@ $petCount=$stmtOtherPet->rowCount();
                 <h1 class="mt-4"><?=$rowPet["name"]?>的資料</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
-                    <li class="breadcrumb-item"><a href="">會員資料</a></li>
+                    <li class="breadcrumb-item"><a href="user.php?id=<?=$rowUser["id"]?>">會員資料</a></li>
                     <li class="breadcrumb-item active"><?=$rowPet["name"]?>的資料</li>
                 </ol>
             </div>
@@ -90,7 +90,7 @@ $petCount=$stmtOtherPet->rowCount();
                         </tr>
                         <tr>
                             <th>毛孩性別</th>
-                            <td class="pet-gender d-flex">
+                            <td class="d-flex">
                                 <div class="form-check me-3">
                                     <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled
                                         <?php if ($rowPet["gender"]==1):
@@ -129,14 +129,21 @@ $petCount=$stmtOtherPet->rowCount();
                         </tr>
                         <tr>
                             <th>毛孩生日</th>
-                            <td><?=$rowPet["birthday"]?></td>
+                            <td><?=$rowPet["birthday"]?>
+                                <?php $now=date("Y-m-d");
+                                $petBirth=$rowPet["birthday"];
+                                $age=date_diff(date_create($now), date_create($petBirth)); ?>
+                                <div class="data-time d-inline-block ms-3">
+                                    <?=$age->format('%y');?> 歲
+                                </div>
+                            </td>
+
                         </tr>
                         <tr>
                             <th>毛孩到家日</th>
                             <td><?=$rowPet["adopt_time"]?>
                                 <?php $now=date("Y-m-d");
-                                $timeDiff=strtotime($now) - strtotime($rowPet["adopt_time"]);
-                                ?>
+                                $timeDiff=strtotime($now) - strtotime($rowPet["adopt_time"]);?>
                                 <div class="data-time d-inline-block ms-3">
                                     已陪伴您 <?=$timeDiff / (60*60*24)?> 天
                                 </div>
@@ -156,22 +163,31 @@ $petCount=$stmtOtherPet->rowCount();
                         <tr>
                             <th>毛孩體重</th>
                             <td>
-                                <?=$rowProfile["weight"];?> kg
+                                <?php if($rowProfile["weight"]>0):
+                                echo $rowProfile["weight"]; ?> kg
                                 <div class="data-time d-inline-block ms-3">資料時間：<?=$rowProfile["created_at"]?></div>
+                                <?php else:?>
+                                尚未提供
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
                             <th>毛孩身高</th>
                             <td>
-                                <?=$rowProfile["height"]?> cm
+                                <?php if($rowProfile["height"]>0):
+                                echo $rowProfile["height"]; ?> cm
                                 <div class="data-time d-inline-block ms-3">資料時間：<?=$rowProfile["created_at"]?></div>
+                                <?php else:?>
+                                    尚未提供
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
                             <th>奴才會員帳號</th>
                             <td>
                                 <?=$rowUser["account"]?>
-                                <a class="btn btn-mao-primary btn-sm ms-3" href="#">檢視會員資料</a>
+                                <a class="btn btn-mao-primary btn-sm ms-3"
+                                   href="user.php?id=<?=$rowUser["id"]?>">檢視會員資料</a>
                             </td>
                         </tr>
                         <tr>
@@ -180,30 +196,48 @@ $petCount=$stmtOtherPet->rowCount();
                         </tr>
                     </table>
                 </div>
-                <div class="avatar col-4">
+                <div class="avatar col-5">
                     <div>
                         <h4><?=$rowPet["name"]?>的大頭照</h4>
                         <figure class="main-pet ratio ratio-1x1">
+                            <?php if($rowPet["img"]!==""): ?>
                             <img class="cover-fit" src="images/<?=$rowPet["img"]?>" alt="">
+                            <?php else: ?>
+                            <img class="cover-fit" src="images/avatar_pet.png" alt="">
+                            <?php endif; ?>
                         </figure>
                     </div>
                     <div>
                         <h4>毛孩家人</h4>
-                        <div class="d-flex">
-                            <figure  class="main-user ratio ratio-1x1 me-3">
-                                <a href="#">
-                                    <img  class="cover-fit" src="images/<?=$rowUser["image"]?>" alt="">
-                                </a>
-                            </figure>
+                        <div class="d-flex flex-wrap">
+                            <div class="me-3">
+                                <figure  class="main-user ratio ratio-1x1">
+                                    <a href="user.php?id=<?=$rowUser["id"]?>">
+                                        <?php if($rowUser["image"]!==""): ?>
+                                        <img  class="cover-fit" src="images/<?=$rowUser["image"]?>" alt="">
+                                        <?php else: ?>
+                                        <img  class="cover-fit" src="images/avatar_user.png" alt="">
+                                        <?php endif; ?>
+                                    </a>
+                                </figure>
+                                <p class="text-center"><?=$rowUser["name"]?></p>
+                            </div>
                             <?php if($petCount>1): ?>
                             <?php for($i=0; $i<=($petCount-1); $i++): ?>
                                     <?php if($rowOtherPet[$i]["id"]!==$rowPet["id"]):?>
-                            <figure  class="sub-pet ratio ratio-1x1 me-3">
-                                <a href="pet-info.php?id=<?=$rowOtherPet[$i]["id"]?>">
-                                    <img  class="cover-fit" src="images/<?=$rowOtherPet[$i]["img"]?>"
-                                          alt="">
-                                </a>
-                            </figure>
+                            <div class="me-3">
+                                <figure  class="sub-pet ratio ratio-1x1">
+                                    <a href="pet-info.php?id=<?=$rowOtherPet[$i]["id"]?>">
+                                        <?php if($rowOtherPet[$i]["img"]!==""):?>
+                                        <img  class="cover-fit" src="images/<?=$rowOtherPet[$i]["img"]?>"
+                                              alt="">
+                                        <?php else: ?>
+                                            <img  class="cover-fit" src="images/avatar_pet.png" alt="">
+                                        <?php endif; ?>
+                                    </a>
+                                </figure>
+                                <p class="text-center"><?=$rowOtherPet[$i]["name"]?></p>
+                            </div>
                                     <?php endif; ?>
                                 <?php endfor; ?>
                             <?php endif; ?>

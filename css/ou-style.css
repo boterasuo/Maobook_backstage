@@ -11,6 +11,10 @@
 .form-check-input[disabled] ~ .form-check-label, .form-check-input:disabled ~ .form-check-label {
     opacity: 1;
 }
+.form-check-input:checked {
+    background-color: var(--mao-dog-brown);
+    border-color: var(--mao-dog-brown);
+}
 .data-time{
     font-size: 14px;
     vertical-align: center;
@@ -28,4 +32,13 @@
 }
 .main-user, .sub-pet{
     width: 100px;
+}
+/*使用者資料頁面*/
+.add-tag{
+    margin-right: 5px;
+    padding: 1px 5px;
+    vertical-align: text-top;
+    font-size: 8px;
+    background: var(--mao-cat-oranger-light);
+    color: #fff;
 }
