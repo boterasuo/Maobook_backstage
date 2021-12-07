@@ -1,7 +1,9 @@
 <?php
-//連線到遠端資料庫
+//連線到本地資料庫
 //require_once("domain-pdo-connect.php");
-require_once ("111pdo-connect.php");
+require_once ("pdo-connect.php");
+//session讀取
+$cartCount=count( $_SESSION['cart']); //購物車總數
 //讀取商品
 if(isset($_GET["id"])){
     $id=$_GET["id"];
@@ -54,13 +56,13 @@ try {
         }
         header span{
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             background: darkorange;
             color: white;
             border-radius: 50%;
             text-align: center;
-            line-height: 20px;
+            line-height: 25px;
             position: absolute;
             left: 15px;
             top:-10px;
@@ -78,7 +80,7 @@ try {
         <div class="main px-5">
             <header class="d-flex justify-content-between align-items-center mb-3">
                 <h1 class="title fs-2">商品介紹</h1>
-                <a class="link-secondary" href="shipping-cart.php" ><img class="CartIcon" src="/maobook-main/images/shopping-bag.png"><span>5</span></a>
+                <a class="link-secondary" href="shipping-cart.php" ><img class="CartIcon" src="images/shopping-bag.png"><span><?=$cartCount?></span></a>
             </header>
             <main >
                 <a class="btn btn-secondary" href="product-frontlist.php">回商品區</a>
@@ -86,7 +88,7 @@ try {
                     <?php while($result=$stmt->fetch(PDO::FETCH_ASSOC)): ?>
                     <div class="col-md-6">
                         <figure>
-                            <img class="img-fluid px-5 py-5" src="/maobook-main/images/product_images/<?=$result["img"]?>" alt="<?=$result["name"]?>">
+                            <img class="img-fluid px-5 py-5" src="images/product_images/<?=$result["img"]?>" alt="<?=$result["name"]?>">
                         </figure>
                     </div>
                     <div class="col-md-6 px-5 py-5">
