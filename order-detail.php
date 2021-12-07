@@ -1,5 +1,6 @@
 <?php
-require_once ("domain-pdo-connect.php"); //連線到遠端資料庫 domain-pdo-connect.php;
+//require_once ("domain-pdo-connect.php"); //連線到遠端資料庫 domain-pdo-connect.php;
+require_once ("pdo-connect.php");
 $id=$_GET["id"]; //order id
 $sqlOrder="SELECT * FROM user_order WHERE id=?";
 $stmtOrder=$db_host->prepare($sqlOrder);
@@ -62,7 +63,7 @@ try{
     <link rel="shortcut icon" type="image/png" href="images/logo-nbg.png"/>
     <link rel="mask-icon" type="image/png" href="images/logo-nbg.png"/>
 
-    <title>板模</title>
+    <title>訂單編號：<?=$rowUser["id"]?></title>
 
     <?php require_once("style.php"); ?>
 
@@ -73,18 +74,25 @@ try{
 <div id="layoutSidenav_content">
     <div class="container px-0">
         <main class="main px-5">
-            <div class="container-fluid px-4">
-                <h1 class="mt-4"><?=$rowUser["name"]?>的購物車</h1>
+            <div class="container-fluid px-0">
+                <h1 class="mt-4">訂單：<?=$rowUser["id"]?></h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
-                    <li class="breadcrumb-item active">所有購物清單</li>
+                    <li class="breadcrumb-item active"><a href="order-list.php">所有購物清單</a></li>
+                    <li class="breadcrumb-item active">訂單編號：<?=$rowUser["id"]?></li>
                 </ol>
             </div>
-
+<!--            <div class="py-2">-->
+<!--                <a role="button" class="btn btn-primary" href="user-order.php?id=--><?//=$rowOrder["user_id"]?><!--">回訂單列表</a>-->
+<!--            </div>-->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    訂單明細
+                </div>
+    <div class="card-body">
             <!--    本頁 內容    -->
-            <div class="py-2">
-                <a role="button" class="btn btn-primary" href="user-order.php?id=<?=$rowOrder["user_id"]?>">回訂單列表</a>
-            </div>
+
 
             <div class="py-2">
                 訂單編號: <?=$id?><br>訂單時間: <?=$rowOrder["order_time"]?><br>狀態: <?=$rowOrder["status"]?>
@@ -125,14 +133,13 @@ try{
                 </table>
             </div>
     </div>
-
+    </div>
+    </div>
     <!--   本頁內容 end  -->
 
 
     </main><!-- 主要內容end -->
-
     <!--    --><?php //require_once("footer.php"); ?>
-
 </div>
 <?php require_once("JS.php"); ?>
 </body>

@@ -1,5 +1,6 @@
 <?php
-require_once ("domain-pdo-connect.php");
+//require_once ("domain-pdo-connect.php");
+require_once ("pdo-connect.php");
 $id=$_GET["id"]; //user id
 $sqlUser="SELECT * FROM users WHERE id=?";
 $stmtUser=$db_host->prepare($sqlUser);
@@ -49,16 +50,34 @@ if(isset($_GET["start"])){
 
     <!-- Bootstrap CSS v5.0.2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <?php require_once("style.php")?>
 
 </head>
-<body>
-<div class="container">
-    <h1><?=$rowUser["name"]?> 的訂單列表</h1>
+<div>
+<?php require_once("main-nav.php")?>
+<div id="layoutSidenav_content">
+    <div class="container px-0">
+        <main class="main px-5">
+            <div class="container-fluid px-0">
+                <h1 class="mt-4"><?=$rowUser["name"]?> 的訂單列表</h1>
+                <ol class="breadcrumb my-4 ">
+                    <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
+                    <li class="breadcrumb-item"><a href="order-list.php">所有訂單</a></li>
+                    <li class="breadcrumb-item active"><?=$rowUser["name"]?>的訂單列表</li>
+                </ol>
+            </div>
+
     <?php if(isset($_GET["start"])): ?>
         <div class="py-2">
             <a role="button" class="btn btn-primary" href="user-order.php?id=<?=$id?>">回列表</a>
         </div>
     <?php endif; ?>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    資料表格
+                </div>
+                <div class="card-body">
     <div class="py-2 d-flex justify-content-between">
         <div>
             共 <?=$orderCount?> 筆
@@ -103,6 +122,11 @@ if(isset($_GET["start"])){
         <?php endif; ?>
         </tbody>
     </table>
+                </div>
+            </div>
+</div>
+<?php require_once("JS.php")?>
+</div>
 </div>
 </body>
 </html>

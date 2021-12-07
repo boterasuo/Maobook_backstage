@@ -55,10 +55,10 @@
     /* Maobook root */
     /*網站主色調*/
     --bg-mao-primary: #8a8066;
-    --bg-mao-primary-light: hsla(39, 90%, 75%, 1);
+    --bg-mao-primary-light: hsla(43, 15%, 57%, 1);
     /*輔色*/
     --bg-mao-secondary: #F6BC54;
-    --bg-mao--secondary-light: hsla(43, 15%, 57%, 1);
+    --bg-mao--secondary-light: hsla(39, 90%, 75%, 1);
 
     /*Logo色碼*/
     /* 橘色貓 */
@@ -86,14 +86,14 @@
 }
 
 .bg-mao-primary {
-    background: var(--mao-nav-top);
-    color: #524362;
+    background: var(--bg-mao-primary);
+    color: var(--mao-cat-oranger);
 }
 
 
 
 /*按鈕設計*/
-.btn-mao-primary {
+.btn-mao-primary, a> .btn-mao-primary {
     background: var(--mao-cat-oranger);
     color: var(--mao-dog-brown);
 }
@@ -103,14 +103,19 @@
     color: var(--mao-dog-brown-light);
 }
 
+.btn-mao-primary:hover .arrow-action {
+    transform: translate(-4px);
+}
+
 .btn-mao-primary:active {
     background: var(--bg-mao--secondary-light);
+    color: var(--bg-mao-primary)
 
 }
 
 
 .btn-mao-icon {
-    height: 38px;
+    height: 36px;
     width: 40px;
 }
 
@@ -128,12 +133,19 @@
 /* 文字選取反白顏色*/
 ::-moz-selection {
     background: var(--mao-dog-brown);
-    color: var(--mao-cat-oranger);
+    color: snow;
 }
 
 ::selection {
     background: var(--mao-dog-brown);
-    color: var(--mao-cat-oranger);
+    color: snow;
+}
+/*tittle 說明標籤*/
+title{
+    background: var(--bg-mao--secondary-light);
+    color: var(--bg-mao-primary);
+    border: 1px solid var(--bg-mao-secondary);
+    font: 12px tahoma;
 }
 
 /* arrow*/
@@ -145,7 +157,4 @@
     transform: translate(-4px);
 }
 
-a > .btn:focus {
-    outline: none;
-}
 

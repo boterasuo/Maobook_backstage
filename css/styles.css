@@ -256,10 +256,11 @@ sup {
 
 a {
     color: var(--bg-mao-primary);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 a:hover {
+    background: #ccc;
     color: var(--bg-mao-primary-light);
 }
 
@@ -2948,6 +2949,7 @@ textarea.form-control-lg {
 
 .input-group-lg > .form-select, .input-group-lg > .dataTable-selector,
 .input-group-sm > .form-select,
+.input-group-sm > .form-select,
 .input-group-sm > .dataTable-selector {
     padding-right: 3rem;
 }
@@ -3174,7 +3176,7 @@ textarea.form-control-lg {
     display: inline-block;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
+    /*color: var(--bg-mao-primary);*/
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
@@ -3183,8 +3185,10 @@ textarea.form-control-lg {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
+    /*background-color: transparent;*/
+    /*border: 1px solid transparent;*/
+    background-color: var(--bg-mao-secondary);
+    border: 1px solid var(--bg-mao-secondary);
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     border-radius: 0.25rem;
@@ -3215,13 +3219,14 @@ textarea.form-control-lg {
 .btn-primary {
     color: #fff;
     background-color: var(--bg-mao-primary);
-    border-color:var(--bg-mao-primary);
+    border-color: var(--bg-mao-primary);
+    transition: .4s;
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: var(--bg-mao-primary);
-    border-color: var(--bg-mao-secondary);
+    background-color: var(--bg-mao-secondary);
+    border-color: var(--bg-mao-primary);
 }
 
 .btn-check:focus + .btn-primary, .btn-primary:focus {
@@ -3735,7 +3740,7 @@ textarea.form-control-lg {
 .btn-link {
     font-weight: 400;
     color: var(--bg-mao-primary);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .btn-link:hover {
@@ -12093,7 +12098,6 @@ body {
 /*側欄目錄按鈕*/
 .sidebarToggle{
     display: inline-block;
-    /*transform: translateX(-20px);*/
     height: 100%;
     width: 40px;
 
@@ -12411,4 +12415,7 @@ body {
     font-size: 0.75rem;
     border-radius: 0.25rem !important;
 }
+
+
+
 
