@@ -137,7 +137,7 @@
                     </div>
                     <!--  第一層下拉式選單 會員購買紀錄 end  -->
                     <!--  第一層下拉式選單 毛孩管理  -->
-                    <a class="nav-link" href="user-social-log.php">
+                    <a class="nav-link" href="user-social-log.php" title="user-social-log.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                         會員社群紀錄
                     </a>
