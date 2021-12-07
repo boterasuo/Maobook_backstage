@@ -132,7 +132,7 @@
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="order-analysis.php" title="order-analysis.php">會員消費分析</a>
-                            <a class="nav-link" href="order-detail.php" title="order-detail.php">會員個人消費紀錄</a>
+                            <a class="nav-link" href="user-order.php" title="user-order.php">會員個人消費紀錄</a>
                         </nav>
                     </div>
                     <!--  第一層下拉式選單 會員購買紀錄 end  -->
