@@ -9,5 +9,6 @@
         crossorigin="anonymous"></script>
 <!--CSS-->
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+<link href="css/styles.css" rel="stylesheet"/>
 <link href="css/mao-style.css" rel="stylesheet">
 
