@@ -1,10 +1,16 @@
 <?php
-require_once("domain-db-connect.php");
+require_once("pdo-connect.php");
 //$sql = "SELECT * FROM users WHERE valid=1";
-$sql="SELECT id, account, name FROM users";
+$sql="SELECT id, account, name, created_at FROM users";
 
-$result = $conn->prepare("SELECT");
-$userCount = $result->num_rows;
+$stmt=$db_host->prepare($sql);
+try{
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $userCount=$stmt->rowCount();
+}catch(PDOException $e){
+    echo $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -133,21 +139,23 @@ $userCount = $result->num_rows;
                         <!-- 資料欄 tbody -->
                         <tbody>
                         <?php if ($userCount > 0):
-                            while ($row = $result->fetch_assoc()): //關聯式陣列
+                            foreach($rows as $user)://關聯式陣列
                                 ?>
                                 <tr>
-                                    <td><?= $row["id"] ?></td>
-                                    <td><?= $row["account"] ?></td>
-                                    <td><?= $row["name"] ?></td>
-                                    <td><?= $row["created_at"] ?></td>
+                                    <td><?= $user["id"] ?></td>
+                                    <td><?= $user["account"] ?></td>
+                                    <td><?= $user["name"] ?></td>
+                                    <td><?= $user["created_at"] ?></td>
                                     <td>
-                                        <a class="btn btn-mao-primary" href="user.php?id=<?=$row["id"]?>"><i
-                                                    class="fas fa-user" title="檢視此會員資料"></i></a>
-                                        <a class="btn btn-mao-primary"
-                                           href="user.php?id=<?= $row["id"] ?>"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-mao-primary" href="user.php?id=<?=$user["id"]?>"
+                                           title="檢視此會員資料">
+                                            <i class="fas fa-user" ></i></a>
+                                        <a class="btn btn-mao-primary" href="user-edit.php?id=<?= $user["id"] ?>"
+                                           title="編輯此會員資料">
+                                            <i class="fas fa-edit"></i></a>
                                     </td>
                                 </tr>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
                                 <td colspan="4">沒有資料</td>

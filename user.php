@@ -1,7 +1,7 @@
 <?php
 require_once("pdo-connect.php"); //連線到遠端資料庫
 $id=$_GET["id"];
-$sqlUser="SELECT * FROM users WHERE valid=1 AND id=?";
+$sqlUser="SELECT * FROM users WHERE id=?";
 $stmtUser=$db_host->prepare($sqlUser);
 try{
     $stmtUser->execute([$id]);
@@ -57,7 +57,6 @@ $petTotalCount=$stmtTotalPet->rowCount();
                 <h1 class="mt-4"><?=$rowUser["name"]?>的個人資料</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
-                    <li class="breadcrumb-item"><a href="home.php">會員管理</a></li>
                     <li class="breadcrumb-item active">會員資料</li>
                 </ol>
             </div>
@@ -150,7 +149,11 @@ $petTotalCount=$stmtTotalPet->rowCount();
                                 </div>
                             </td>
                         </tr>
+
                     </table>
+                    <div class="text-end">
+                        <a class="btn btn-mao-primary" href="user-edit.php?id=<?=$rowUser["id"]?>">編輯會員資料</a>
+                    </div>
 
                 </div>
                 <div class="avatar col-5">
@@ -166,9 +169,11 @@ $petTotalCount=$stmtTotalPet->rowCount();
                     </div>
                     <div>
                         <h4>目前服侍毛孩</h4>
+                        <?php if($petTotalCount==0): ?>
+                        <p class="text-secondary">尚無服侍毛孩</p>
+                        <?php elseif($petTotalCount>0): ?>
                         <div class="d-flex flex-wrap">
-                            <?php if($petTotalCount>0):
-                            foreach($rowTotalPet as $eachPet): ?>
+                        <?php foreach($rowTotalPet as $eachPet): ?>
                             <div class="me-3">
                                 <figure  class="sub-pet ratio ratio-1x1">
                                     <a href="pet-info.php?id=<?=$eachPet["id"]?>">
@@ -182,8 +187,9 @@ $petTotalCount=$stmtTotalPet->rowCount();
                                 </figure>
                                 <p class="text-center"><?=$eachPet["name"]?></p>
                             </div>
-                            <?php endforeach; endif; ?>
+                            <?php endforeach; ?>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
