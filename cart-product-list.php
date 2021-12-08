@@ -141,7 +141,7 @@ try {
         <div class="main px-5">
             <header class="d-flex justify-content-between align-items-center mb-5">
                 <h1 class="title fs-2">商品列表</h1>
-                <a class="link-secondary " href="shipping-cart.php" ><img class="CartIcon" src="images/shopping-bag.png"><span><?=$cartCount?></span></a>
+                <a class="link-secondary " href="cart-shipping.php" ><img class="CartIcon" src="images/shopping-bag.png"><span><?=$cartCount?></span></a>
             </header>
             <main>
                 <div class="row">
