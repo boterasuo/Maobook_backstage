@@ -83,7 +83,7 @@ try {
                 <a class="link-secondary" href="shipping-cart.php" ><img class="CartIcon" src="images/shopping-bag.png"><span><?=$cartCount?></span></a>
             </header>
             <main >
-                <a class="btn btn-secondary" href="product-frontlist.php">回商品區</a>
+                <a class="btn btn-secondary" href="cart-product-list.php">回商品區</a>
                 <div class="row">
                     <?php while($result=$stmt->fetch(PDO::FETCH_ASSOC)): ?>
                     <div class="col-md-6">
