@@ -93,7 +93,7 @@
                             <a class="nav-link" href="product-list.php" title="product-list.php">所有商品</a>
                             <a class="nav-link" href="product-inventory.php" title="product-inventory.php">庫存管理</a>
                             <a class="nav-link" href="product-detail.php" title="product-detail.php">商品描述模板</a>
-                            <a class="nav-link" href="category.php" title="category.php">分類管理</a>
+                            <a class="nav-link" href="product-category.php" title="product-category.php">分類管理</a>
 
                         </nav>
                     </div>
