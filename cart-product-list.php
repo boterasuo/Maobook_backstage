@@ -1,14 +1,19 @@
 <?php
 //連線到本地資料庫
 require_once ("pdo-connect.php");
-//session讀取
-//購物袋數量顯示:先判斷是否有購物車存在，沒有就建一個新的購物車陣列，購物車數量顯示0，沒有則顯示原本購物車數量
 
-if( !isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+//右上購物車總數判斷
+if( !isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
     $cartCount=0; //購物車預設0;
 }
-else{ $cartCount=count( $_SESSION['cart']); }
+if( empty($_SESSION['cart'])){
+    $cartCount=0; //購物車預設0;
+}
+else {
+    $cartCount = count($_SESSION['cart']);
+    }
+
 //商品清單：讀取全部商品
 $sqlTotal="SELECT * FROM products";
 $stmt= $db_host->prepare($sqlTotal);

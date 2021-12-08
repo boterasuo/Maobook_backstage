@@ -2,11 +2,18 @@
 //連線到本地資料庫
 //require_once("domain-pdo-connect.php");
 require_once ("pdo-connect.php");
-//session讀取
+////右上購物車總數判斷
+if( !isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+    $cartCount=0; //購物車預設0;
+}
+if( empty($_SESSION['cart'])){
+    $cartCount=0; //購物車預設0;
+}
+else{ $cartCount=count( $_SESSION['cart']); }
 
-$cartCount=count( $_SESSION['cart']); //購物車總數
 //讀取商品
-//if(isset($_SESSION['cart'])
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -3,7 +3,7 @@
 //require_once("domain-pdo-connect.php");
 require_once ("pdo-connect.php");
 //session讀取
-$cartCount=count( $_SESSION['cart']); //購物車總數
+$cartCount=count( $_SESSION['cart']); //右上購物車總數
 //讀取商品
 if(isset($_GET["id"])){
     $id=$_GET["id"];
