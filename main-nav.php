@@ -99,7 +99,7 @@
                     </div>
                     <!--  第一層下拉式選單 商品管理 end  -->
                     <!--  購物車  -->
-                    <a class="nav-link" href="product-frontlist.php" tittle="product-frontlist.php">
+                    <a class="nav-link" href="cart-product-list.php" tittle="cart-product-list.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                         購物車
                     </a>
