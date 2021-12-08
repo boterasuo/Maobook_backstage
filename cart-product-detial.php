@@ -1,24 +1,62 @@
 <?php
 //連線到本地資料庫
-//require_once("domain-pdo-connect.php");
 require_once ("pdo-connect.php");
 $cartCount=count( $_SESSION['cart']); //右上購物車總數
 
 //讀取商品
-if(isset($_GET["id"])){
-    $id=$_GET["id"];
+if(isset($_GET["name"])){
+    $name=$_GET["name"];
 }else{
-    $id=0;
+    $name=0;
 }
-$sql="SELECT * FROM products WHERE id=? AND valid=1";
+$sql="SELECT * FROM products WHERE name=? AND valid=1";
 $stmt= $db_host->prepare($sql);
 try {
-    $stmt->execute([$id]);
+    $stmt->execute([$name]);
     $result = $stmt->fetch();
     $totalProductCount=$stmt->rowCount(); //共有幾筆
 }catch(PDOException $e){
     echo $e->getMessage();
 }
+
+//加入購物車，重新讀取商品，直接覆蓋上面$result
+if(isset($_GET["id"])){
+    $id=$_GET["id"];
+}else{
+    $id=0;
+}
+$sql="SELECT * FROM products WHERE id=? AND valid=1";//從資料庫讀取id=$id商品資料
+$stmt1= $db_host->prepare($sql);
+try {
+    $stmt1->execute([$id]);
+    $idExist=$stmt1->rowCount(); //確認是否有get到id
+    if($idExist>0) {  //如果大於0才執行以下
+        $result = $stmt1->fetch(); //抓出商品id=$id全部資訊存入關聯式陣列
+        $item=[  //取出需要的資料存成新的關聯式陣列
+            "id"=>$result["id"],
+            "num"=>1,
+            "name"=>$result["name"],
+            "price"=>$result["price"]
+        ];
+
+        if (isset($_SESSION['cart'][$id])) { //判斷是否有重複品項，若直接對數量+1
+            $countAmount=$_SESSION['cart'][$id];
+            $countAmount["num"]=$countAmount["num"]+1;
+            $_SESSION['cart'][$id]=$countAmount;
+        }
+        else{  //若有則直接存入第二陣列
+            $_SESSION['cart'][$id] = $item;
+
+        }
+        $cartCount=count( $_SESSION['cart']); //重新計算購物車總數
+//        $a = implode(",", $_SESSION['cart'][1]);//測試是否有存入用
+    }
+
+}catch(PDOException $e){
+    echo $e->getMessage();
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,7 +132,8 @@ try {
                         <h1 class="fs-4"><?=$result["name"]?></h1>
                         <div class="fs-5 my-5">NT$<?=$result["price"]?></div>
                         <div class="fs-6 my-3 text-danger fw-bold">庫存：<?=$result["stock_num"]?></div>
-                        <button type="button" class="btn btn-mao-primary">加入購物車</button>
+                        <a class="btn btn-mao-primary" href="cart-product-detial.php?id=<?=$result["id"]?>">加入購物車</a>
+
                         <p class="fs-6 my-5 fw-bold">
                             <span>產品成分：</span>
                             <br>
@@ -105,11 +144,13 @@ try {
 
             </main>
         </div>
-    <!--    --><?php //require_once("footer.php"); ?>
-   </div>
+        <!--    --><?php //require_once("footer.php"); ?>
+    </div>
 </div>
 <!--   本頁內容 end  -->
 
 <?php require_once("JS.php"); ?>
+
+
 </body>
 </html>

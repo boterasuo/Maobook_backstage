@@ -1,7 +1,7 @@
 <?php
 //連線到本地資料庫
 require_once ("pdo-connect.php");
-
+$URL=$_SERVER['PHP_SELF'];//取得當前php檔名，傳入清空購物車
 //右上購物車總數判斷
 if( !isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
@@ -31,23 +31,23 @@ if(isset($_GET["id"])){
 }else{
     $id=0;
 }
-$sql="SELECT * FROM products WHERE id=$id AND valid=1";//從資料庫讀取id=$id商品資料
+$sql="SELECT * FROM products WHERE id=? AND valid=1";//從資料庫讀取id=$id商品資料
 $stmt1= $db_host->prepare($sql);
 try {
-    $stmt1->execute();
+    $stmt1->execute([$id]);
     $idExist=$stmt1->rowCount(); //確認是否有get到id
     if($idExist>0) {  //如果大於0才執行以下
         $row2 = $stmt1->fetch(); //抓出商品id=$id全部資訊存入關聯式陣列
         $item=[  //取出需要的資料存成新的關聯式陣列
             "id"=>$row2["id"],
-            "數量"=>1,
-            "商品"=>$row2["name"],
-            "價錢"=>$row2["price"]
+            "num"=>1,
+            "name"=>$row2["name"],
+            "price"=>$row2["price"]
         ];
 
         if (isset($_SESSION['cart'][$id])) { //判斷是否有重複品項，若直接對數量+1
             $countAmount=$_SESSION['cart'][$id];
-            $countAmount["數量"]=$countAmount["數量"]+1;
+            $countAmount["num"]=$countAmount["num"]+1;
             $_SESSION['cart'][$id]=$countAmount;
         }
         else{  //若有則直接存入第二陣列
@@ -144,16 +144,19 @@ try {
 <div id="layoutSidenav_content">
     <div class="container px-0 mt-5">
         <div class="main px-5">
-            <header class="d-flex justify-content-between align-items-center mb-5">
+            <header class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="title fs-2">商品列表</h1>
                 <a class="link-secondary " href="cart-shipping.php" ><img class="CartIcon" src="images/shopping-bag.png"><span><?=$cartCount?></span></a>
             </header>
+            <div class="d-flex justify-content-end">
+            <a id="cleanAll" class="btn btn-mao-primary mb-2" >清空購物車</a>
+            </div>
             <main>
                 <div class="row">
                     <?php foreach($row1 as $value): ?>
                     <div class="col-md-3 mb-5">
                         <div class="card" ">
-                                <a href="cart-product-detial.php?id=<?=$value["id"]?>">
+                                <a href="cart-product-detial.php?name=<?=$value["name"]?>">
                                     <figure class="m-0 ratio ratio-4x3">
                                         <div>
                                             <img class=" cover-fit" src="images/product_images/<?=$value["img"]?>"  alt="minion">
@@ -182,15 +185,22 @@ try {
 <!--    --><?php //require_once("footer.php"); ?>
 </div>
 <?php require_once("JS.php"); ?>
-<!--<script>-->
-<!--  let addCart=document.querySelector("#addCart");-->
-<!--  let cartNum=document.querySelector("#cartNum");-->
-<!--  let cartCount=0;-->
-<!---->
-<!--  addCart.onclick=function (){-->
-<!--      cartCount+=1;-->
-<!--  }-->
-<!--  cartNum.textContent=cartCount;-->
-<!--</script>-->
+
+<script>//安全檢查刪除購物車
+    let count='<?=$cartCount?>';//接住php變數
+
+    if(count==0){  //判斷購物車是否為0
+        stop()
+    }else {
+        let cleanAll = document.querySelector("#cleanAll");
+        function doClean(e) { //執行警示窗
+            if (window.confirm('是否要全部刪除?') == true) {
+                document.location.href = "cartCleanAll.php?url=" + location.href;
+            }
+        };
+        cleanAll.addEventListener('click', doClean);
+    }
+</script>
+
 </body>
 </html>
