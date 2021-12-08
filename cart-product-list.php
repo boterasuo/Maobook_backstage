@@ -148,7 +148,7 @@ try {
                     <?php foreach($row1 as $value): ?>
                     <div class="col-md-3 mb-5">
                         <div class="card" ">
-                                <a href="products-frontdetial.php?id=<?=$value["id"]?>">
+                                <a href="cart-product-detial.php?id=<?=$value["id"]?>">
                                     <figure class="m-0 ratio ratio-4x3">
                                         <div>
                                             <img class=" cover-fit" src="images/product_images/<?=$value["img"]?>"  alt="minion">
@@ -158,7 +158,7 @@ try {
                             <div class="card-body">
                                 <h5 class="card-title"><?=$value["name"]?></h5>
                                 <p class="card-text mb-2">NT$<?=$value["price"]?></p>
-                                <a class="link-secondary text-decoration-none d-flex align-items-center" href="product-frontlist.php?id=<?=$value["id"]?>">
+                                <a class="link-secondary text-decoration-none d-flex align-items-center" href="cart-product-list.php?id=<?=$value["id"]?>">
                                     <img class="CartIconSmall" src="images/shopping-bag.png">
                                     <span class="text-end ms-1">加入購物車</span>
                                 </a>
