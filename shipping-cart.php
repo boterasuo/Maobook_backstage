@@ -1,22 +1,12 @@
 <?php
-//連線到遠端資料庫
+//連線到本地資料庫
 //require_once("domain-pdo-connect.php");
-require_once ("111pdo-connect.php");
+require_once ("pdo-connect.php");
+//session讀取
+
+$cartCount=count( $_SESSION['cart']); //購物車總數
 //讀取商品
-if(isset($_GET["id"])){
-    $id=$_GET["id"];
-}else{
-    $id=0;
-}
-$sql="SELECT * FROM products WHERE id='$id' AND valid=1";
-$stmt= $db_host->prepare($sql);
-try {
-    $stmt->execute();
-//    $row = $stmt->fetch(PDO::FETCH_ASSOC); //取出全部
-    $totalProductCount=$stmt->rowCount(); //共有幾筆
-}catch(PDOException $e){
-    echo $e->getMessage();
-}
+//if(isset($_SESSION['cart'])
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,13 +44,13 @@ try {
         }
         header span{
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             background: darkorange;
             color: white;
             border-radius: 50%;
             text-align: center;
-            line-height: 20px;
+            line-height: 25px;
             position: absolute;
             left: 15px;
             top:-10px;
@@ -78,8 +68,12 @@ try {
         <div class="main px-5">
             <header class="d-flex justify-content-between align-items-center mb-3">
                 <h1 class="title fs-2">購物車清單</h1>
-                <a class="link-secondary" href="shipping-cart.php" ><img class="CartIcon" src="/maobook-main/images/shopping-bag.png"><span>5</span></a>
+                <a class="link-secondary" href="shipping-cart.php" ><img class="CartIcon" src="images/shopping-bag.png"><span><?=$cartCount?></span></a>
             </header>
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-secondary mb-5 me-2" href="product-frontlist.php">回商品區</a>
+                <a class="btn btn-secondary mb-5" href="doCleanCart.php">清空購物車</a>
+            </div>
             <main >
                 <table class="form-control">
                     <thead>
@@ -103,7 +97,7 @@ try {
 
                     </tbody>
                 </table>
-                <button type="button" class="btn btn-mao-primary ">結帳</button>
+                <button type="button" class="btn btn-mao-primary mt-2">結帳</button>
             </main>
         </div>
         <!--    --><?php //require_once("footer.php"); ?>
