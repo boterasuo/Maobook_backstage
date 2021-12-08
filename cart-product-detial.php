@@ -2,19 +2,19 @@
 //連線到本地資料庫
 //require_once("domain-pdo-connect.php");
 require_once ("pdo-connect.php");
-//session讀取
 $cartCount=count( $_SESSION['cart']); //右上購物車總數
+
 //讀取商品
 if(isset($_GET["id"])){
     $id=$_GET["id"];
 }else{
     $id=0;
 }
-$sql="SELECT * FROM products WHERE id='$id' AND valid=1";
+$sql="SELECT * FROM products WHERE id=? AND valid=1";
 $stmt= $db_host->prepare($sql);
 try {
-    $stmt->execute();
-//    $row = $stmt->fetch(PDO::FETCH_ASSOC); //取出全部
+    $stmt->execute([$id]);
+    $result = $stmt->fetch();
     $totalProductCount=$stmt->rowCount(); //共有幾筆
 }catch(PDOException $e){
     echo $e->getMessage();
@@ -85,7 +85,6 @@ try {
             <main >
                 <a class="btn btn-secondary" href="cart-product-list.php">回商品區</a>
                 <div class="row">
-                    <?php while($result=$stmt->fetch(PDO::FETCH_ASSOC)): ?>
                     <div class="col-md-6">
                         <figure>
                             <img class="img-fluid px-5 py-5" src="images/product_images/<?=$result["img"]?>" alt="<?=$result["name"]?>">
@@ -102,7 +101,6 @@ try {
                             <?=$result["description"]?>
                         </p>
                     </div>
-                    <?php endwhile; ?>
                 </div>
 
             </main>
