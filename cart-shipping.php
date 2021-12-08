@@ -71,7 +71,7 @@ $cartCount=count( $_SESSION['cart']); //購物車總數
                 <a class="link-secondary" href="shipping-cart.php" ><img class="CartIcon" src="images/shopping-bag.png"><span><?=$cartCount?></span></a>
             </header>
             <div class="d-flex justify-content-end">
-                <a class="btn btn-secondary mb-5 me-2" href="product-frontlist.php">回商品區</a>
+                <a class="btn btn-secondary mb-5 me-2" href="cart-product-list.php">回商品區</a>
                 <a class="btn btn-secondary mb-5" href="doCleanCart.php">清空購物車</a>
             </div>
             <main >
