@@ -260,7 +260,6 @@ a {
 }
 
 a:hover {
-    background: #ccc;
     color: var(--bg-mao-primary-light);
 }
 
