@@ -39,6 +39,91 @@
     padding: 1px 5px;
     vertical-align: text-top;
     font-size: 8px;
-    background: var(--mao-cat-oranger-light);
+    background: var(--mao-cat-oranger);
     color: #fff;
+}
+/*使用者資料編輯頁面*/
+.passwordErr, .nameErr, .mobileErr, .zipErr{
+    color: red;
+    font-size: 12px;
+}
+.address1, .address2, .address3{
+    display: inline-block;
+    position: relative;
+}
+.address3{
+    width: 100%;
+}
+.address1:before, .address2:before, .address3:before{
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #9a9a9a;
+}
+.address1:before{
+    content: "郵遞區號";
+}
+.address2:before{
+    content: "縣市";
+}
+.address3:before{
+    content: "詳細地址";
+}
+.address1 input{
+    padding-left: 65px;
+}
+.address2 input{
+    padding-left: 38px;
+}
+.address3 input{
+    padding-left: 65px;
+}
+.user-avatar{
+    width: 200px;
+    position: relative;
+}
+.avatar-edit{
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+    transition: .4s;
+}
+.avatar-edit:hover{
+    opacity: 1;
+}
+.edit-font{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.edit-icon{
+    font-size: 30px;
+    color: #ccc;
+}
+input[type="file"]{
+    display: none;
+}
+.custom-upload-btn{
+    cursor: pointer;
+}
+.figure-preview{
+    position: absolute;
+    top: 0;
+    width: 200px;
+}
+.show{
+    width: 400px;
+    height: 300px;
+    background: #eee;
+}
+.thumb{
+    width: 50px;
+    margin: 10px;
+    box-shadow: 0 0 5px #333;
 }
