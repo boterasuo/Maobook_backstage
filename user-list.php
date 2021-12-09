@@ -1,5 +1,5 @@
 <?php
-require_once("domain-pdo-connect.php");//連線到遠端資料庫 domain-pdo-connect.php;
+require_once("pdo-connect.php");//連線到遠端資料庫 domain-pdo-connect.php;
 $sql = "SELECT * FROM users WHERE valid=1";
 //$sql="SELECT id, account, name FROM users";
 
