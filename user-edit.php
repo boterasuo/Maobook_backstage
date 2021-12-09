@@ -171,6 +171,7 @@ try{
                                 </div>
                         </div>
                         <div class="text-end">
+                            <a class="btn btn-secondary" href="user.php?id=<?=$rowUser["id"]?>">放棄修改</a>
                             <button id="submitBtn" class="btn btn-mao-primary" type="submit">儲存</button>
                         </div>
                 </div>

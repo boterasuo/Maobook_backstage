@@ -1,9 +1,8 @@
 <?php
 require_once("pdo-connect.php");
-//$sql = "SELECT * FROM users WHERE valid=1";
-$sql="SELECT id, account, name, created_at FROM users";
-
+$sql="SELECT id, account, name, created_at FROM users WHERE valid!=9";
 $stmt=$db_host->prepare($sql);
+
 try{
     $stmt->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
