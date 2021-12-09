@@ -103,7 +103,7 @@ $totalProductCount=$result->num_rows;
             echo "<td>".$row_result["stock_num"]."</td>";
 //            echo "<td>".$row_result["img"]."</td>";
 
-            echo $row_result["img"]==''?'<td>商品圖片</td>':'<td><img src="./product_images/'.$row_result["img"].'" class="img-responsive" width="250px" height="250px"></td>';
+            echo $row_result["img"]==''?'<td>商品圖片</td>':'<td><img src="./images/product_images/'.$row_result["img"].'" class="img-responsive" width="250px" height="250px"></td>';
 
             echo "<td>".$row_result["created_at"]."</td>";
 
