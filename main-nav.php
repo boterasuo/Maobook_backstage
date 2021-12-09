@@ -90,9 +90,10 @@
                     <div class="collapse" id="tab2" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="product-list.php" title="product-list.php">所有商品</a>
-                            <a class="nav-link" href="product-inventory.php" title="product-inventory.php">庫存管理</a>
-                            <a class="nav-link" href="product-detail.php" title="product-detail.php">商品描述模板</a>
+                            <a class="nav-link" href="product_manage.php" title="product_manage.php">商品資料管理</a>
+                            <a class="nav-link" href="product_add.php" title="product_add.php">新增商品</a>
+<!--                    <a class="nav-link" href="product-inventory.php" title="product-inventory.php">庫存管理</a>-->
+<!--                    <a class="nav-link" href="product-detail.php" title="product-detail.php">商品描述模板</a>-->
                             <a class="nav-link" href="product-category.php" title="product-category.php">分類管理</a>
 
                         </nav>
@@ -114,7 +115,7 @@
                     <!--  頁面鏈結 會員管理 end -->
                     <!--  頁面鏈結 毛孩管理  -->
                     <a class="nav-link" href="pets-list.php">
-                        <div class="sb-nav-link-icon"><i class="fas fa-paw"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                         毛孩管理
                     </a>
                     <!--  頁面鏈結 毛孩管理 end -->
