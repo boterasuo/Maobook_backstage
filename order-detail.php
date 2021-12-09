@@ -1,29 +1,28 @@
 <?php
-//require_once ("domain-pdo-connect.php"); //連線到遠端資料庫 domain-pdo-connect.php;
 require_once ("pdo-connect.php");
 $id=$_GET["id"]; //order id
-$sqlOrder="SELECT * FROM user_order WHERE id=?";
+$sqlOrder="SELECT * FROM user_order WHERE id=?";//從訂單抓資料
 $stmtOrder=$db_host->prepare($sqlOrder);
-
-
 try{
     $stmtOrder->execute([$id]);
-    $rowOrder=$stmtOrder->fetch();
+    $rowOrder=$stmtOrder->fetch(); //訂單資料
+
 }catch(PDOException $e){
     echo "取得訂單資訊錯誤<br>";
     echo $e->getMessage();
 }
-// 抓取 users
+// 抓取 users 會員資料表
 $id=$_GET["id"]; //user id
 $sqlUser="SELECT * FROM users WHERE id=?";
 $stmtUser=$db_host->prepare($sqlUser);
 try{
     $stmtUser->execute([$id]);
-    $rowUser=$stmtUser->fetch();
+    $rowUser=$stmtUser->fetch();//會員資料
 }catch(PDOException $e){
     echo $e->getMessage();
 }
-//抓取 user_oder裡的名字
+
+//抓取 user_order
 $sqlOrderList="SELECT * FROM user_order WHERE user_id=?";
 $stmtOrderList=$db_host->prepare($sqlOrderList);
 try{
@@ -34,6 +33,7 @@ try{
     echo $e->getMessage();
 }
 
+//選擇訂單總金額、產品名稱、產品價格、產品圖片從[order-detail]加入到[products]參考ON在order_detail.product_id = products.id
 $sql="SELECT order_detail.amount, products.name, products.price, products.img FROM order_detail 
 JOIN products ON order_detail.product_id = products.id
 WHERE order_detail.order_id = ?";
@@ -41,7 +41,32 @@ $stmt=$db_host->prepare($sql);
 try{
     $stmt->execute([$id]);
     $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+//    $rowOrder=$stmtOrder->fetch();
+}catch(PDOException $e){
+    echo "取得訂單細節錯誤<br>";
+    echo $e->getMessage();
+}
 
+//抓status的名稱
+$sql="SELECT order_status.name,order_status.id, user_order.status, user_order.id FROM user_order JOIN order_status ON user_order.status = order_status.id
+WHERE user_order.id = ?";
+$stmtOrderStatus=$db_host->prepare($sql);
+try{
+    $stmtOrderStatus->execute([$id]);
+    $statusRow=$stmtOrderStatus->fetch(PDO::FETCH_ASSOC);
+//    $rowOrder=$stmtOrder->fetch();
+}catch(PDOException $e){
+    echo "取得訂單細節錯誤<br>";
+    echo $e->getMessage();
+}
+
+//抓user_id的名稱
+$sql="SELECT  user_order.user_id, user_order.id, users.name FROM user_order JOIN users ON user_order.user_id = users.id
+WHERE user_order.id = ?";
+$stmtOrderUser=$db_host->prepare($sql);
+try{
+    $stmtOrderUser->execute([$id]);
+    $orderUserRow=$stmtOrderUser->fetch(PDO::FETCH_ASSOC);
 //    $rowOrder=$stmtOrder->fetch();
 }catch(PDOException $e){
     echo "取得訂單細節錯誤<br>";
@@ -78,7 +103,7 @@ try{
                 <h1 class="mt-4">訂單：<?=$rowUser["id"]?></h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
-                    <li class="breadcrumb-item active"><a href="order-list.php">所有購物清單</a></li>
+                    <li class="breadcrumb-item active"><a href="order-list.php">訂單管理</a></li>
                     <li class="breadcrumb-item active">訂單編號：<?=$rowUser["id"]?></li>
                 </ol>
             </div>
@@ -92,15 +117,17 @@ try{
                 </div>
     <div class="card-body">
             <!--    本頁 內容    -->
-
-
             <div class="py-2">
-                訂單編號: <?=$id?><br>訂單時間: <?=$rowOrder["order_time"]?><br>狀態: <?=$rowOrder["status"]?>
+                訂單編號: <?=$id?><br>
+                訂購人: <a href="user-order.php?id=<?=$rowOrder["user_id"]?>" title="查看【<?=$orderUserRow["name"]?>】的所有訂單"><?=$orderUserRow["name"]?></a><br>
+                訂單時間: <?=$rowOrder["order_time"]?><br>
+                狀態: <?=$statusRow["name"]?><br>
             </div>
             <div>
-                <table class="table table-bordered table-sm">
+                <table id="datatablesSimple" class="table table-bordered table-sm">
                     <thead>
                     <tr>
+                        <th>產品名稱</th>
                         <th>產品名稱</th>
                         <th>單價</th>
                         <th>數量</th>
@@ -112,6 +139,7 @@ try{
                     $total=0;
                     foreach($rows as $value): ?>
                         <tr>
+                            <td><a href="cart-product-detial.php?name=<?=$value["name"]?>" title="<?=$value["name"]?>"><img src="images/product_images/<?=$value["img"]?>" alt="" width="100px" ></a></td>
                             <td><?=$value["name"]?></td>
                             <td class="text-end"><?=$value["price"]?></td>
                             <td class="text-end"><?=$value["amount"]?></td>

@@ -22,7 +22,7 @@ $orderCount = $result->num_rows;
     <link rel="shortcut icon" type="image/png" href="images/logo-nbg.png"/>
     <link rel="mask-icon" type="image/png" href="images/logo-nbg.png"/>
 
-    <title>會員列表</title>
+    <title>訂單管理</title>
 
     <?php require_once("style.php"); ?>
 
@@ -34,10 +34,10 @@ $orderCount = $result->num_rows;
     <div class="container px-0">
         <main class="main px-5">
             <div class="container-fluid px-4">
-                <h1 class="mt-4">所有訂單</h1>
+                <h1 class="mt-4">訂單管理</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
-                    <li class="breadcrumb-item active">所有訂單</li>
+                    <li class="breadcrumb-item active">訂單管理</li>
                 </ol>
 
                 <!-- 副標題 end -->
