@@ -117,13 +117,4 @@ input[type="file"]{
     top: 0;
     width: 200px;
 }
-.show{
-    width: 400px;
-    height: 300px;
-    background: #eee;
-}
-.thumb{
-    width: 50px;
-    margin: 10px;
-    box-shadow: 0 0 5px #333;
-}
+
