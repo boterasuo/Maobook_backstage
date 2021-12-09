@@ -1,6 +1,12 @@
 <?php
 require_once("pdo-connect.php"); //連線到遠端資料庫
-$id=$_GET["id"]; // pets id
+
+if (isset($_GET["id"])){
+    $id=$_GET["id"]; // pets id
+}else{
+    header("location: pets-list.php");
+}
+
 $sqlPets="SELECT * FROM pets WHERE id=?";
 $stmtPets=$db_host->prepare($sqlPets);
 try{
@@ -74,7 +80,7 @@ $petCount=$stmtOtherPet->rowCount();
             <div class="container-fluid px-4">
                 <h1 class="mt-4"><?=$rowPet["name"]?>的資料</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.php">首頁</a></li>
+                    <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
                     <li class="breadcrumb-item"><a href="user.php?id=<?=$rowUser["id"]?>">會員資料</a></li>
                     <li class="breadcrumb-item active"><?=$rowPet["name"]?>的資料</li>
                 </ol>
@@ -163,7 +169,7 @@ $petCount=$stmtOtherPet->rowCount();
                         <tr>
                             <th>毛孩體重</th>
                             <td>
-                                <?php if($rowProfile["weight"]>0):
+                                <?php if(isset($rowProfile["weight"]) && $rowProfile["weight"]>0):
                                 echo $rowProfile["weight"]; ?> kg
                                 <div class="data-time d-inline-block ms-3">資料時間：<?=$rowProfile["created_at"]?></div>
                                 <?php else:?>
@@ -174,7 +180,7 @@ $petCount=$stmtOtherPet->rowCount();
                         <tr>
                             <th>毛孩身高</th>
                             <td>
-                                <?php if($rowProfile["height"]>0):
+                                <?php if(isset($rowProfile["weight"]) && $rowProfile["height"]>0):
                                 echo $rowProfile["height"]; ?> cm
                                 <div class="data-time d-inline-block ms-3">資料時間：<?=$rowProfile["created_at"]?></div>
                                 <?php else:?>
@@ -183,7 +189,7 @@ $petCount=$stmtOtherPet->rowCount();
                             </td>
                         </tr>
                         <tr>
-                            <th>奴才會員帳號</th>
+                            <th>奴才帳號</th>
                             <td>
                                 <?=$rowUser["account"]?>
                                 <a class="btn btn-mao-primary btn-sm ms-3"

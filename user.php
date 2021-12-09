@@ -153,8 +153,9 @@ $petTotalCount=$stmtTotalPet->rowCount();
 
                     </table>
                     <div class="text-end">
-                        <a class="btn btn-danger" href="doDelete.php?id=<?=$rowUser["id"]?>">刪除會員</a>
+                        <a class="btn btn-danger" href="user-doDelete.php?id=<?=$rowUser["id"]?>">刪除會員</a>
                         <a class="btn btn-mao-primary" href="user-edit.php?id=<?=$rowUser["id"]?>">編輯會員資料</a>
+
                     </div>
 
                 </div>

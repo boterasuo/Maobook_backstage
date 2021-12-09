@@ -53,7 +53,7 @@ try{
             </div>
 
             <!--    本頁 內容    -->
-            <form id="form" action="doUpdate.php" method="post" enctype="multipart/form-data">
+            <form id="form" action="user-doUpdate.php" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-7 mb-3">
 
