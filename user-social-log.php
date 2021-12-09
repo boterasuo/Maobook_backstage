@@ -30,8 +30,11 @@ $articleCount = $result->num_rows;
 </head>
 <body class="sb-nav-fixed">
 <?php require_once("main-nav.php"); ?>
+
 <!-- 主要內容 -->
 <div id="layoutSidenav_content">
+
+
     <div class="container px-0">
         <main class="main px-5">
             <div class="container-fluid px-4">
@@ -40,8 +43,6 @@ $articleCount = $result->num_rows;
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
                     <li class="breadcrumb-item active">文章列表</li>
                 </ol>
-
-
 
 <!----------------------- card ---------------------->
 <!--                <div class="row">-->
@@ -88,6 +89,10 @@ $articleCount = $result->num_rows;
 
                     <!-- 表格區塊 -->
                     <div class="card-body">
+                        <div>
+                            <a class="btn btn-primary" href="user-social-insert.php">新增文章</a>
+                        </div>
+
                         <table id="datatablesSimple">
                             <!-- 標題欄 -->
                             <thead>
@@ -98,20 +103,11 @@ $articleCount = $result->num_rows;
                                 <th>內容</th>
                                 <th>類別</th>
                                 <th>建立時間</th>
-                                <th></th>
+                                <th>編輯</th>
+                                <th>刪除</th>
                             </tr>
                             </thead>
 
-                            <!-- 總結資訊 tfoot -->
-                            <tfoot>
-<!--                            <tr>-->
-<!--                                <th>ID</th>-->
-<!--                                <th>帳號</th>-->
-<!--                                <th>名稱</th>-->
-<!--                                <th>建立時間</th>-->
-<!--                                <th>其他操作</th>-->
-<!--                            </tr>-->
-                            </tfoot>
 
                             <!-- 資料欄 tbody -->
                             <tbody>
@@ -124,15 +120,15 @@ $articleCount = $result->num_rows;
                                         <td><?=$row["article_content"]?></td>
                                         <td><?=$row["article_cate"]?></td>
                                         <td><?=$row["created_at"]?></td>
-                                        <td>
+                                        <td><!--編輯 -->
                                             <a class="btn btn-mao-primary "
-                                               href="user-social-edit.php?id=<?= $row["id"] ?>">
+                                               href="user-social-edit.php?id=<?=$row["id"] ?>">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                         </td>
-                                        <td>
+                                        <td><!--刪除 -->
                                             <a class="btn btn-mao-primary "
-                                               href="user-social-delete.php?id=<?=$row["id"]?>">
+                                               href="social-doDelete.php?id=<?=$row["id"]?>">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </td>
