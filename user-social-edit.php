@@ -42,26 +42,34 @@ $userExist=$result->num_rows;
                 $row=$result->fetch_assoc();
                 ?>
 
-                <form action="doUpdate.php" method="post">
+                <form action="social-doUpdate.php" method="post">
                     <input type="hidden" name="id" value="<?=$row["id"]?>">
 
                     <div class="mb-3">
-                        <label for="name">標題</label>
+                        <label for="article_title">標題</label>
                         <input id="article_title" type="text" name="article_title" class="form-control" value="<?=$row["article_title"]?>">
                     </div>
+
                     <div class="mb-3">
-                        <label for="name">內文</label>
-                        <input id="article_content" type="text" name="article_content" class="form-control" value="<?=$row["article_content"]?>">
+                        <label for="article_content">內文</label>
+                        <textarea id="article_content" type="text" name="article_content" class="form-control"  rows="6"><?=$row["article_content"]?></textarea>
                     </div>
+
                     <div class="mb-3">
-                        <label for="name">類別</label>
-                        <input id="article_cate" type="text" name="article_cate" class="form-control" value="<?=$row["article_cate"]?>">
+                        <label for="article_cate">類別</label>
+<!--                        <input id="article_cate" type="text" name="article_cate" class="form-control" value="--><?//=$row["article_cate"]?><!--">-->
+                        <select class="form-select" aria-label="Default select example"  name="article_cate" id="article_cate" required>
+                            <option value="飲食保健" <?php if($row["article_cate"] == '飲食保健') echo"selected"; ?>>飲食保健</option>
+                            <option value="醫療症狀" <?php if($row["article_cate"] == '醫療症狀') echo"selected"; ?>>醫療症狀</option>
+                            <option value="生活分享" <?php if($row["article_cate"] == '生活分享') echo"selected"; ?>>生活分享</option>
+                            <option value="其他" <?php if($row["article_cate"] == '其他') echo"selected"; ?>>其他</option>
+                        </select>
                     </div>
 
 <!--        BUTTON            -->
                     <div>
                         <button class="btn btn-primary" type="submit">修改</button>
-                        <button class="btn btn-primary" type="reset">重新填寫</button>
+                        <input class="btn btn-primary" type="reset">
                     </div>
 
                 </form>
