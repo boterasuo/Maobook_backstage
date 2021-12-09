@@ -75,9 +75,11 @@
     /* 橘色貓 */
     --mao-cat-oranger: #F6BC54;
     --mao-cat-oranger-light: hsla(39, 90%, 75%, 1);
+    --mao-cat-oranger-dark: hsla(39, 90%, 55%, 1);
     /* 咖啡狗 */
     --mao-dog-brown: #8a8066;
     --mao-dog-brown-light: hsla(43, 15%, 57%, 1);
+    --mao-dog-brown-dark: hsla(43, 15%, 37%, 1);
 
 }
 
