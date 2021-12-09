@@ -1,11 +1,17 @@
 <?php
-require_once ("../pdo-connect.php");
+require_once ("db-connect.php");
 
 if(isset($_POST["email"])){
     $email=$_POST["email"];
     $password=$_POST["password"];
+    echo $email."<br>";
+    echo $password."<br>";
+
+
 }else{
     exit();
+
+//    可以留個慰留語
 }
 $password=md5($password);
 $sql="SELECT * FROM users WHERE email=? AND password = ? AND valid=1";
@@ -21,10 +27,8 @@ try{
             "name"=>$row["name"],
             "email"=>$row["email"]
         ];
-//        $_SESSION["cart"];
         $_SESSION["user"]=$user;
-//        var_dump($_SESSION["user"]);
-        header("location: dashboard.php");
+        header("location: home.php");
     }
 }catch(PDOException $e){
     echo $e->getMessage();
