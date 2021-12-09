@@ -121,7 +121,7 @@ if(isset($useraccount)&&$useraccount===$account){
     <div class="container px-0 mt-5">
         <div class="main px-5">
             <header class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="title fs-2">購物車清單<?=$a?></h1>
+                <h1 class="title fs-2">購物車清單</h1>
                 <a class="link-secondary" href="cart-shipping.php"><img class="CartIcon"
                                                                         src="images/shopping-bag.png"><span><?= $cartCount ?></span></a>
             </header>
