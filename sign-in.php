@@ -46,7 +46,6 @@
             <form action="doLogin.php" method="post">
             <div class="">
                 <img class="logo" src="/images/logo.png" alt="">
-                <h4 class="h4 pt-0.5 mb-3">Pleace&nbsp;&nbsp;Sign&nbsp;&nbsp;In</h4>
                 <div class="form-floating input-up">
                     <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
                     <label for="floatingInput">Email</label>
@@ -56,7 +55,8 @@
                     <label for="password">Password</label>
                   </div>
                   <div class="d-grid gap-2 mb-5 mt-3">
-                    <button class="btn btn-warning text-white" type="submit">爪爪日記 &nbsp;&nbsp; 歡迎您</button>
+                      <button class="btn btn-warning text-white" type="submit">爪爪日記 &nbsp;&nbsp; 歡迎您</button>
+                      <a class="btn btn-outline-warning text-warning" href="create-user.php">還沒有日記本嗎？ &nbsp;&nbsp; 請點我</a>
                   </div>
                   <div class="text-muted">© moebook 2021</div>
             </div>
