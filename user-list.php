@@ -1,10 +1,36 @@
 <?php
-require_once("db-connect.php");//連線到遠端資料庫 domain-pdo-connect.php;
-$sql = "SELECT * FROM users WHERE valid=1";
-//$sql="SELECT id, account, name FROM users";
+require_once("pdo-connect.php");
+$sql = "SELECT id, account, name, created_at FROM users WHERE valid!=9";
+$stmt=$db_host->prepare($sql);
+try{
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $userCount=$stmt->rowCount();
+}catch(PDOException $e){
+    echo $e->getMessage();
+}
+for ($i=0; $i<count($rows); $i++){
+    $sqlDogs = "SELECT user_id, COUNT(id) AS dog_count FROM pets WHERE category='dog' AND user_id=? GROUP BY user_id";
+    $sqlCats = "SELECT user_id, COUNT(id) AS cat_count FROM pets WHERE category='cat' AND user_id=? GROUP BY user_id";
+    $stmtDogs=$db_host->prepare($sqlDogs);
+    $stmtDogs->execute([$rows[$i]["id"]]);
+    $userDogs = $stmtDogs->fetchAll(PDO::FETCH_ASSOC);
+    $stmtCats=$db_host->prepare($sqlCats);
+    $stmtCats->execute([$rows[$i]["id"]]);
+    $userCats = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
+//    var_dump($userDogs);
+//    echo "<br>";
+    $dogCountArr=array_column($userDogs, "dog_count");
+    $catCountArr=array_column($userCats, "cat_count");
+    foreach($dogCountArr as $dogCount){
+        $rows[$i]["dogs"]=$dogCount;
+    }
+    foreach($catCountArr as $catCount){
+        $rows[$i]["cats"]=$catCount;
+    }
+}
 
-$result = $conn->query($sql);
-$userCount = $result->num_rows;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +49,11 @@ $userCount = $result->num_rows;
     <title>會員列表</title>
 
     <?php require_once("style.php"); ?>
+    <style>
+        .pet-icon{
+            width: 20px;
+        }
+    </style>
 
 </head>
 <body class="sb-nav-fixed">
@@ -31,12 +62,13 @@ $userCount = $result->num_rows;
 <div id="layoutSidenav_content">
     <div class="container px-0">
         <main class="main px-5">
-            <div class="container-fluid px-4">
+            <div class="container-fluid px-2">
                 <h1 class="mt-4">會員列表</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
                     <li class="breadcrumb-item active">會員列表</li>
                 </ol>
+<!--                <div>--><?//=var_dump($rows)?><!--</div>-->
 
                 <!-- 副標題 end -->
                 <div class="card mb-4">
@@ -55,6 +87,8 @@ $userCount = $result->num_rows;
                                 <th>帳號</th>
                                 <th>名稱</th>
                                 <th>建立時間</th>
+                                <th>狗狗數</th>
+                                <th>貓貓數</th>
                                 <th>其他操作</th>
                             </tr>
                             </thead>
@@ -65,30 +99,49 @@ $userCount = $result->num_rows;
                                 <th>帳號</th>
                                 <th>名稱</th>
                                 <th>建立時間</th>
+                                <th>狗狗數</th>
+                                <th>貓貓數</th>
                                 <th>其他操作</th>
                             </tr>
                             </tfoot>
                             <!-- 資料欄 tbody -->
                             <tbody>
                             <?php if ($userCount > 0):
-                                while ($row = $result->fetch_assoc()): //關聯式陣列
-                                    ?>
+                                foreach($rows as $user):?>
                                     <tr>
-                                        <td><?= $row["id"] ?></td>
-                                        <td><?= $row["account"] ?></td>
-                                        <td><?= $row["name"] ?></td>
-                                        <td><?= $row["created_at"] ?></td>
+                                        <td><?= $user["id"] ?></td>
+                                        <td><?= $user["account"] ?></td>
+                                        <td><?= $user["name"] ?></td>
+                                        <td><?= $user["created_at"] ?></td>
                                         <td>
-                                            <a class="btn btn-mao-primary " href="user.php?id=<?=$row["id"]?>"><i
+                                            <?php if(isset($user["dogs"])): ?>
+                                                <img class="pet-icon me-1" src="images/dog.png" alt="">
+                                                <?= $user["dogs"] ?>
+                                            <?php else:?>
+                                                <img class="pet-icon me-1" src="images/dog.png" alt="">
+                                                0
+                                            <?php endif;?>
+                                        </td>
+                                        <td>
+                                            <?php if(isset($user["cats"])): ?>
+                                                <img class="pet-icon me-1" src="images/cat.png" alt="">
+                                                <?= $user["cats"] ?>
+                                            <?php else:?>
+                                                <img class="pet-icon me-1" src="images/cat.png" alt="">
+                                                0
+                                            <?php endif;?>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-mao-primary " href="user.php?id=<?=$user["id"]?>"><i
                                                         class="fas fa-user" title="檢視此會員資料"></i></a>
                                             <a class="btn btn-mao-primary "
-                                               href="user.php?id=<?= $row["id"] ?>"><i class="fas fa-edit"></i></a>
+                                               href="user.php?id=<?= $user["id"] ?>"><i class="fas fa-edit"></i></a>
 
-                                            <a class="btn btn-mao-primary " href="user-order.php?id=<?=$row["id"]?>"><i
+                                            <a class="btn btn-mao-primary " href="user-order.php?id=<?=$user["id"]?>"><i
                                                         class="fas fa-credit-card " title="會員訂單"></i></a>
                                         </td>
                                     </tr>
-                                <?php endwhile; ?>
+                            <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
                                     <td colspan="4">沒有資料</td>

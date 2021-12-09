@@ -59,12 +59,13 @@ $petTotalCount=$stmtTotalPet->rowCount();
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
                     <li class="breadcrumb-item active">會員資料</li>
                 </ol>
+
             </div>
 
             <!--    本頁 內容    -->
             <div class="row">
                 <div class="col-7">
-                    <table class="table table-bordered table-sm">
+                    <table class="table table-bordered table-sm user-table">
                         <tr>
                             <th>奴才帳號</th>
                             <td><?=$rowUser["account"]?></td>
@@ -152,6 +153,7 @@ $petTotalCount=$stmtTotalPet->rowCount();
 
                     </table>
                     <div class="text-end">
+                        <a class="btn btn-danger" href="doDelete.php?id=<?=$rowUser["id"]?>">刪除會員</a>
                         <a class="btn btn-mao-primary" href="user-edit.php?id=<?=$rowUser["id"]?>">編輯會員資料</a>
                     </div>
 
