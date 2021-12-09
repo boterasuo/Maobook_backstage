@@ -1,16 +1,6 @@
 <?php
 
-$servername = "localhost";
-$username = "admin";
-$password = "12345";
-$dbname = "my_db";
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("連線失敗: " . $conn->connect_error);
-} else {
-    //echo "資料庫連線成功";
-}
-
+require_once ("db-connect.php");
 require_once("style.php");
 require_once("main-nav.php");
 
@@ -39,7 +29,6 @@ while($row=$resultPet_Category->fetch_assoc()){
 
 $sql_query="SELECT * From products WHERE valid=1";
 $result=$conn->query($sql_query);
-
 $totalProductCount=$result->num_rows;
 ?>
 
@@ -103,7 +92,7 @@ $totalProductCount=$result->num_rows;
             echo "<td>".$row_result["stock_num"]."</td>";
 //            echo "<td>".$row_result["img"]."</td>";
 
-            echo $row_result["img"]==''?'<td>商品圖片</td>':'<td><img src="./images/product_images/'.$row_result["img"].'" class="img-responsive" width="250px" height="250px"></td>';
+            echo $row_result["img"]==''?'<td>商品圖片</td>':'<td><img src="./product_images/'.$row_result["img"].'" class="img-responsive" width="250px" height="250px"></td>';
 
             echo "<td>".$row_result["created_at"]."</td>";
 

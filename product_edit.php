@@ -5,16 +5,7 @@ if(isset($_GET["id"])){
     $id=0;
 }
 
-$servername = "localhost";
-$username = "admin";
-$password = "12345";
-$dbname = "my_db";
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("連線失敗: " . $conn->connect_error);
-} else {
-    //echo "資料庫連線成功";
-}
+require_once ("db-connect.php");
 
 $sql="SELECT * FROM products WHERE id='$id'";
 $result=$conn->query($sql);
