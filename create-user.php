@@ -43,9 +43,9 @@
   </head>
   <body class="d-flex justify-content-center align-items-center vh-200">
         <div class="login-panel text-center">
-            <form action="doSignUp.php" method="post" >
+            <form action="doSignUp.php" method="post"  >
 
-                <div class="form-group">
+                <div class="form-group"></div>
                 <img class="logo" src="/images/logo.png" alt="">
                 <div class="progress mb-3">
                     <div class="progress-bar bg-warning " role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
@@ -56,12 +56,15 @@
                         <label for="name">姓名</label>
                     </div>
                     <div class="form-floating input mb-2">
+                        <input type="text" class="form-control" id="account" placeholder="account" name="account" required>
+                        <label for="account">帳號</label>
+                    </div>
+                    <div class="form-floating input mb-2">
                         <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" data-error="郵件格式錯誤">
                         <label for="email">信箱</label>
                     </div>
-
                     <div class="form-floating input mb-2">
-                        <input type="int" class="form-control" id="mobile" placeholder="mobile" name="mobile">
+                        <input type="mobile" class="form-control" id="mobile" placeholder="mobile" name="mobile">
                         <label for="mobile">手機</label>
                     </div>
 
@@ -75,9 +78,9 @@
                     <label for="repassword">確認密碼</label>
                     <div class="help-block with-errors"></div>
                 </div>
-
-            </div>
-
+                <div class="mb-3">
+                    <input id="valid" type="hidden" name="valid" class="form-control" >
+                </div>
                   <div class="d-grid gap-2 mb-5 mt-3">
                       <div class="help-block with-errors"></div>
 
