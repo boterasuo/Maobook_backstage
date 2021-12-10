@@ -1,5 +1,5 @@
 <?php
-require_once ("db-connect.php");
+require_once ("pdo-connect.php");
 $name=$_POST["name"];
 $email=$_POST["email"];
 $mobile=$_POST["mobile"];
