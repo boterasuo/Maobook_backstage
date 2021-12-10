@@ -55,7 +55,7 @@ try {
 
         }
         $cartCount=count( $_SESSION['cart']); //重新計算購物車總數
-//        $a = implode(",", $_SESSION['cart'][1]);//測試是否有存入用
+//        $a = implode(",", $_SESSION['cart'][1]);//測試用~~~確認是否有存入用
     }
 
 }catch(PDOException $e){

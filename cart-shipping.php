@@ -15,9 +15,9 @@ if (empty($_SESSION['cart'])) {
 
 //搜尋使用者資料
 
-$account="user";
+$account = "user";
 if (isset($_POST["useraccount"])) {
-    $useraccount= $_POST["useraccount"];
+    $useraccount = $_POST["useraccount"];
 
 }
 $sql = "SELECT * FROM users WHERE account=?  AND valid=1";
@@ -29,7 +29,7 @@ try {
     if ($userExist > 0) {
         $row = $stmt->fetch();
         $id = $row["id"];
-        $account=$row["account"];
+        $account = $row["account"];
         $name = $row["mailing_name"];
         $email = $row["mailing_email"];
         $phone = $row["mailing_phone"];
@@ -38,8 +38,8 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-if(isset($useraccount)&&$useraccount===$account){
- $a="yes";
+if (isset($useraccount) && $useraccount === $account) {
+    $a = "yes";
 }
 
 ?>
@@ -142,6 +142,7 @@ if(isset($useraccount)&&$useraccount===$account){
                     </thead>
                     <tbody>
                     <?php
+                    //從Session抓出資料
                     $totalPrice = 0;
                     $deliveryFee = 60; //運費
                     if (!empty($_SESSION["cart"])):
@@ -178,60 +179,72 @@ if(isset($useraccount)&&$useraccount===$account){
                         <form class="d-grid gap-3 mb-3" action="" method="post" name="form1">
                             <div>
                                 <label for="useraccount" class="text-danger">請輸入會員帳號</label>
-                                <input  <?php if(isset($useraccount)&&$useraccount===$account):?> value="<?=$account?>" <?php endif;?> name="useraccount" type="text" class="form-control form-control" required >
-                                <button id="yes" class="btn btn-mao-primary mt-2" type="submit" name="Submit">確認</button>
+                                <input name="useraccount" type="text" class="form-control form-control" required>
+                                <button id="yes" class="btn btn-mao-primary mt-2" type="submit" name="Submit">確認
+                                </button>
 
 
                             </div>
                         </form>
-                        <form class="d-grid gap-3" action="" method="post" name="form2">
-                            <?php if(isset($useraccount)&&$useraccount===$account):?>
-                            <div>
-                                <label for="name">聯絡人</label>
-                                <input value="<?=$name?>" name="name" type="text" class="form-control form-control" placeholder="name" required>
-                            </div>
-                            <div>
-                                <label for="validationCustom03" class="form-label">詳細地址</label>
-                                <input value="<?=$address?>" type="text" class="form-control" id="validationCustom03" required>
-                                <div class="invalid-feedback">請填入詳細地址</div>
-                            </div>
-                            <div>
-                                <label for="phone">電話</label>
-                                <input value="<?=$phone?>" name="phone" type="tel" class="form-control form-control">
-                            </div>
-                            <div>
-                                <label for="email">Email</label>
-                                <input value="<?=$email?>" name="email" class="form-control form-control" type="email">
-                            </div>
-                            <?php endif;?>
+                        <form class="d-grid gap-3" action="cartSendOder.php" method="post" name="form2">
+                            <?php if (isset($useraccount) && $useraccount === $account): ?>
+                                <div>
+                                    <?php if (isset($useraccount) && $useraccount === $account): ?>
+                                        <label for="account">會員</label>
+                                        <input name="account" type="text" class=" form-control form-control"
+                                               value="<?= $account ?>" readonly>
+                                    <?php endif; ?>
+                                </div>
+                                <div>
+                                    <label for="name">聯絡人</label>
+                                    <input value="<?= $name ?>" type="text"
+                                           class="form-control form-control" placeholder="name" required name="name">
+                                </div>
+                                <div>
+                                    <label for="validationCustom03" class="form-label">詳細地址</label>
+                                    <input value="<?= $address ?>" type="text" class="form-control"
+                                           id="validationCustom03" placeholder="address" required name="address">
+                                    <div class="invalid-feedback">請填入詳細地址</div>
+                                </div>
+                                <div>
+                                    <label for="phone">電話</label>
+                                    <input value="<?= $phone ?>" name="phone" type="tel"
+                                           class="form-control form-control" placeholder="09xxxxxxxx" name="phone">
+                                </div>
+                                <div>
+                                    <label for="email">Email</label>
+                                    <input value="<?= $email ?>" name="email" class="form-control form-control"
+                                           type="email" placeholder="name@example.com" name="email">
+                                </div>
+                                <div class="text-danger">請確認以上配送資訊是否正確，不正確請修改</div>
+                            <?php endif; ?>
 
-                        </form>
+
                     </div>
                     <div class="pay col-5  p-4">
                         <div>
-                            <form action="">
-                                <div class="row text-end m-0">
-                                    <div class="col-10 d-grid gap-3 ">
-                                        <div>商品總金額：</div>
-                                        <div>運費：</div>
-                                        <div>結帳金額：</div>
-                                    </div>
-                                    <div class="col-2 d-grid gap-3">
-                                        <?php if ($totalPrice == 0) {
-                                            $deliveryFee = 0;
-                                        }
-                                        ?>
-                                        <div>NT$<?= $totalPrice ?></div>
-                                        <div>+NT$<?= $deliveryFee ?></div>
-                                        <div>NT$<?= $totalPrice + $deliveryFee ?></div>
-                                    </div>
+                            <div class="row text-end m-0">
+                                <div class="col-10 d-grid gap-3 ">
+                                    <div>商品總金額：</div>
+                                    <div>運費：</div>
+                                    <div>結帳金額：</div>
                                 </div>
-                                <div class=" d-grid">
-                                    <button type="button" class="btn btn-mao-primary mt-3 ">下單購買</button>
+                                <div class="col-2 d-grid gap-3">
+                                    <?php if ($totalPrice == 0) {
+                                        $deliveryFee = 0;
+                                    }
+                                    ?>
+                                    <div>NT$<?= $totalPrice ?></div>
+                                    <div>+NT$<?= $deliveryFee ?></div>
+                                    <div>NT$<?= $totalPrice + $deliveryFee ?></div>
                                 </div>
-                            </form>
+                            </div>
+                            <div class=" d-grid">
+                                <button id="sendorder" type="submit" class="btn btn-mao-primary mt-3">下單購買</button>
+                            </div>
                         </div>
                     </div>
+                    </form>
                 </div>
 
             </main>
@@ -259,6 +272,14 @@ if(isset($useraccount)&&$useraccount===$account){
         cleanAll.addEventListener('click', doClean);
     }
 
+
+    //let account='<?//=$account?>//';
+
+    var sendoder = document.querySelector("#sendorder");
+    sendoder.addEventListener('click',()=>{
+        alert("訂單已送出");
+    })
+
     //
     //var button = document.querySelector("#yes");
 
@@ -268,10 +289,10 @@ if(isset($useraccount)&&$useraccount===$account){
     //    alert("只限會員購買，請註冊會員");
     //};
 
-    let button = document.querySelector("#yes");
-    let userkeyin='<?=$useraccount?>';
-    let account='<?=$account?>';
-
+    //let button = document.querySelector("#yes");
+    ////let userkeyin='<?////=$useraccount?>////';
+    //let account='<?//=$account?>//';
+    //
 
 </script>
 </body>
