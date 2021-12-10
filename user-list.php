@@ -132,13 +132,15 @@ for ($i=0; $i<count($rows); $i++){
                                             <?php endif;?>
                                         </td>
                                         <td>
-                                            <a class="btn btn-mao-primary " href="user.php?id=<?=$user["id"]?>"><i
-                                                        class="fas fa-user" title="檢視此會員資料"></i></a>
-                                            <a class="btn btn-mao-primary "
-                                               href="user.php?id=<?= $user["id"] ?>"><i class="fas fa-edit"></i></a>
-
-                                            <a class="btn btn-mao-primary " href="user-order.php?id=<?=$user["id"]?>"><i
-                                                        class="fas fa-credit-card " title="會員訂單"></i></a>
+                                            <a class="btn btn-mao-primary " href="user.php?id=<?=$user["id"]?>"
+                                               title="檢視此會員資料">
+                                                <i class="fas fa-user"></i></a>
+                                            <a class="btn btn-mao-primary" href="user.php?id=<?= $user["id"] ?>"
+                                            title="編輯此會員資料">
+                                                <i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-mao-primary " href="user-order.php?id=<?=$user["id"]?>"
+                                            title="會員訂單">
+                                                <i class="fas fa-credit-card "></i></a>
                                         </td>
                                     </tr>
                             <?php endforeach; ?>

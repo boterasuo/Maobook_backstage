@@ -68,11 +68,7 @@ $petTotalCount=$stmtTotalPet->rowCount();
                     <table class="table table-bordered table-sm user-table">
                         <tr>
                             <th>奴才帳號</th>
-                            <td><?=$rowUser["account"]?></td>
-                        </tr>
-                        <tr>
-                            <th>奴才密碼</th>
-                            <td><?=$rowUser["password"]?></td>
+                            <td><?=$rowUser["email"]?></td>
                         </tr>
                         <tr>
                             <th>奴才姓名</th>
@@ -81,9 +77,10 @@ $petTotalCount=$stmtTotalPet->rowCount();
                         <tr>
                             <th>奴才性別</th>
                             <td class="d-flex">
+                                <?php if(isset($rowUser["gender"])): ?>
                                 <div class="form-check me-3">
                                     <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled
-                                        <?php if ($rowUser["gender"]==1):
+                                        <?php if($rowUser["gender"]==1):
                                             echo "checked";
                                         endif; ?>>
                                     <label class="form-check-label" for="flexRadioDisabled">男孩</label>
@@ -102,17 +99,26 @@ $petTotalCount=$stmtTotalPet->rowCount();
                                         endif; ?>>
                                     <label class="form-check-label" for="flexRadioDisabled">不透漏</label>
                                 </div>
+                                <?php else: ?>
+                                <div class="text-secondary">尚未提供</div>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
                             <th>奴才生日</th>
-                            <td><?=$rowUser["birthday"]?>
+                            <td><?php if(isset($rowUser["birthday"])):?>
+                                    <?=$rowUser["birthday"];?>
+                                <?php else: ?>
+                                    <div class="text-secondary d-inline-block me-2">尚未提供</div>
+                                <?php endif; ?>
+                                <?php if(isset($rowUser["birthday"])):?>
                                 <?php $now=date("Y-m-d");
                                 $userBirth=$rowUser["birthday"];
                                 $age=date_diff(date_create($now), date_create($userBirth)); ?>
                                 <div class="data-time d-inline-block ms-3">
                                     <?=$age->format('%y');?> 歲
                                 </div>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
@@ -122,13 +128,29 @@ $petTotalCount=$stmtTotalPet->rowCount();
                         <tr>
                             <th rowspan="2">奴才地址</th>
                             <td>
-                                <span class="add-tag">郵遞區號</span><?=$rowUser["zip_code"]?>
-                                <span class="add-tag">縣市</span><?=$rowUser["county"]?>
+                                <span class="add-tag">郵遞區號</span>
+                                <?php if(isset($rowUser["zip_code"])):?>
+                                <?=$rowUser["zip_code"];?>
+                                <?php else: ?>
+                                <div class="text-secondary d-inline-block me-2">尚未提供</div>
+                                <?php endif; ?>
+
+                                <span class="add-tag">縣市</span>
+                                <?php if(isset($rowUser["county"])):?>
+                                    <?=$rowUser["county"];?>
+                                <?php else: ?>
+                                    <div class="text-secondary d-inline-block me-2">尚未提供</div>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <span class="add-tag">詳細地址</span><?=$rowUser["address"]?>
+                                <span class="add-tag">詳細地址</span>
+                                <?php if(isset($rowUser["address"])):?>
+                                    <?=$rowUser["address"];?>
+                                <?php else: ?>
+                                    <div class="text-secondary d-inline-block me-2">尚未提供</div>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
@@ -164,7 +186,7 @@ $petTotalCount=$stmtTotalPet->rowCount();
                     <div>
                         <h4><?=$rowUser["name"]?>的大頭照</h4>
                         <figure class="main-pet ratio ratio-1x1">
-                            <?php if($rowUser["image"]!==""): ?>
+                            <?php if(isset($rowUser["image"])): ?>
                                 <img class="cover-fit" src="images/<?=$rowUser["image"]?>" alt="">
                             <?php else: ?>
                                 <img class="cover-fit" src="images/avatar_user.png" alt="">

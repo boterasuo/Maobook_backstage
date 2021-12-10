@@ -62,13 +62,13 @@ try{
                             <label for="account" class="col-3 col-form-label">奴才帳號</label>
                             <div class="col-9">
                                 <input id="account" name="account" type="text" class="form-control"
-                                value="<?=$rowUser["account"]?>" readonly>
+                                value="<?=$rowUser["email"]?>" readonly>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
                             <label for="password" class="col-3 col-form-label">奴才密碼</label>
                             <div class="col-9">
-                                <input id="password" name="password" type="text" class="form-control"
+                                <input id="password" name="password" type="password" class="form-control"
                                        value="<?=$rowUser["password"]?>">
                                 <div id="passwordErr" class="passwordErr">  </div>
                             </div>
@@ -85,25 +85,25 @@ try{
                             <label for="gender" class="col-3 col-form-label">奴才性別</label>
                             <div class="col-9 d-flex align-items-center">
                                 <div class="form-check me-3">
-                                    <input id="gender" name="gender" type="radio" class="form-check-input" value="1"
+                                    <input id="male" name="gender" type="radio" class="form-check-input" value="1"
                                             <?php if ($rowUser["gender"]==1):
                                             echo "checked";
                                             endif; ?>>
-                                    <label class="form-check-label" for="gender">男性</label>
+                                    <label class="form-check-label" for="male">男性</label>
                                 </div>
                                 <div class="form-check me-3">
-                                    <input id="gender" name="gender" type="radio" class="form-check-input" value="2"
+                                    <input id="female" name="gender" type="radio" class="form-check-input" value="2"
                                         <?php if ($rowUser["gender"]==2):
                                             echo "checked";
                                         endif; ?>>
-                                    <label class="form-check-label" for="gender">女性</label>
+                                    <label class="form-check-label" for="female">女性</label>
                                 </div>
                                 <div class="form-check me-3">
-                                    <input id="gender" name="gender" type="radio" class="form-check-input" value="9"
+                                    <input id="noGender" name="gender" type="radio" class="form-check-input" value="9"
                                         <?php if ($rowUser["gender"]==9):
                                             echo "checked";
                                         endif; ?>>
-                                    <label class="form-check-label" for="gender">不透漏</label>
+                                    <label class="form-check-label" for="noGender">不透漏</label>
                                 </div>
                             </div>
 
@@ -155,18 +155,18 @@ try{
                             <label for="valid" class="col-3 col-form-label">使用者權限</label>
                                 <div class="col-9 d-flex">
                                     <div class="form-check me-3 py-2">
-                                        <input id="valid" name="valid" type="radio" class="form-check-input" value="1"
+                                        <input id="validA" name="valid" type="radio" class="form-check-input" value="1"
                                             <?php if ($rowUser["valid"]==1):
                                                 echo "checked";
                                             endif; ?>>
-                                        <label class="form-check-label" for="valid">一般</label>
+                                        <label class="form-check-label" for="validA">一般</label>
                                     </div>
                                     <div class="form-check me-3 py-2">
-                                        <input id="valid" name="valid" type="radio" class="form-check-input" value="0"
+                                        <input id="validB" name="valid" type="radio" class="form-check-input" value="0"
                                             <?php if ($rowUser["valid"]==0):
                                                 echo "checked";
                                             endif; ?>>
-                                        <label class="form-check-label" for="valid">封鎖中</label>
+                                        <label class="form-check-label" for="validB">封鎖中</label>
                                     </div>
                                 </div>
                         </div>
@@ -179,7 +179,7 @@ try{
                     <div>
                         <h4><?=$rowUser["name"]?>的大頭照</h4>
                         <figure class="user-avatar ratio ratio-1x1">
-                            <?php if($rowUser["image"]!==""): ?>
+                            <?php if(isset($rowUser["image"])): ?>
                                 <img class="cover-fit" src="images/<?=$rowUser["image"]?>" alt="">
                             <?php else: ?>
                                 <img class="cover-fit" src="images/avatar_user.png" alt="">
@@ -250,7 +250,7 @@ try{
                 mobileErr.innerText="手機號碼格式錯誤!"
                 mobile.style.border="1px solid red";
             }
-            if (zip.value.length!=3 && zip.value.length!=5) {
+            if (zip.value.length!=3 && zip.value.length!=5 && zip.value.length!=0) {
                 zipErr.innerText = "郵遞區號應為3碼或5碼";
                 zip.style.border="1px solid red";
             }

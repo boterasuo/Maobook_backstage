@@ -214,9 +214,10 @@ $petCount=$stmtOtherPet->rowCount();
                         </figure>
                     </div>
                     <div>
-                        <h4>毛孩家人</h4>
+                        <h4 class="mb-3">毛孩家人</h4>
                         <div class="d-flex flex-wrap">
-                            <div class="me-3">
+                            <div class="position-relative me-3">
+                                <div class="pet-info-userIcon"><i class="fas fa-user"></i></div>
                                 <figure  class="main-user ratio ratio-1x1">
                                     <a href="user.php?id=<?=$rowUser["id"]?>">
                                         <?php if($rowUser["image"]!==""): ?>
@@ -231,7 +232,8 @@ $petCount=$stmtOtherPet->rowCount();
                             <?php if($petCount>1): ?>
                             <?php for($i=0; $i<=($petCount-1); $i++): ?>
                                     <?php if($rowOtherPet[$i]["id"]!==$rowPet["id"]):?>
-                            <div class="me-3">
+                            <div class="position-relative me-3">
+                                <div class="pet-info-petIcon"><i class="fas fa-paw"></i></div>
                                 <figure  class="sub-pet ratio ratio-1x1">
                                     <a href="pet-info.php?id=<?=$rowOtherPet[$i]["id"]?>">
                                         <?php if($rowOtherPet[$i]["img"]!==""):?>

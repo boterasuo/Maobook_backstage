@@ -1,12 +1,6 @@
-
-
 <?php
-
 require_once("pdo-connect.php");
-if(!isset($_SESSION["user"])){
-    header("sign-in.php");
-}
-$sql="SELECT id, account, name, created_at FROM users WHERE valid!=9";
+$sql="SELECT id, account, name, email, created_at FROM users WHERE valid!=9";
 $stmt=$db_host->prepare($sql);
 
 try{
@@ -148,7 +142,7 @@ try{
                                 ?>
                                 <tr>
                                     <td><?= $user["id"] ?></td>
-                                    <td><?= $user["account"] ?></td>
+                                    <td><?= $user["email"] ?></td>
                                     <td><?= $user["name"] ?></td>
                                     <td><?= $user["created_at"] ?></td>
                                     <td>
