@@ -220,7 +220,7 @@ $petCount=$stmtOtherPet->rowCount();
                                 <div class="pet-info-userIcon"><i class="fas fa-user"></i></div>
                                 <figure  class="main-user ratio ratio-1x1">
                                     <a href="user.php?id=<?=$rowUser["id"]?>">
-                                        <?php if($rowUser["image"]!==""): ?>
+                                        <?php if(isset($rowUser["image"])): ?>
                                         <img  class="cover-fit" src="images/<?=$rowUser["image"]?>" alt="">
                                         <?php else: ?>
                                         <img  class="cover-fit" src="images/avatar_user.png" alt="">

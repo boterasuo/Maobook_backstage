@@ -50,6 +50,18 @@ for ($i=0; $i<count($rows); $i++){
 
     <?php require_once("style.php"); ?>
     <style>
+        #th-id{
+            width: 7%;
+        }
+        #th-account{
+            width: 17%;
+        }
+        #th-created-at{
+            width: 22%;
+        }
+        #th-dog-count, #th-cat-count{
+            width: 10%;
+        }
         .pet-icon{
             width: 20px;
         }
@@ -83,12 +95,12 @@ for ($i=0; $i<count($rows); $i++){
                             <thead>
                             <tr>
                                 <!-- 表格註腳 thead -->
-                                <th>ID</th>
-                                <th>帳號</th>
+                                <th id="th-id">ID</th>
+                                <th id="th-account">帳號</th>
                                 <th>名稱</th>
-                                <th>建立時間</th>
-                                <th>狗狗數</th>
-                                <th>貓貓數</th>
+                                <th id="th-created-at">建立時間</th>
+                                <th id="th-dog-count">狗狗數</th>
+                                <th id="th-cat-count">貓貓數</th>
                                 <th>其他操作</th>
                             </tr>
                             </thead>

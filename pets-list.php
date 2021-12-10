@@ -1,10 +1,20 @@
 <?php
 require_once("pdo-connect.php");
-$sqlPets="SELECT * FROM pets WHERE valid!=9";
-$stmtPets=$db_host->prepare($sqlPets);
 
-try{
+
+
+
+if(isset($_GET["petToday"])) {
+    $petToday = $_GET["petToday"];
+    $sqlPets = "SELECT * FROM pets WHERE valid!=9 AND DATE(created_at)=? ";
+    $stmtPets = $db_host->prepare($sqlPets);
+    $stmtPets->execute([$petToday]);
+}else{
+    $sqlPets="SELECT * FROM pets WHERE valid!=9";
+    $stmtPets=$db_host->prepare($sqlPets);
     $stmtPets->execute();
+}
+try{
     $petRows = $stmtPets->fetchAll(PDO::FETCH_ASSOC);
     $petCount=$stmtPets->rowCount();
 }catch(PDOException $e){
@@ -17,6 +27,16 @@ $stmtUser->execute();
 $userRows = $stmtUser->fetchAll(PDO::FETCH_ASSOC);
 $userAccount = array_column($userRows, "account", "id");
 $userName = array_column($userRows, "name", "id");
+
+$now=date("Y-m-d");
+$sqlPetCount="SELECT COUNT(id) AS pet_count FROM pets WHERE DATE(created_at)= ? ";
+$stmtPetCount=$db_host->prepare($sqlPetCount);
+$stmtPetCount->execute([$now]);
+$petCount = $stmtPetCount->fetch(PDO::FETCH_ASSOC);
+//var_dump($petCount);
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -36,6 +56,11 @@ $userName = array_column($userRows, "name", "id");
     <title>毛孩管理</title>
 
     <?php require_once("style.php"); ?>
+    <style>
+        .pet-count-card div{
+            width: 68px;
+        }
+    </style>
 
 </head>
 <body class="sb-nav-fixed">
@@ -55,9 +80,16 @@ $userName = array_column($userRows, "name", "id");
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Primary Card</div>
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div class="pet-count-card">
+                                    <div>今日新增毛孩數 <i class="fas fa-paw"></i></div>
+                                </div>
+                                <div class="px-3 fs-2"><?=$petCount["pet_count"]?></div>
+                            </div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
+                                <a class="small text-white stretched-link" href="pets-list.php?petToday=<?=$now?>">
+                                    View Details
+                                </a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
@@ -90,30 +122,6 @@ $userName = array_column($userRows, "name", "id");
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                面積圖表
-                            </div>
-                            <div class="card-body">
-                                <canvas id="myAreaChart" width="100%" height="40"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                長條圖表
-                            </div>
-                            <div class="card-body">
-                                <canvas id="myBarChart" width="100%" height="40"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
@@ -129,6 +137,7 @@ $userName = array_column($userRows, "name", "id");
                             <!-- 表格註腳 thead -->
                             <th>ID</th>
                             <th>毛孩名稱</th>
+                            <th>毛孩類型</th>
                             <th>奴才帳號</th>
                             <th>奴才名稱</th>
                             <th>建立時間</th>
@@ -140,6 +149,7 @@ $userName = array_column($userRows, "name", "id");
                         <tr>
                             <th>ID</th>
                             <th>毛孩名稱</th>
+                            <th>毛孩類型</th>
                             <th>奴才帳號</th>
                             <th>奴才名稱</th>
                             <th>建立時間</th>
@@ -154,6 +164,13 @@ $userName = array_column($userRows, "name", "id");
                                 <tr>
                                     <td><?= $pet["id"] ?></td>
                                     <td><?= $pet["name"] ?></td>
+                                    <td>
+                                        <?php if($pet["category"]==="dog"): ?>
+                                        狗狗
+                                        <?php else: ?>
+                                        貓貓
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?= $userAccount[$pet["user_id"]] ?></td>
                                     <td><?= $userName[$pet["user_id"]] ?></td>
                                     <td><?= $pet["created_at"] ?></td>
