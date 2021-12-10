@@ -153,7 +153,8 @@ $petTotalCount=$stmtTotalPet->rowCount();
 
                     </table>
                     <div class="text-end">
-                        <a class="btn btn-danger" href="user-doDelete.php?id=<?=$rowUser["id"]?>">刪除會員</a>
+                        <a class="btn btn-danger" href="user-doDelete.php?id=<?=$rowUser["id"]?>"
+                           onClick="return checkDel()">刪除會員</a>
                         <a class="btn btn-mao-primary" href="user-edit.php?id=<?=$rowUser["id"]?>">編輯會員資料</a>
 
                     </div>
@@ -206,5 +207,12 @@ $petTotalCount=$stmtTotalPet->rowCount();
 
 </div>
 <?php require_once("JS.php"); ?>
+<script>
+    function checkDel(){
+        if(!confirm('確認刪除 <?=$rowUser["name"]?> 的會員資料?')){
+            return false;
+        }
+    }
+</script>
 </body>
 </html>
