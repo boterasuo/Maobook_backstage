@@ -1,5 +1,5 @@
 <?php
-require_once("domain-pdo-connect.php"); //連線到遠端資料庫
+require_once("pdo-connect.php"); //連線到遠端資料庫
 
 ?>
 <!DOCTYPE html>

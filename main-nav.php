@@ -71,8 +71,8 @@
                     <div class="collapse" id="tab1" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="order-list.php"  title="oder-list.php">所有訂單</a>
-                            <a class="nav-link" href="lost-cart.php" title="lost-cart.php">被遺棄的購物車</a>
+                            <a class="nav-link" href="order-list.php"  title="oder-list.php">訂單查詢</a>
+                            <a class="nav-link" href="lost-cart.php" title="lost-cart.php">新增訂單</a>
 
                         </nav>
                     </div>
