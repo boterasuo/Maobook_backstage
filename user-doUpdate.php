@@ -32,7 +32,7 @@ if ($_FILES["myFile"]["error"] === 0){
         try{
             $stmtPic->execute([$file_name, $id]); //寫入資料庫
 //            echo "upload success";
-            header("location: user.php?id=$id");
+            echo "<script> alert('修改成功!'); window.location.href='user.php?id=$id'</script>";
         }catch (PDOException $e){
             echo $e->getMessage();
         }
@@ -40,5 +40,5 @@ if ($_FILES["myFile"]["error"] === 0){
         echo "upload failed";
     }
 }else{
-    header("location: user.php?id=$id");
+    echo "<script> alert('修改成功!'); window.location.href='user.php?id=$id'</script>";
 }
