@@ -38,9 +38,9 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-if (isset($useraccount) && $useraccount === $account) {
-    $a = "yes";
-}
+//if (isset($useraccount) && $useraccount === $account) {
+//    $a = "yes"; //測試用~~~~~~~~
+//}
 
 ?>
 <!DOCTYPE html>
