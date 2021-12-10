@@ -1,5 +1,11 @@
+
+
 <?php
+
 require_once("pdo-connect.php");
+if(!isset($_SESSION["user"])){
+    header("sign-in.php");
+}
 $sql="SELECT id, account, name, created_at FROM users WHERE valid!=9";
 $stmt=$db_host->prepare($sql);
 
