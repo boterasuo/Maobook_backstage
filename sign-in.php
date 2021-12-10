@@ -45,7 +45,7 @@
         <div class="login-panel text-center">
             <form action="doLogin.php" method="post">
             <div class="">
-                <img class="logo" src="/images/logo.png" alt="">
+                <img class="logo" src="images/logo.png" alt="">
                 <div class="form-floating input-up">
                     <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
                     <label for="floatingInput">Email</label>
