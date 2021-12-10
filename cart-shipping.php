@@ -21,7 +21,7 @@ if (isset($_POST["useraccount"])) {
     $useraccount = $_POST["useraccount"];
 
 }
-$sql = "SELECT * FROM users WHERE account=?  AND valid=1";
+$sql = "SELECT * FROM users WHERE account=?  ";  //AND valid=1
 $stmt = $db_host->prepare($sql);
 try {
     $stmt->execute([$useraccount]);
