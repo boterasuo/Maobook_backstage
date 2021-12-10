@@ -24,8 +24,8 @@ try{
 }
 
 if ($_FILES["myFile"]["error"] === 0){
-    if (move_uploaded_file($_FILES["myFile"]["tmp_name"], "images/".$id.$_FILES["myFile"]["name"])){
-        $file_name=$id.$_FILES["myFile"]["name"];
+    if (move_uploaded_file($_FILES["myFile"]["tmp_name"], "images/"."user_id_".$id."-".$_FILES["myFile"]["name"])){
+        $file_name="user_id_".$id."-".$_FILES["myFile"]["name"];
 
         $sqlPic="UPDATE users SET image=? WHERE id=? ";
         $stmtPic=$db_host->prepare($sqlPic);
