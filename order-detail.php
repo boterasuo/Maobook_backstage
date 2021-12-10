@@ -100,20 +100,23 @@ try{
     <div class="container px-0">
         <main class="main px-5">
             <div class="container-fluid px-0">
-                <h1 class="mt-4">訂單：<?=$rowUser["id"]?></h1>
-                <ol class="breadcrumb mb-4">
+                <ol class="breadcrumb mb-2 mt-4">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
                     <li class="breadcrumb-item active"><a href="order-list.php">訂單管理</a></li>
-                    <li class="breadcrumb-item active">訂單編號：<?=$rowUser["id"]?></li>
+                    <li class="breadcrumb-item active">訂單管理</li>
                 </ol>
+                <h3 class="mb-4">訂單編號：#<?=$id?></h3>
+
             </div>
 <!--            <div class="py-2">-->
 <!--                <a role="button" class="btn btn-primary" href="user-order.php?id=--><?//=$rowOrder["user_id"]?><!--">回訂單列表</a>-->
 <!--            </div>-->
             <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table me-1"></i>
-                    訂單明細
+                <div class="card-header d-flex justify-content-between"" title="新增訂單">
+                <a ><i class="fas fa-table me-1 end-0"></i>
+                    資料表格</a>
+                <a href="order-edit.php"><i class="fas fa-edit me-1 end-0"></i>
+                    修改訂單&nbsp;&nbsp;</a>
                 </div>
     <div class="card-body">
             <!--    本頁 內容    -->
@@ -124,7 +127,7 @@ try{
                 狀態: <?=$statusRow["name"]?><br>
             </div>
             <div>
-                <table id="datatablesSimple" class="table table-bordered table-sm">
+                <table  class="table table-bordered table-sm"><!-- id="datatablesSimple" -->
                     <thead>
                     <tr>
                         <th>產品名稱</th>
@@ -139,8 +142,9 @@ try{
                     $total=0;
                     foreach($rows as $value): ?>
                         <tr>
-                            <td><a href="cart-product-detial.php?name=<?=$value["name"]?>" title="<?=$value["name"]?>"><img src="images/product_images/<?=$value["img"]?>" alt="" width="100px" ></a></td>
-                            <td><?=$value["name"]?></td>
+                            <td><a href="cart-product-detial.php?name=<?=$value["name"]?>" title="<?=$value["name"]?>"><img src="images/product_images/<?=$value["img"]?>" alt="" width="100px" ></a></td><!-- 商品圖片 -->
+                            <td><?=$value["name"]?></td> <!-- 訂購人名稱 -->
+
                             <td class="text-end"><?=$value["price"]?></td>
                             <td class="text-end"><?=$value["amount"]?></td>
                             <td class="text-end"><?php
@@ -155,7 +159,7 @@ try{
                     </tbody>
                     <tfoot>
                     <tr>
-                        <td class="text-end" colspan="4">總計: <?=$total?></td>
+                        <td class="text-end" colspan="12">總計: <?=$total?></td>
                     </tr>
                     </tfoot>
                 </table>
@@ -170,5 +174,6 @@ try{
     <!--    --><?php //require_once("footer.php"); ?>
 </div>
 <?php require_once("JS.php"); ?>
+
 </body>
 </html>

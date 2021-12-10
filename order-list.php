@@ -1,12 +1,88 @@
 <?php
-//require_once("domain-db-connect.php");//連線到遠端資料庫 domain-pdo-connect.php;
-require_once("db-connect.php");
-//$sql = "SELECT * FROM user_oder WHERE status=1";
-$sql = "SELECT id, user_id, order_time, status FROM user_order";
+require_once("pdo-connect.php");
+//$id = $_GET["id"]; //order id
 
-$result = $conn->query($sql);
-$orderCount = $result->num_rows;
+//status 抓取
+$sqlStatusType = "SELECT * FROM order_status";
+$stmtStatusType = $db_host->prepare($sqlStatusType);
+try {
+    $stmtStatusType->execute();
+    $statusTypeRows = $stmtStatusType->fetchAll(PDO::FETCH_ASSOC);
+    $statusTypes = array_column($statusTypeRows, "name", "id");
+} catch (PDOException $e) {
+    echo "預處理陳述式執行失敗！ <br/>";
+    echo "Error: " . $e->getMessage() . "<br/>";
+    $db_host = NULL;
+    exit;
+}
 
+// 抓取 users 會員資料表
+//$id = $_GET["id"]; //user id
+$sqlUser = "SELECT * FROM users ";
+$stmtUser = $db_host->prepare($sqlUser);
+try {
+    $stmtUser->execute();
+    $rowUser = $stmtUser->fetch();//會員資料
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+//抓取 user_order
+$sqlOrderList = "SELECT * FROM user_order ";
+$stmtOrderList = $db_host->prepare($sqlOrderList);
+try {
+    $stmtOrderList->execute();
+    $rowOrderLists = $stmtOrderList->fetchAll(PDO::FETCH_ASSOC);
+//    $rowOrderList = $stmtOrderList->fetch(PDO::FETCH_ASSOC);
+    $orderCount = $stmtOrderList->rowCount();
+
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+//選擇訂單總金額、產品名稱、產品價格、產品圖片從[order-detail]加入到[products]參考ON在order_detail.product_id = products.id
+//$sql = "SELECT order_detail.amount, products.name, products.price, products.img FROM order_detail
+//JOIN products ON order_detail.product_id = products.id
+//WHERE order_detail.order_id = ?";
+//$stmt = $db_host->prepare($sql);
+//try {
+//    $stmt->execute();
+//    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+////    $rowOrder=$stmtOrder->fetch();
+//} catch (PDOException $e) {
+//    echo "取得訂單細節錯誤<br>";
+//    echo $e->getMessage();
+//}
+
+//抓status的名稱
+//$sql = "SELECT order_status.name,order_status.id, user_order.status, user_order.id FROM user_order JOIN order_status ON user_order.status = order_status.id
+//WHERE user_order.id = ?";
+//$stmtOrderStatus = $db_host->prepare($sql);
+//try {
+//    $stmtOrderStatus->execute();
+//    $statusRow = $stmtOrderStatus->fetch(PDO::FETCH_ASSOC);
+//    $statusRows = $stmtOrderStatus->fetchAll(PDO::FETCH_ASSOC);
+////    $rowOrder=$stmtOrder->fetch();
+//} catch (PDOException $e) {
+//    echo "取得訂單細節錯誤<br>";
+//    echo $e->getMessage();
+//}
+
+//抓user_id的名稱
+$sql = "SELECT  user_order.user_id, user_order.id, users.name FROM  users JOIN user_order ON user_order.user_id = users.id";
+$stmtOrderUser = $db_host->prepare($sql);
+try {
+    $stmtOrderUser->execute();
+    $orderUserRows = $stmtOrderUser->fetchAll(PDO::FETCH_ASSOC);
+//    $orderUserRow = $stmtOrderUser->fetch(PDO::FETCH_ASSOC);
+    $orderName = array_column($orderUserRows, "name", "user_id");
+
+} catch (PDOException $e) {
+    echo "取得訂單細節錯誤<br>";
+    echo $e->getMessage();
+}
+
+//var_dump($orderUserRows[$rowOrderList]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +98,7 @@ $orderCount = $result->num_rows;
     <link rel="shortcut icon" type="image/png" href="images/logo-nbg.png"/>
     <link rel="mask-icon" type="image/png" href="images/logo-nbg.png"/>
 
-    <title>訂單管理</title>
+    <title>訂單查詢</title>
 
     <?php require_once("style.php"); ?>
 
@@ -33,83 +109,98 @@ $orderCount = $result->num_rows;
 <div id="layoutSidenav_content">
     <div class="container px-0">
         <main class="main px-5">
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">訂單管理</h1>
-                <ol class="breadcrumb mb-4">
+            <div class="container-fluid px-0 ">
+                <h1 class="mt-4 ">訂單查詢</h1>
+                <ol class="breadcrumb my-4 ">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
-                    <li class="breadcrumb-item active">訂單管理</li>
+                    <li class="breadcrumb-item active">訂單查詢</li>
                 </ol>
+            </div>
 
-                <!-- 副標題 end -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        資料表格
-                    </div>
-                    <!-- 表格區塊 -->
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <!-- 標題欄 -->
-                            <thead>
-                            <tr>
-                                <!-- 表格註腳 thead -->
-                                <th><input type="checkbox">全選</th>
-                                <th>訂單編號</th>
-                                <th>訂單日期</th>
-                                <th>客戶姓名</th>
-                                <th>付款狀態</th>
-                                <th>出貨狀態</th>
-                                <th>總金額</th>
-                            </tr>
-                            </thead>
-                            <!-- 總結資訊 tfoot -->
-                            <tfoot>
-                            <tr>
-                                <th><input type="checkbox">   ˋ全選</th>
-                                <th>訂單編號</th>
-                                <th>訂單日期</th>
-                                <th>客戶姓名</th>
-                                <th>付款狀態</th>
-                                <th>出貨狀態</th>
-                                <th>總金額</th>
-                            </tr>
-                            </tfoot>
-                            <!-- 資料欄 tbody -->
-                            <tbody>
-                            <?php if ($orderCount > 0):
-                                while ($row = $result->fetch_assoc()): //關聯式陣列
-//                                    var_dump($row);
-                                    ?>
-                                    <tr>
-                                        <td class="w-10"><input type="checkbox"></td>
-                                        <td class="fst-italic" title="訂單編號: <?= $row["id"] ?>"><a href="order-detail.php?id=<?= $row["id"] ?>">#<?= $row["id"] ?></a></td>
-                                        <td><?= $row["order_time"] ?></td>
-                                        <td><?= $row["user_id"] ?></td>
-                                        <td><?= $row["status"] ?></td>
-                                        <td><?= $row["status"] ?></td>
-                                        <td><?= $row["status"] ?></td>
-                                    </tr>
-
-                                <?php endwhile; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="12">沒有資料</td>
-                                </tr>
-                            <?php endif; ?>
-
-                            </tbody>
-
-                        </table>
-
-                    </div><!-- 表格區塊 end-->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between"" title="新增訂單">
+                    <a ><i class="fas fa-table me-1 end-0"></i>
+                        資料表格</a>
+                    <a href="order-add.php"><i class="fas fa-plus me-1 end-0"></i>
+                        新增訂單&nbsp;&nbsp;</a>
                 </div>
+                <div class="card-body">
+                    <div class="py-2 d-flex justify-content-between">
+                        <!--        <div>-->
+                        <!--            共 --><? //=$orderCount?><!-- 筆-->
+                        <!--        </div>-->
+                        <form action="user-order.php" method="get">
+                            <div class="d-flex align-items-center">
+                                <!--                時間範圍-->
+                                <!--                <input type="date" class="form-control me-2" name="start"-->
+                                <!--                       value="-->
+                                <?php //if(isset($start))echo $start; ?><!--">-->
+                                <!--                <div class="me-2">~</div>-->
+                                <!--                <input type="date" class="form-control me-2" name="end"-->
+                                <!--                       value="--><?php //if(isset($end))echo $end; ?><!--">-->
+                                <!--                時間範圍end-->
+                                <!--                篩選-->
+                                <!--                <button type="submit" class="btn btn-primary text-nowrap">篩選</button>-->
+                                <!--                篩選end-->
 
-        </main><!-- 主要內容end -->
+                            </div>
+                        </form>
+                    </div>
+                    <table id="datatablesSimple" class="table table-bordered table-sm">
+                        <thead>
+                        <tr>
+                            <th>編號</th>
+                            <th>訂購時間</th>
+                            <th>訂購人</th>
+                            <th>狀態</th>
+                            <th>交易金額</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php if ($orderCount > 0):
+                            foreach ($rowOrderLists as $value):
+                                ?>
+                                <tr>
+                                    <td><a href="order-detail.php?id=<?= $value["id"] ?>"
+                                           title="訂單編號: <?= $value["id"] ?>"><b># <?= $value["id"] ?></b></a>
+                                    </td>
+                                    <td><?= $value["order_time"] ?></td>
+                                    <td title="查看會員: <?= $orderName[$value["user_id"]] ?>(ID:<?= $value["user_id"] ?>)的所有訂單">
+                                        <a href="user-order.php?id=<?= $value["user_id"] ?>">@ <?= $orderName[$value["user_id"]] ?></a>
+                                    </td>
+                                    <!--                                    rowOrderLists-->
+                                    <td title="狀態代碼:  <?= $value["status"] ?> "><?= $statusTypes[$value["status"]] ?></td>
+                                    <td>$$</td>
+                                    <td>
+                                        <a class="btn btn-mao-primary" href="user.php?id=<?=$user["id"]?>"
+                                           title="檢視訂單明細">
+                                            <i class="fas fa-info-circle" ></i></a>
+                                        <a class="btn btn-mao-primary" href="user-edit.php?id=<?= $user["id"] ?>"
+                                           title="編輯該筆訂單">
+                                            <i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-mao-primary" href="user-edit.php?id=<?= $user["id"] ?>"
+                                           title="刪除該筆資料">
+                                            <i class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            <?php
+                            endforeach;
+                        else: ?>
+                            <tr>
+                                <td colspan="12">尚未有訂單</td>
+                            </tr>
 
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     </div>
-    <!--    --><?php //require_once("footer.php"); ?>
-    <!--</div>-->
+
+    <?php require_once("JS.php") ?>
 </div>
-<?php require_once("JS.php"); ?>
+</div>
+
 </body>
 </html>
