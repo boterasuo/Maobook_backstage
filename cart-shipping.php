@@ -279,8 +279,10 @@ try {
         }
     //訂單送出時，確認購物車是否有東西
     function sendCheck() {
+        if (!okaccount) {
+            alert('請確認是否輸入會員帳號');
+        }else
         if (count === 0) {alert('購物車為0，');}
-        if (!okaccount){alert('請確認是否輸入會員帳號');}
     }
 
 
