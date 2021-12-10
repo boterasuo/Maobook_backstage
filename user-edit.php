@@ -162,7 +162,7 @@ try{
                                         <label class="form-check-label" for="valid">一般</label>
                                     </div>
                                     <div class="form-check me-3 py-2">
-                                        <input id="valid" name="valid" type="radio" class="form-check-input" value="1"
+                                        <input id="valid" name="valid" type="radio" class="form-check-input" value="0"
                                             <?php if ($rowUser["valid"]==0):
                                                 echo "checked";
                                             endif; ?>>
