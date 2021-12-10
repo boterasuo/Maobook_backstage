@@ -1,5 +1,5 @@
 <?php
-require_once ("db-connect.php");
+require_once ("pdo-connect.php");
 
 if(isset($_POST["email"])){
     $email=$_POST["email"];
