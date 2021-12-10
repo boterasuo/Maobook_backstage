@@ -16,6 +16,7 @@ if (empty($_SESSION['cart'])) {
 //搜尋使用者資料
 
 $account = "user";
+$useraccount="useraccount";
 if (isset($_POST["useraccount"])) {
     $useraccount = $_POST["useraccount"];
 
@@ -127,7 +128,7 @@ try {
             </header>
             <div class="d-flex justify-content-end">
                 <a class="btn btn-secondary mb-5 me-2" href="cart-product-list.php">回商品區</a>
-                <a id="cleanAll" class="btn btn-secondary mb-5" ">清空購物車</a>
+                <a id="cleanAll"  onClick="return doClean()" class="btn btn-secondary mb-5">清空購物車</a>
             </div>
             <main>
                 <table class="table table-hover ">
@@ -178,9 +179,9 @@ try {
                         <h2 class="fs-4 border-bottom pb-2 mb-3 fw-bold">帳單資訊</h2>
                         <form class="d-grid gap-3 mb-3" action="" method="post" name="form1">
                             <div>
-                                <label for="useraccount" class="text-danger">請輸入會員帳號</label>
-                                <input name="useraccount" type="text" class="form-control form-control" required>
-                                <button id="yes" class="btn btn-mao-primary mt-2" type="submit" name="Submit">確認
+                                <label  for="useraccount" class="text-danger">請輸入會員帳號</label>
+                                <input  name="useraccount" type="text" class="form-control form-control" required>
+                                <button  class="btn btn-mao-primary mt-2"  type="submit" name="Submit">確認
                                 </button>
 
 
@@ -191,7 +192,7 @@ try {
                                 <div>
                                     <?php if (isset($useraccount) && $useraccount === $account): ?>
                                         <label for="account">會員</label>
-                                        <input name="account" type="text" class=" form-control form-control"
+                                        <input id="okaccount" name="account" type="text" class=" form-control form-control"
                                                value="<?= $account ?>" readonly>
                                     <?php endif; ?>
                                 </div>
@@ -240,7 +241,7 @@ try {
                                 </div>
                             </div>
                             <div class=" d-grid">
-                                <button id="sendorder" type="submit" class="btn btn-mao-primary mt-3">下單購買</button>
+                                <button id="sendorder" onClick="return sendCheck()" type="submit" class="btn btn-mao-primary mt-3">下單購買</button>
                             </div>
                         </div>
                     </div>
@@ -257,42 +258,33 @@ try {
 <?php require_once("JS.php"); ?>
 
 <script>
-    //安全檢查刪除購物車
-    let count = '<?=$cartCount?>';//接住php變數
-    if (count == 0) {  //判斷購物車是否為0
-        stop()
-    } else {
-        let cleanAll = document.querySelector("#cleanAll");
+    //let userkeyin='<?//=$useraccount?>//';
+    //let account='<?//=$account?>//';
 
-        function doClean(e) { //執行警示窗
-            if (window.confirm('是否要全部刪除?') == true) {
-                document.location.href = "cartCleanAll.php?url=" + location.href;
-            }
+    let count = <?php echo $cartCount ?>;//接住php變數
+    let cleanAll = document.querySelector("#cleanAll");
+    let sendoder = document.querySelector("#sendorder");
+    let okaccount=document.querySelector("#okaccount");
+
+
+    //刪除購物車確認警示
+    function doClean(){
+        if(count===0 ){
+            alert('購物車沒有商品');
         }
-        cleanAll.addEventListener('click', doClean);
+        else if(confirm('確定要清空購物車嗎?')===true) {
+            document.location.href = "cartCleanAll.php?url=" + location.href;
+        }
+            return false;
+        }
+    //訂單送出時，確認購物車是否有東西
+    function sendCheck() {
+        if (count === 0) {alert('購物車為0，');}
+        if (!okaccount){alert('請確認是否輸入會員帳號');}
     }
 
 
-    //let account='<?//=$account?>//';
 
-    var sendoder = document.querySelector("#sendorder");
-    sendoder.addEventListener('click',()=>{
-        alert("訂單已送出");
-    })
-
-    //
-    //var button = document.querySelector("#yes");
-
-    //
-    //
-    //button.onclick = function () {
-    //    alert("只限會員購買，請註冊會員");
-    //};
-
-    //let button = document.querySelector("#yes");
-    ////let userkeyin='<?////=$useraccount?>////';
-    //let account='<?//=$account?>//';
-    //
 
 </script>
 </body>

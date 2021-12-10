@@ -149,7 +149,7 @@ try {
                 <a class="link-secondary " href="cart-shipping.php" ><img class="CartIcon" src="images/shopping-bag.png"><span><?=$cartCount?></span></a>
             </header>
             <div class="d-flex justify-content-end">
-            <a id="cleanAll" class="btn btn-mao-primary mb-2" >清空購物車</a>
+            <a onClick="return doClean()" class="btn btn-mao-primary mb-2" >清空購物車</a>
             </div>
             <main>
                 <div class="row">
@@ -187,18 +187,16 @@ try {
 <?php require_once("JS.php"); ?>
 
 <script>//安全檢查刪除購物車
-    let count='<?=$cartCount?>';//接住php變數
+    let count=<?=$cartCount?>; //接住php變數
 
-    if(count==0){  //判斷購物車是否為0
-        stop()
-    }else {
-        let cleanAll = document.querySelector("#cleanAll");
-        function doClean(e) { //執行警示窗
-            if (window.confirm('是否要全部刪除?') == true) {
-                document.location.href = "cartCleanAll.php?url=" + location.href;
-            }
-        };
-        cleanAll.addEventListener('click', doClean);
+    function doClean(){
+        if(count === 0 ){
+            alert('購物車沒有商品');
+        }
+        else if(confirm('確定要清空購物車嗎?')===true) {
+            document.location.href = "cartCleanAll.php?url=" + location.href;
+        }
+        return false;
     }
 </script>
 
