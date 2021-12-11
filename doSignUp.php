@@ -30,11 +30,11 @@ if($emailExist>0){
 
 }
 $now=date("Y-m-d H:i:s");
-$sql="INSERT INTO users( account , name , email, mobile , password , valid , created_at)VALUES('$account','$name', '$email','$mobile', '$crPassword','$valid','$now')";
+$sql="INSERT INTO users( account , name , email, mobile , password , valid , created_at)VALUES(?, ?, ?, ?, ?, ?, ?)";
 
 $stmt=$db_host->prepare($sql);
 try{
-    $stmt->execute();
+    $stmt->execute([$account, $name, $email, $mobile, $crPassword, $valid, $now]);
     header("location: sign-in.php");
 }catch(PDOException $e){
     echo $e->getMessage();
