@@ -1,22 +1,27 @@
 <?php
+
 if(isset($_GET["id"])){
     $id=$_GET["id"];
 }else{
     $id=0;
 }
 
-require_once ("db-connect.php");
-
-$sql="SELECT * FROM products WHERE id='$id'";
-$result=$conn->query($sql);
-$productExist=$result->num_rows;
-
-
+require_once ("pdo-connect.php");
 require_once("style.php");
 require_once("main-nav.php");
 
+$sql="SELECT * FROM products WHERE id=?";
+$stmt=$db_host->prepare($sql);
+try{
+    $stmt->execute([$id]);
+    $row=$stmt->fetch();
+    $productExist=$stmt->rowCount();
+}catch (PDOException $e){
+    echo $e->getMessage();
+}
 
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -41,12 +46,11 @@ require_once("main-nav.php");
 
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <?php if($productExist===0): ?>
-                商品不存在
-            <?php else:
-                $row=$result->fetch_assoc();
-                ?>
-
+<!--            --><?php //if($productExist===0): ?>
+<!--                商品不存在-->
+<!--            --><?php //else:
+//                $row=$stmt->fetch(PDO::FETCH_ASSOC);
+//                ?>
                 <form action="product_doUpdate.php" method="post">
                     <input type="hidden" name="id" value="<?=$row["id"]?>">
 
@@ -62,12 +66,14 @@ require_once("main-nav.php");
 
                     <div class="mb-3">
                         <label for="price">價格</label>
-                        <input id="price" type="text" name="price" class="form-control" value="<?=$row["price"]?>">
+                        <input id="price" type="number" name="price" class="form-control" value="<?=$row["price"]?>">
                     </div>
 
+
                     <div class="mb-3">
-                        <label for="description">商品描述</label>
-                        <input id="description" type="text" name="description" class="form-control" value="<?=$row["description"]?>">
+                        <label for="description">描述</label><br>
+                        <textarea style= "width:735px;height:100px;"
+                                  name="description" rows="6" cols="40" required><?=$row["description"]?></textarea>
                     </div>
 
 <!--                    <div class="mb-3">-->
@@ -146,8 +152,8 @@ require_once("main-nav.php");
                     </div>
 
                     <div class="mb-3">
-                        <label for="stock_num">庫存</label>
-                        <input id="stock_num" type="text" name="stock_num" class="form-control" value="<?=$row["stock_num"]?>">
+                        <label for="stock_num">庫存數量</label>
+                        <input id="stock_num" type="number" name="stock_num" class="form-control" value="<?=$row["stock_num"]?>">
                     </div>
 
                     <div class="mb-3">
@@ -157,9 +163,6 @@ require_once("main-nav.php");
 
                     <button class="btn btn-primary" type="submit">送出</button>
                 </form>
-
-
-            <?php endif; ?>
         </div>
     </div>
 </div>

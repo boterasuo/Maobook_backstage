@@ -36,7 +36,7 @@ require_once("main-nav.php");
 
                 <div class="mb-3">
                     <label for="price">價格</label>
-                    <input id="price" type="text" name="price" class="form-control" required >
+                    <input id="price" type="number" name="price" class="form-control" required >
                 </div>
 
                 <div class="mb-3">
@@ -107,7 +107,7 @@ require_once("main-nav.php");
 
                 <div class="mb-3">
                     <label for="stock_num">庫存數量</label>
-                    <input id="stock_num" type="text" name="stock_num" class="form-control" required>
+                    <input id="stock_num" type="number" name="stock_num" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
