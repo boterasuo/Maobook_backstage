@@ -43,7 +43,7 @@
   </head>
   <body class="d-flex justify-content-center align-items-center vh-200">
         <div class="login-panel text-center">
-            <form action="doSignUp.php" method="post"  >
+            <form action="doSignUp.php" method="post" class="needs-validation" novalidate >
 
                 <div class="form-group"></div>
                 <img class="logo" src="images/logo.png" alt="">
@@ -56,7 +56,7 @@
                         <label for="name">姓名</label>
                     </div>
                     <div class="form-floating input mb-2">
-                        <input type="text" class="form-control" id="account" placeholder="account" name="account" required>
+                        <input id="account" type="text" name="account" class="form-control"  placeholder="account" required>
                         <label for="account">帳號</label>
                     </div>
                     <div class="form-floating input mb-2">
@@ -74,8 +74,8 @@
                 </div>
 
                 <div class="form-floating input mb-2">
-                    <input id="irepassword" name="repassword" class="form-control" type="password" placeholder="確認密碼" data-match="#inputPassword" data-error="密碼未吻合！" required="required">
-                    <label for="repassword">確認密碼</label>
+                    <input id="RePassword" name="RePassword" class="form-control" type="password" placeholder="確認密碼" data-match="#inputPassword" data-error="密碼未吻合！" required="required">
+                    <label for="RePassword">確認密碼</label>
                     <div class="help-block with-errors"></div>
                 </div>
                 <div class="mb-3">
@@ -86,7 +86,7 @@
 
                       <button class="btn btn-warning text-white" type="submit">開始書寫 &nbsp; 屬於您和毛孩的爪爪日記</button>
                   </div>
-                  <div class="text-muted">© moebook 2021</div>
+                  <div class="text-muted">© maobook 2021</div>
             </div>
             </form>
         </div>
