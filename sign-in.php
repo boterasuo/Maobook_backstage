@@ -55,10 +55,10 @@
                     <label for="password">Password</label>
                   </div>
                   <div class="d-grid gap-2 mb-5 mt-3">
-                      <button class="btn btn-warning text-white" type="submit">爪爪日記 &nbsp;&nbsp; 歡迎您</button>
-                      <a class="btn btn-outline-warning text-warning" href="create-user.php">還沒有日記本嗎？ &nbsp;&nbsp; 請點我</a>
+                      <button class="btn btn-warning text-white" type="submit" >爪爪日記 &nbsp;&nbsp; 歡迎您</button>
+                      <button class="btn btn-outline-warning text-warning" href="create-user.php">還沒有日記本嗎？ &nbsp;&nbsp; 請點我</button>
                   </div>
-                  <div class="text-muted">© moebook 2021</div>
+                  <div class="text-muted">© maobook 2021</div>
             </div>
             </form>
         </div>
