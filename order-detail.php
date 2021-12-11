@@ -1,77 +1,80 @@
 <?php
-require_once ("pdo-connect.php");
-$id=$_GET["id"]; //order id
-$sqlOrder="SELECT * FROM user_order WHERE id=?";//從訂單抓資料
-$stmtOrder=$db_host->prepare($sqlOrder);
-try{
-    $stmtOrder->execute([$id]);
-    $rowOrder=$stmtOrder->fetch(); //訂單資料
+require_once("pdo-connect.php");
+if (isset($_GET["id"])):
+    $id = $_GET["id"]; //order id
+    $sqlOrder = "SELECT * FROM user_order WHERE id=?";//從訂單抓資料
+    $stmtOrder = $db_host->prepare($sqlOrder);
+    try {
+        $stmtOrder->execute([$id]);
+        $rowOrder = $stmtOrder->fetch(); //訂單資料
 
-}catch(PDOException $e){
-    echo "取得訂單資訊錯誤<br>";
-    echo $e->getMessage();
-}
+    } catch (PDOException $e) {
+        echo "取得訂單資訊錯誤<br>";
+        echo $e->getMessage();
+    }
 // 抓取 users 會員資料表
-$id=$_GET["id"]; //user id
-$sqlUser="SELECT * FROM users WHERE id=?";
-$stmtUser=$db_host->prepare($sqlUser);
-try{
-    $stmtUser->execute([$id]);
-    $rowUser=$stmtUser->fetch();//會員資料
-}catch(PDOException $e){
-    echo $e->getMessage();
-}
+    $id = $_GET["id"]; //user id
+    $sqlUser = "SELECT * FROM users WHERE id=?";
+    $stmtUser = $db_host->prepare($sqlUser);
+    try {
+        $stmtUser->execute([$id]);
+        $rowUser = $stmtUser->fetch();//會員資料
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
 
 //抓取 user_order
-$sqlOrderList="SELECT * FROM user_order WHERE user_id=?";
-$stmtOrderList=$db_host->prepare($sqlOrderList);
-try{
-    $stmtOrderList->execute([$id]);
-    $rowOrderList=$stmtOrderList->fetchAll(PDO::FETCH_ASSOC);
-    $orderCount=$stmtOrderList->rowCount();
-}catch(PDOException $e){
-    echo $e->getMessage();
-}
+    $sqlOrderList = "SELECT * FROM user_order WHERE user_id=?";
+    $stmtOrderList = $db_host->prepare($sqlOrderList);
+    try {
+        $stmtOrderList->execute([$id]);
+        $rowOrderList = $stmtOrderList->fetch(PDO::FETCH_ASSOC);
+        $orderCount = $stmtOrderList->rowCount();
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
 
 //選擇訂單總金額、產品名稱、產品價格、產品圖片從[order-detail]加入到[products]參考ON在order_detail.product_id = products.id
-$sql="SELECT order_detail.amount, products.name, products.price, products.img FROM order_detail 
+    $sql = "SELECT order_detail.amount, products.name, products.price, products.img FROM order_detail 
 JOIN products ON order_detail.product_id = products.id
 WHERE order_detail.order_id = ?";
-$stmt=$db_host->prepare($sql);
-try{
-    $stmt->execute([$id]);
-    $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $db_host->prepare($sql);
+    try {
+        $stmt->execute([$id]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //    $rowOrder=$stmtOrder->fetch();
-}catch(PDOException $e){
-    echo "取得訂單細節錯誤<br>";
-    echo $e->getMessage();
-}
+    } catch (PDOException $e) {
+        echo "取得訂單細節錯誤<br>";
+        echo $e->getMessage();
+    }
 
-//抓status的名稱
-$sql="SELECT order_status.name,order_status.id, user_order.status, user_order.id FROM user_order JOIN order_status ON user_order.status = order_status.id
+//抓status的名稱 [user_order].status -> [order_status].name
+    $sql = "SELECT order_status.name,order_status.id, user_order.status, user_order.id FROM user_order JOIN order_status ON user_order.status = order_status.id
 WHERE user_order.id = ?";
-$stmtOrderStatus=$db_host->prepare($sql);
-try{
-    $stmtOrderStatus->execute([$id]);
-    $statusRow=$stmtOrderStatus->fetch(PDO::FETCH_ASSOC);
+    $stmtOrderStatus = $db_host->prepare($sql);
+    try {
+        $stmtOrderStatus->execute([$id]);
+        $statusRow = $stmtOrderStatus->fetch(PDO::FETCH_ASSOC);
 //    $rowOrder=$stmtOrder->fetch();
-}catch(PDOException $e){
-    echo "取得訂單細節錯誤<br>";
-    echo $e->getMessage();
-}
+    } catch (PDOException $e) {
+        echo "取得訂單細節錯誤<br>";
+        echo $e->getMessage();
+    }
 
-//抓user_id的名稱
-$sql="SELECT  user_order.user_id, user_order.id, users.name FROM user_order JOIN users ON user_order.user_id = users.id
+//抓user_id的名稱[user_order].user_id -> [users].id
+    $sql = "SELECT  user_order.user_id, user_order.id, users.name FROM user_order JOIN users ON user_order.user_id = users.id
 WHERE user_order.id = ?";
-$stmtOrderUser=$db_host->prepare($sql);
-try{
-    $stmtOrderUser->execute([$id]);
-    $orderUserRow=$stmtOrderUser->fetch(PDO::FETCH_ASSOC);
+    $stmtOrderUser = $db_host->prepare($sql);
+    try {
+        $stmtOrderUser->execute([$id]);
+        $orderUserRow = $stmtOrderUser->fetch(PDO::FETCH_ASSOC);
 //    $rowOrder=$stmtOrder->fetch();
-}catch(PDOException $e){
-    echo "取得訂單細節錯誤<br>";
-    echo $e->getMessage();
-}
+    } catch (PDOException $e) {
+        echo "取得訂單細節錯誤<br>";
+        echo $e->getMessage();
+    }
+endif;
+
 
 ?>
 <!DOCTYPE html>
@@ -88,92 +91,305 @@ try{
     <link rel="shortcut icon" type="image/png" href="images/logo-nbg.png"/>
     <link rel="mask-icon" type="image/png" href="images/logo-nbg.png"/>
 
-    <title>訂單編號：<?=$rowUser["id"]?></title>
+    <title>訂單編號：<?= $rowUser["id"] ?></title>
 
     <?php require_once("style.php"); ?>
+    <!-- 此處新增css檔 -->
+    <!--    <link rel="stylesheet" href="css/anun-style.css">-->
+    <!-- Css檔 end   -->
+    <style>
+        #showarea,#showareaCancel{
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.678);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 999999;
+            visibility: hidden;
+        }
 
+
+        #showBox, #showBoxCancel {
+            width: 300px;
+            max-height: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+
+        }
+
+        .text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .closeBtn {
+            width: 60px;
+            height: 30px;
+            font-size: 14pt;
+            /*text-align: center;*/
+            line-height: 30px;
+            transition: .4s;
+
+        }
+
+        /*訂購人資訊 頭像*/
+        .avatar {
+            width: 60px;
+        }
+
+
+    </style>
 </head>
 <body class="sb-nav-fixed">
 <?php require_once("main-nav.php"); ?>
 <!-- 主要內容 -->
 <div id="layoutSidenav_content">
-    <div class="container px-0">
+    <div class="container-fluid px-0">
         <main class="main px-5">
-            <div class="container-fluid px-0">
-                <ol class="breadcrumb mb-2 mt-4">
-                    <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
-                    <li class="breadcrumb-item active"><a href="order-list.php">訂單管理</a></li>
-                    <li class="breadcrumb-item active">訂單管理</li>
-                </ol>
-                <h3 class="mb-4">訂單編號：#<?=$id?></h3>
+            <!--                <div class="container px-0">-->
+            <ol class="breadcrumb mb-2 mt-4">
+                <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
+                <li class="breadcrumb-item"><a href="order-list.php">訂單查詢</a></li>
+                <li class="breadcrumb-item active">訂單管理</li>
+            </ol>
+            <h3 class="h3 mb-4 d-inline-block me-2">訂單編號：#<?= $id ?></h3>
+            <small class="text-muted me-2 d-inline-block" title="訂單成立時間：<?= $rowOrder["order_time"] ?>">
+                <time><?= $rowOrder["order_time"] ?></time>
+            </small>
+            <small class="d-inline-block rounded-pill border border-5 " title="<?= $statusRow["name"] ?>">
+                <status>&nbsp; <?= $statusRow["name"] ?>&nbsp;</status>
+            </small>
 
-            </div>
-<!--            <div class="py-2">-->
-<!--                <a role="button" class="btn btn-primary" href="user-order.php?id=--><?//=$rowOrder["user_id"]?><!--">回訂單列表</a>-->
-<!--            </div>-->
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between"" title="新增訂單">
-                <a ><i class="fas fa-table me-1 end-0"></i>
-                    資料表格</a>
-                <a href="order-edit.php"><i class="fas fa-edit me-1 end-0"></i>
-                    修改訂單&nbsp;&nbsp;</a>
+
+            <!--   row    -->
+            <div class="row ">
+                <!-- 左側col -->
+                <div class="col-8 ">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between"
+                        " title="新增訂單">
+                        <a><i class="fas fa-table me-1 end-0"></i>
+                            訂單明細</a>
+                    </div>
+                    <div class="card-body">
+                        <!--    本頁 內容    -->
+
+                        <table class="table table-bordered table-sm"><!-- id="datatablesSimple" -->
+                            <thead>
+                            <tr>
+                                <th>產品名稱</th>
+                                <th>產品名稱</th>
+                                <th>單價</th>
+                                <th>數量</th>
+                                <th>小計</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $total = 0;
+                            foreach ($rows as $value): ?>
+                                <tr>
+                                    <td><a href="cart-product-detial.php?name=<?= $value["name"] ?>"
+                                           title="<?= $value["name"] ?>"><img
+                                                    src="images/product_images/<?= $value["img"] ?>" alt=""
+                                                    width="100px"></a></td><!-- 商品圖片 -->
+                                    <td><?= $value["name"] ?></td> <!-- 訂購人名稱 -->
+
+                                    <td class="text-end"><?= $value["price"] ?></td>
+                                    <td class="text-end"><?= $value["amount"] ?></td>
+                                    <td class="text-end"><?php
+                                        $subtotal = $value["amount"] * $value["price"];
+                                        echo $subtotal;
+                                        //                            $total=$total+$subtotal;
+                                        $total += $subtotal;
+
+                                        ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td class="text-end h3 bg-mao-primary " colspan="12">總計: <?= $total ?></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
                 </div>
-    <div class="card-body">
-            <!--    本頁 內容    -->
-            <div class="py-2">
-                訂單編號: <?=$id?><br>
-                訂購人: <a href="user-order.php?id=<?=$rowOrder["user_id"]?>" title="查看【<?=$orderUserRow["name"]?>】的所有訂單"><?=$orderUserRow["name"]?></a><br>
-                訂單時間: <?=$rowOrder["order_time"]?><br>
-                狀態: <?=$statusRow["name"]?><br>
             </div>
-            <div>
-                <table  class="table table-bordered table-sm"><!-- id="datatablesSimple" -->
-                    <thead>
-                    <tr>
-                        <th>產品名稱</th>
-                        <th>產品名稱</th>
-                        <th>單價</th>
-                        <th>數量</th>
-                        <th>小計</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    $total=0;
-                    foreach($rows as $value): ?>
-                        <tr>
-                            <td><a href="cart-product-detial.php?name=<?=$value["name"]?>" title="<?=$value["name"]?>"><img src="images/product_images/<?=$value["img"]?>" alt="" width="100px" ></a></td><!-- 商品圖片 -->
-                            <td><?=$value["name"]?></td> <!-- 訂購人名稱 -->
+            <!-- 左側col end -->
 
-                            <td class="text-end"><?=$value["price"]?></td>
-                            <td class="text-end"><?=$value["amount"]?></td>
-                            <td class="text-end"><?php
-                                $subtotal=$value["amount"]*$value["price"];
-                                echo $subtotal;
-                                //                            $total=$total+$subtotal;
-                                $total+=$subtotal;
+            <!-- 右側col -->
+            <div class="col-4 ">
 
-                                ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td class="text-end" colspan="12">總計: <?=$total?></td>
-                    </tr>
-                    </tfoot>
-                </table>
-            </div>
+                <!--  訂單操作   -->
+                <div>
+                    <div class="card">
+                        <div class="card-header"
+                        ">
+                        <a><i class="fas fa-cog me-1 end-0 "></i>
+                            訂單操作</a>
+                    </div>
+                    <div class="card-body d-flex justify-content-evenly ">
+
+                        <?php if ($statusRow["status"] == 5): ?>
+
+                            <div class="d-inline-block text-center">
+                                <a href="order-edit.php?id=<?= $id ?>" title="修改訂單">
+                                    <i class="fas fa-edit me-1 end-0"></i><br>修改訂單&nbsp;&nbsp;</a>
+                            </div>
+
+<!--                            <div class="d-inline-block text-center">-->
+<!--                                <a href="order-doDelete.php?id=--><?// //= $statusRow["id"] ?><!--"-->
+<!--                                   onClick="return checkDelete()" title="刪除該筆資料">-->
+<!--                                    <i class="fas fa-trash me-1 end-0"></i><br>刪除訂單&nbsp;&nbsp;</a>-->
+<!--                            </div>-->
+
+                            <div id="showBtn" class="d-inline-block text-center pointer">
+                                <a href="#" title="刪除訂單">
+                                    <i class="fas fa-heart-broken me-1 end-0"></i><br>刪除訂單&nbsp;&nbsp;</a>
+                            </div>
+                        <?php elseif ($statusRow["status"] != 5 && $statusRow["status"] != 0): ?>
+                            <div class="d-inline-block text-center">
+                                <a href="order-edit.php?id=<?= $id ?>" title="修改訂單">
+                                    <i class="fas fa-edit me-1 end-0"></i><br>修改訂單&nbsp;&nbsp;</a>
+                            </div>
+                            <!--                            <div class="d-inline-block text-center">-->
+                            <!--                                <a href="order-doCancel.php?id=--><? //= $statusRow["id"] ?><!--"  title="取消訂單">-->
+                            <!--                                    <i class="fas fa-heart-broken me-1 end-0"></i><br>取消訂單&nbsp;&nbsp;</a>-->
+                            <!--                            </div>-->
+                            <div id="showBtn" class="d-inline-block text-center pointer">
+                                <a href="#" title="取消訂單">
+                                    <i class="fas fa-heart-broken me-1 end-0"></i><br>取消訂單&nbsp;&nbsp;</a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <!--  訂單操作  end  -->
+                <br>
+                <!--  客戶資訊   -->
+                <div>
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <a><i class="fas fa-user-tag me-1 end-0"></i>客戶資訊</a>
+                            <a href="order-doUpdate.php">
+                                <i class="fas fa-external-link-alt me-1 end-0 text-muted" title="查看會員資料"></i>
+                            </a>
+                        </div>
+                        <div class="card-body ">
+                            <!--頭貼-->
+                            <img class="avatar rounded-circle float-start me-2" src="<?= $rowUser["image"] ?>" alt="">
+                            訂購人: <a href="user.php?id=<?= $rowOrder["user_id"] ?>"
+                                    title="查看【<?= $orderUserRow["name"] ?>】的會員資料"><?= $orderUserRow["name"] ?></a>
+                            <p><?php if($rowUser != NULL):?>
+                                <?= $rowUser["mailing_email"] ?><?php else:{ } endif;?></p>
+
+                            <br>
+
+                        </div>
+                    </div>
+                    <!--  客戶資訊  end  -->
+                    <br>
+                    <!--  宅配地址   -->
+                    <div>
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <a><i class="fas fa-truck me-1 end-0"></i>宅配資訊</a>
+                                <a href="user-edit.php?id=<?= $id ?>">
+                                    <i class="fas fa-edit me-1 end-0 text-muted"></i>
+                                </a>
+                            </div>
+                            <div class="card-body ">
+                                <p>
+                                    <?php if($rowUser != NULL):?>
+                                    收件人:　<?= $rowUser["mailing_name"] ?><br>
+                                    地址：　<?= $rowUser["mailing_address"] ?><br>
+                                    手機：　<?= $rowUser["mailing_phone"] ?><br>
+                                    信箱：　<?= $rowUser["mailing_email"] ?></p>
+                                <?php else:{ echo "未登錄資訊";} endif;?>
+                            </div>
+                        </div>
+                        <!--  宅配地址  end  -->
+
+                        <!-- 右側col end -->
+                        <!--   本頁內容 end  -->
+                    </div>
+                </div>
+                <?php if($statusRow["status"] ==5):?>
+                <!--刪除訂單-->
+                <div id="showarea">
+                    <div id="showBox">
+                        <div class="text"> <strong>警告：確認刪除訂單? 刪除後的資料將無法進行恢復。</strong></div>
+                        <div>
+                            <a href="order-doDelete.php?id=<?= $statusRow["id"] ?>"
+                               class=" btn btn-danger d-inline-flex">確定</a>
+                            <a id="closeBtn" onclick="openWindow()" class="btn btn-secondary d-inline-flex">取消</a>
+                        </div>
+                    </div>
+                </div>
+                <!--刪除訂單 end-->
+
+                <?php elseif ($statusRow["status"] != 5 && $statusRow["status"] != 0): ?>
+                <!--取消訂單-->
+                <div id="showarea">
+                    <div id="showBox">
+                        <div class="text">確認取消該筆訂單?</div>
+                        <div>
+                            <a href="order-doCancel.php?id=<?= $statusRow["id"] ?>"
+                               class=" btn btn-danger d-inline-flex" title="取消訂單">確定</a>
+                            <a id="closeBtn" onclick="openWindow()" class="btn btn-secondary d-inline-flex "
+                               title="前往會員管理中心~">取消</a>
+                        </div>
+                    </div>
+                </div>
+                <!--取消訂單 end-->
+    <?php endif; ?>
+        </main><!-- 主要內容end -->
+        <!--    --><?php //require_once("footer.php"); ?>
     </div>
-    </div>
-    </div>
-    <!--   本頁內容 end  -->
+    <?php require_once("JS.php"); ?>
+
+    <script>
+        function openWindow() {
+            window.open("http://localhost/pj_maobook/user-list.php", "_self");
+        }
+
+        // function checkDelete() {
+        //     if (!confirm('確認刪除該筆訂單嗎 ? 已刪除內容資料庫將無法保存')) {
+        //         return false;
+        //     }
+        // }
+
+        function checkCancel() {
+            if (!confirm('確認取消該筆訂單嗎 ?')) {
+                return false;
+            }
+        }
+
+        let showbtn = document.querySelector("#showBtn");
+        let closebtn = document.querySelector("#closeBtn");
+        var Box = document.querySelector('#showarea');
+        showbtn.onclick = function () {
+            Box.style.visibility = "visible";
+        }
+        closebtn.onclick = function () {
+            Box.style.visibility = "hidden";
+        }
 
 
-    </main><!-- 主要內容end -->
-    <!--    --><?php //require_once("footer.php"); ?>
-</div>
-<?php require_once("JS.php"); ?>
+
+    </script>
+
 
 </body>
 </html>
