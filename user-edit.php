@@ -10,6 +10,9 @@ try{
     echo $e->getMessage();
 }
 
+session_start();
+$_SESSION["user-original-psw"]=$rowUser["password"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,6 +76,14 @@ try{
                                 <div id="passwordErr" class="passwordErr">  </div>
                             </div>
                         </div>
+                    <div class="form-group row mb-1">
+                        <label for="repassword" class="col-3 col-form-label">確認密碼</label>
+                        <div class="col-9">
+                            <input id="repassword" name="repassword" type="password" class="form-control"
+                                   value="<?=$rowUser["password"]?>">
+                            <div id="repasswordErr" class="passwordErr">  </div>
+                        </div>
+                    </div>
                         <div class="form-group row mb-1">
                             <label for="name" class="col-3 col-form-label">奴才姓名</label>
                             <div class="col-9">
@@ -216,6 +227,8 @@ try{
     let form=document.querySelector("#form"),
         password=document.querySelector("#password"),
         passwordErr=document.querySelector("#passwordErr"),
+        repassword=document.querySelector("#repassword"),
+        repasswordErr=document.querySelector("#repasswordErr"),
         name=document.querySelector("#name"),
         nameErr=document.querySelector("#nameErr"),
         mobile=document.querySelector("#mobile"),
@@ -230,14 +243,21 @@ try{
 
         submitBtn.addEventListener("click", function(e){
             e.preventDefault();
-            passwordErr.innerText=nameErr.innerText=mobileErr.innerText=zipErr.innerText="";
-            password.style.border=name.style.border=mobile.style.border=zip.style.border="";
+            passwordErr.innerText=repasswordErr.innerText=nameErr.innerText=mobileErr.innerText=zipErr.innerText="";
+            password.style.border=repassword.style.border=name.style.border=mobile.style.border=zip.style.border="";
             if (password.value === ""){
                 passwordErr.innerText="密碼不能留空!"
                 password.style.border="1px solid red";
             } else if (!regPassword.test(password.value)){
                 passwordErr.innerText="密碼請至少包含一個以上的數字和大寫字母!"
                 password.style.border="1px solid red";
+            }
+            if (repassword.value === ""){
+                repasswordErr.innerText="密碼不能留空!"
+                repassword.style.border="1px solid red";
+            } else if (password.value !== repassword.value){
+                repasswordErr.innerText="密碼不一致!"
+                repassword.style.border="1px solid red";
             }
             if (name.value === ""){
                 nameErr.innerText="姓名不能留空!"
@@ -254,7 +274,7 @@ try{
                 zipErr.innerText = "郵遞區號應為3碼或5碼";
                 zip.style.border="1px solid red";
             }
-            if (passwordErr.innerText==="" && nameErr.innerText==="" && mobileErr.innerText==="" && zipErr.innerText===""){
+            if (passwordErr.innerText==="" && repasswordErr.innerText==="" && nameErr.innerText==="" && mobileErr.innerText==="" && zipErr.innerText===""){
                 form.submit();
             }
         })
