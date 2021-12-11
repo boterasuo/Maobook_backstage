@@ -1,35 +1,45 @@
 <?php
 
-require_once ("db-connect.php");
+require_once ("pdo-connect.php");
 require_once("style.php");
 require_once("main-nav.php");
 
 
-$sqlBrand_Category="SELECT * FROM brand_category";
-$resultBrand_Category=$conn->query($sqlBrand_Category);
+$sql_Brand="SELECT * FROM brand_category";
+$stmt_Brand=$db_host->prepare($sql_Brand);
+$stmt_Brand->execute();
 $Brand_categoryArr=[];
-while($row=$resultBrand_Category->fetch_assoc()){
-    $Brand_categoryArr[$row["id"]]=$row["name"];
+while ($row_Brand=$stmt_Brand->fetch()){
+    $Brand_categoryArr[$row_Brand["id"]]=$row_Brand["name"];
 }
 
-$sqlProduct_Category="SELECT * FROM product_category";
-$resultProduct_Category=$conn->query($sqlProduct_Category);
+$sql_Product="SELECT * FROM product_category";
+$stmt_Product=$db_host->prepare($sql_Product);
+$stmt_Product->execute();
 $Product_categoryArr=[];
-while($row=$resultProduct_Category->fetch_assoc()){
-    $Product_categoryArr[$row["id"]]=$row["name"];
+while ($row_Product=$stmt_Product->fetch()){
+    $Product_categoryArr[$row_Product["id"]]=$row_Product["name"];
 }
 
-$sqlPet_Category="SELECT * FROM pet_category";
-$resultPet_Category=$conn->query($sqlPet_Category);
+$sql_Pet="SELECT * FROM pet_category";
+$stmt_Pet=$db_host->prepare($sql_Pet);
+$stmt_Pet->execute();
 $Pet_categoryArr=[];
-while($row=$resultPet_Category->fetch_assoc()){
-    $Pet_categoryArr[$row["id"]]=$row["name"];
+while ($row_Pet=$stmt_Pet->fetch()){
+    $Pet_categoryArr[$row_Pet["id"]]=$row_Pet["name"];
+}
+
+$sql= "SELECT * From products WHERE valid=1";
+$stmt=$db_host->prepare($sql);
+try{
+$stmt->execute();
+$result=$stmt->fetch(PDO::FETCH_ASSOC);
+$productCount=$stmt->rowCount();
+}catch (PDOException $e){
+    echo $e->getMessage();
 }
 
 
-$sql_query="SELECT * From products WHERE valid=1";
-$result=$conn->query($sql_query);
-$totalProductCount=$result->num_rows;
 ?>
 
 <!doctype html>
@@ -52,7 +62,7 @@ $totalProductCount=$result->num_rows;
 <div class="container">
     <div class="row align-items-center">
     <h1 class="text-center">商品資料管理</h1>
-    <p class="text-center">目前共<?php echo $totalProductCount;?>筆資料　<a class="btn btn-primary" role="button" href="product_add.php">新增商品資料</a></p>
+    <p class="text-center">目前共<?php echo $productCount;?>筆資料　<a class="btn btn-primary" role="button" href="product_add.php">新增商品資料</a></p>
     </div>
 
     <table class="table table-bordered table-sm">
@@ -76,7 +86,7 @@ $totalProductCount=$result->num_rows;
         <tbody>
 
         <?php
-        while($row_result=$result->fetch_assoc()){
+        while($row_result=$stmt->fetch(PDO::FETCH_ASSOC)){
 
             echo "<tr>";
             echo "<td>".$row_result["id"]."</td>";
@@ -89,10 +99,11 @@ $totalProductCount=$result->num_rows;
             echo "<td>".$Product_categoryArr[$row_result["product_category"]]."</td>";
             echo "<td>".$Pet_categoryArr[$row_result["pet_category"]]."</td>";
 
+
             echo "<td>".$row_result["stock_num"]."</td>";
 //            echo "<td>".$row_result["img"]."</td>";
 
-            echo $row_result["img"]==''?'<td>商品圖片</td>':'<td><img src="./product_images/'.$row_result["img"].'" class="img-responsive" width="250px" height="250px"></td>';
+            echo $row_result["img"]==''?'<td>商品圖片</td>':'<td><img src="./images/product_images/'.$row_result["img"].'" class="img-responsive" width="250px" height="250px"></td>';
 
             echo "<td>".$row_result["created_at"]."</td>";
 
