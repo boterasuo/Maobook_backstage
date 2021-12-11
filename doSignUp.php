@@ -17,9 +17,10 @@ if($password!==$RePassword){
 }
 $crPassword=md5($password);
 //echo "$crPassword<br>";
-$sqlCheck="SELECT * FROM users WHERE account='$account'";
-$checkResult=$conn->query($sqlCheck);
-$emailExist=$checkResult->num_rows;
+$sqlCheck="SELECT * FROM users WHERE account=? ";
+$stmtCheck=$db_host->prepare($sqlCheck);
+$stmtCheck->execute([$account]);
+$emailExist=$stmtCheck->rowCount();
 //echo $userExist;
 if($emailExist>0){
 
@@ -29,18 +30,14 @@ if($emailExist>0){
 
 }
 $now=date("Y-m-d H:i:s");
-$sql="INSERT INTO users( account , name , email, mobile , password , valid , created_at)VALUES('$account','$name', '$email','$mobile', '$password','$valid','$now')";
+$sql="INSERT INTO users( account , name , email, mobile , password , valid , created_at)VALUES('$account','$name', '$email','$mobile', '$crPassword','$valid','$now')";
 
-
-if ($conn->query($sql) === TRUE) {
-    echo '<div class="alert alert-warning" role="alert">
-        註冊成功！期待與您一起書寫毛毛日記！</div>';
-    $id=$conn->insert_id;
+$stmt=$db_host->prepare($sql);
+try{
+    $stmt->execute();
     header("location: sign-in.php");
-
-
-} else {
-    echo "新增資料錯誤: " . $conn->error;
+}catch(PDOException $e){
+    echo $e->getMessage();
 }
 
 ?>

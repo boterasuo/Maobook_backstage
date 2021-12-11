@@ -19,7 +19,7 @@ $stmt=$db_host->prepare($sql);
 try{
     $stmt->execute([$email, $password]);
     $userExist=$stmt->rowCount();
-//    echo $userExist;
+    echo $userExist;
     if($userExist>0){
         $row=$stmt->fetch();
         $user=[
