@@ -147,7 +147,7 @@ for ($i=0; $i<count($rows); $i++){
                                             <a class="btn btn-mao-primary " href="user.php?id=<?=$user["id"]?>"
                                                title="檢視此會員資料">
                                                 <i class="fas fa-user"></i></a>
-                                            <a class="btn btn-mao-primary" href="user.php?id=<?= $user["id"] ?>"
+                                            <a class="btn btn-mao-primary" href="user-edit.php?id=<?= $user["id"] ?>"
                                             title="編輯此會員資料">
                                                 <i class="fas fa-edit"></i></a>
                                             <a class="btn btn-mao-primary " href="user-order.php?id=<?=$user["id"]?>"
