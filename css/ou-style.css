@@ -27,11 +27,25 @@
     overflow: hidden;
     box-shadow: 10px 10px 10px #ccc;
 }
+/*寵物資料頁面*/
 .main-pet{
     width: 200px;
 }
 .main-user, .sub-pet{
     width: 100px;
+}
+.pet-info-userIcon, .pet-info-petIcon{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: var(--mao-cat-oranger);
+    color: var(--mao-dog-brown);
+    border-radius: 50%;
+    position: absolute;
+    top: -8px;
+    right: 0;
+    z-index: 2;
 }
 /*使用者資料頁面*/
 .add-tag{
