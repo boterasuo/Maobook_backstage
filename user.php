@@ -68,6 +68,10 @@ $petTotalCount=$stmtTotalPet->rowCount();
                     <table class="table table-bordered table-sm user-table">
                         <tr>
                             <th>奴才帳號</th>
+                            <td><?=$rowUser["account"]?></td>
+                        </tr>
+                        <tr>
+                            <th>奴才email</th>
                             <td><?=$rowUser["email"]?></td>
                         </tr>
                         <tr>

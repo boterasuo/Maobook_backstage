@@ -142,7 +142,7 @@ try{
                                 ?>
                                 <tr>
                                     <td><?= $user["id"] ?></td>
-                                    <td><?= $user["email"] ?></td>
+                                    <td><?= $user["account"] ?></td>
                                     <td><?= $user["name"] ?></td>
                                     <td><?= $user["created_at"] ?></td>
                                     <td>
