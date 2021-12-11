@@ -101,6 +101,9 @@ try {
     <title>訂單查詢</title>
 
     <?php require_once("style.php"); ?>
+    <!-- 此處新增css檔 -->
+    <link rel="stylesheet" href="css/anun-style.css">
+    <!-- Css檔 end   -->
 
 </head>
 <body class="sb-nav-fixed">
@@ -118,70 +121,47 @@ try {
             </div>
 
             <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between"" title="新增訂單">
-                    <a ><i class="fas fa-table me-1 end-0"></i>
-                        資料表格</a>
+                <div class="card-header d-flex justify-content-between" title="新增訂單">
+                    <a><i class="fas fa-table me-1 end-0"></i>
+                        訂單列表</a>
                     <a href="order-add.php"><i class="fas fa-plus me-1 end-0"></i>
                         新增訂單&nbsp;&nbsp;</a>
                 </div>
                 <div class="card-body">
                     <div class="py-2 d-flex justify-content-between">
-                        <!--        <div>-->
-                        <!--            共 --><? //=$orderCount?><!-- 筆-->
-                        <!--        </div>-->
-                        <form action="user-order.php" method="get">
-                            <div class="d-flex align-items-center">
-                                <!--                時間範圍-->
-                                <!--                <input type="date" class="form-control me-2" name="start"-->
-                                <!--                       value="-->
-                                <?php //if(isset($start))echo $start; ?><!--">-->
-                                <!--                <div class="me-2">~</div>-->
-                                <!--                <input type="date" class="form-control me-2" name="end"-->
-                                <!--                       value="--><?php //if(isset($end))echo $end; ?><!--">-->
-                                <!--                時間範圍end-->
-                                <!--                篩選-->
-                                <!--                <button type="submit" class="btn btn-primary text-nowrap">篩選</button>-->
-                                <!--                篩選end-->
 
-                            </div>
-                        </form>
                     </div>
                     <table id="datatablesSimple" class="table table-bordered table-sm">
                         <thead>
                         <tr>
-                            <th>編號</th>
-                            <th>訂購時間</th>
-                            <th>訂購人</th>
-                            <th>狀態</th>
-                            <th>交易金額</th>
-                            <th>操作</th>
+                            <th width="10%">訂單編號</th>
+                            <th width="30%">訂購時間</th>
+                            <th width="20%">訂購人</th>
+                            <th width="20%">訂單狀態</th>
+                            <th width="20%">訂單操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php if ($orderCount > 0):
                             foreach ($rowOrderLists as $value):
+                                $value["id"] = sprintf("%02d", $value["id"]);
                                 ?>
                                 <tr>
-                                    <td><a href="order-detail.php?id=<?= $value["id"] ?>"
-                                           title="訂單編號: <?= $value["id"] ?>"><b># <?= $value["id"] ?></b></a>
+                                    <td>
+                                        <a href='order-detail.php?id=<?= $value["id"] ?>' title='訂單編號: <?= $value["id"] ?>'><b>#<?= $value["id"] ?></b></a>
                                     </td>
                                     <td><?= $value["order_time"] ?></td>
-                                    <td title="查看會員: <?= $orderName[$value["user_id"]] ?>(ID:<?= $value["user_id"] ?>)的所有訂單">
-                                        <a href="user-order.php?id=<?= $value["user_id"] ?>">@ <?= $orderName[$value["user_id"]] ?></a>
+                                    <td title='查看<?= $orderName[$value["user_id"]] ?>(ID:<?= $value["user_id"] ?>)的所有訂單'>
+                                        <a href="user-order.php?id=<?= $value["user_id"] ?>">@<?= $orderName[$value["user_id"]] ?></a>
                                     </td>
-                                    <!--                                    rowOrderLists-->
-                                    <td title="狀態代碼:  <?= $value["status"] ?> "><?= $statusTypes[$value["status"]] ?></td>
-                                    <td>$$</td>
+                                    <td title='訂單狀態:  <?= $value["status"] ?> '>
+                                        <a class=""><?= $statusTypes[$value["status"]] ?></a>
+                                    </td>
                                     <td>
-                                        <a class="btn btn-mao-primary" href="user.php?id=<?=$user["id"]?>"
-                                           title="檢視訂單明細">
-                                            <i class="fas fa-info-circle" ></i></a>
-                                        <a class="btn btn-mao-primary" href="user-edit.php?id=<?= $user["id"] ?>"
-                                           title="編輯該筆訂單">
+                                        <a class="btn btn-mao-primary" href='order-detail.php?id=<?= $value["id"] ?>' title="檢視訂單明細">
+                                            <i class="fas fa-info-circle"></i></a>
+                                        <a class="btn btn-mao-primary" href='order-edit.php?id=<?= $value["id"] ?>' title="編輯該筆訂單">
                                             <i class="fas fa-edit"></i></a>
-                                        <a class="btn btn-mao-primary" href="user-edit.php?id=<?= $user["id"] ?>"
-                                           title="刪除該筆資料">
-                                            <i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                             <?php
@@ -201,6 +181,5 @@ try {
     <?php require_once("JS.php") ?>
 </div>
 </div>
-
 </body>
 </html>
