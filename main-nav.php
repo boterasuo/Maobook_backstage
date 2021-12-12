@@ -119,24 +119,7 @@
                         毛孩管理
                     </a>
                     <!--  頁面鏈結 毛孩管理 end -->
-                    <!--  第一層下拉式選單 會員購買紀錄  -->
-                    <a class="nav-link collapsed" href="#" target="_blank" data-bs-toggle="collapse"
-                       data-bs-target="#Tab4"
-                       aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-shopping-bag"></i></div>
-                        會員購買紀錄
-                        <!--  arrow 箭頭  -->
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <!--  第二層下拉式選單 01-2  -->
-                    <div class="collapse" id="Tab4" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="order-analysis.php" title="order-analysis.php">會員消費分析</a>
-                            <a class="nav-link" href="user-order.php" title="user-order.php">會員個人消費紀錄</a>
-                        </nav>
-                    </div>
-                    <!--  第一層下拉式選單 會員購買紀錄 end  -->
+
                     <!--  第一層下拉式選單 毛孩管理  -->
                     <a class="nav-link" href="user-social-log.php" title="user-social-log.php">
                         <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
