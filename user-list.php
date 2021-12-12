@@ -1,6 +1,6 @@
 <?php
 require_once("pdo-connect.php");
-$sql = "SELECT id, account, name, created_at FROM users WHERE valid!=9";
+$sql = "SELECT id, account, name, created_at, valid FROM users WHERE valid!=9";
 $stmt=$db_host->prepare($sql);
 try{
     $stmt->execute();
@@ -54,10 +54,13 @@ for ($i=0; $i<count($rows); $i++){
             width: 7%;
         }
         #th-account{
-            width: 17%;
+            width: 15%;
         }
         #th-created-at{
-            width: 22%;
+            width: 20%;
+        }
+        #th-valid{
+            width: 8%;
         }
         #th-dog-count, #th-cat-count{
             width: 10%;
@@ -99,6 +102,7 @@ for ($i=0; $i<count($rows); $i++){
                                 <th id="th-account">帳號</th>
                                 <th>名稱</th>
                                 <th id="th-created-at">建立時間</th>
+                                <th id="th-valid">狀態</th>
                                 <th id="th-dog-count">狗狗數</th>
                                 <th id="th-cat-count">貓貓數</th>
                                 <th>其他操作</th>
@@ -111,6 +115,7 @@ for ($i=0; $i<count($rows); $i++){
                                 <th>帳號</th>
                                 <th>名稱</th>
                                 <th>建立時間</th>
+                                <th>狀態</th>
                                 <th>狗狗數</th>
                                 <th>貓貓數</th>
                                 <th>其他操作</th>
@@ -125,6 +130,13 @@ for ($i=0; $i<count($rows); $i++){
                                         <td><?= $user["account"] ?></td>
                                         <td><?= $user["name"] ?></td>
                                         <td><?= $user["created_at"] ?></td>
+                                        <td>
+                                            <?php if($user["valid"]==1): ?>
+                                            一般
+                                            <?php else: ?>
+                                            封鎖中
+                                            <?php endif; ?>
+                                        </td>
                                         <td>
                                             <?php if(isset($user["dogs"])): ?>
                                                 <img class="pet-icon me-1" src="images/dog.png" alt="">
