@@ -9,7 +9,18 @@ if(isset($_GET["petToday"])) {
     $sqlPets = "SELECT * FROM pets WHERE valid!=9 AND DATE(created_at)=? ";
     $stmtPets = $db_host->prepare($sqlPets);
     $stmtPets->execute([$petToday]);
-}else{
+}else if(isset($_GET["dogTotal"])){
+    $cate_dog = $_GET["dogTotal"];
+    $sqlPets = "SELECT * FROM pets WHERE valid!=9 AND category=? ";
+    $stmtPets = $db_host->prepare($sqlPets);
+    $stmtPets->execute([$cate_dog]);
+}else if (isset($_GET["catTotal"])){
+    $cate_cat = $_GET["catTotal"];
+    $sqlPets = "SELECT * FROM pets WHERE valid!=9 AND category=? ";
+    $stmtPets = $db_host->prepare($sqlPets);
+    $stmtPets->execute([$cate_cat]);
+}
+else{
     $sqlPets="SELECT * FROM pets WHERE valid!=9";
     $stmtPets=$db_host->prepare($sqlPets);
     $stmtPets->execute();
@@ -35,7 +46,12 @@ $stmtPetCount->execute([$now]);
 $petCount = $stmtPetCount->fetch(PDO::FETCH_ASSOC);
 //var_dump($petCount);
 
-
+$sqlTotalPet="SELECT *, COUNT(id) AS pet_total_count FROM pets WHERE valid!=9 GROUP BY category";
+$stmtTotalPet=$db_host->prepare($sqlTotalPet);
+$stmtTotalPet->execute();
+$rowTotalPet=$stmtTotalPet->fetchAll(PDO::FETCH_ASSOC);
+$totalPet=array_column($rowTotalPet, "pet_total_count", "category");
+//var_dump($totalPet);
 
 
 ?>
@@ -56,9 +72,16 @@ $petCount = $stmtPetCount->fetch(PDO::FETCH_ASSOC);
     <title>毛孩管理</title>
 
     <?php require_once("style.php"); ?>
+    <link rel="stylesheet" href="css/ou-style.css?time=<?=time()?>">
     <style>
         .pet-count-card div{
             width: 68px;
+        }
+        .dog-count-card{
+            background: var(--mao-dog-brown);
+        }
+        .cat-count-card{
+            background: var(--mao-cat-oranger);
         }
     </style>
 
@@ -68,7 +91,7 @@ $petCount = $stmtPetCount->fetch(PDO::FETCH_ASSOC);
 <!-- 主要內容 -->
 <div id="layoutSidenav_content">
     <div class="container px-0">
-        <main class="main px-5">
+        <div class="main px-5">
             <div class="container-fluid px-4">
                 <h1 class="mt-4">毛孩管理</h1>
                 <ol class="breadcrumb mb-4">
@@ -78,7 +101,7 @@ $petCount = $stmtPetCount->fetch(PDO::FETCH_ASSOC);
 
             <!-- 副標題 end -->
                 <div class="row">
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-4 col-md-4">
                         <div class="card bg-primary text-white mb-4">
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <div class="pet-count-card">
@@ -94,29 +117,40 @@ $petCount = $stmtPetCount->fetch(PDO::FETCH_ASSOC);
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Warning Card</div>
+                    <div class="col-xl-4 col-md-4">
+                        <div class="dog-count-card card text-white mb-4">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div class="pet-count-card">
+                                    <div>目前所有狗狗數<i class="fas fa-dog"></i></div>
+                                </div>
+                                <?php $dogShare=round($totalPet["dog"]*100/
+                                    ($totalPet["dog"]+$totalPet["cat"]), 0) ?>
+                                <div class="px-2 fs-3"><?=$totalPet["dog"]?> <span class="fs-6">個 / </span>
+                                    <?=$dogShare?><span class="fs-6"> %</span>
+                                </div>
+                            </div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
+                                <a class="small text-white stretched-link"
+                                   href="pets-list.php?dogTotal=dog">View Details</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Success Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    <div class="col-xl-4 col-md-4">
+                        <div class="cat-count-card card text-white mb-4">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div class="pet-count-card">
+                                    <div>目前所有貓貓數<i class="fas fa-cat"></i></div>
+                                </div>
+                                <?php $catShare=round($totalPet["cat"]*100/
+                                    ($totalPet["dog"]+$totalPet["cat"]), 0) ?>
+                                <div class="px-2 fs-3"><?=$totalPet["cat"]?> <span class="fs-6">個 / </span>
+                                    <?=$catShare?><span class="fs-6"> %</span>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Danger Card</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
+                                <a class="small text-white stretched-link"
+                                   href="pets-list.php?catTotal=cat">View Details</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
@@ -187,8 +221,12 @@ $petCount = $stmtPetCount->fetch(PDO::FETCH_ASSOC);
                             </tr>
                         <?php endif; ?>
                         </tbody>
-
                     </table>
+                    <?php if(isset($petToday) || isset($cate_dog) || isset($cate_cat)): ?>
+                    <div class="text-center">
+                        <a class="btn btn-mao-primary btn-sm" href="pets-list.php">回所有毛孩列表</a>
+                    </div>
+                    <?php endif; ?>
                 </div><!-- 表格區塊 end-->
             </div>
 
