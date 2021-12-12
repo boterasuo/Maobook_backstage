@@ -1,5 +1,5 @@
-
 <?php
+
 if(isset($_GET["id"])){
     $id=$_GET["id"];
 }else{
@@ -10,6 +10,8 @@ $sql="SELECT * FROM social_forum WHERE id='$id' AND valid=1";
 $result=$conn->query($sql);
 $userExist=$result->num_rows;
 
+require_once("style.php");
+require_once("main-nav.php");
 
 ?>
 
@@ -46,23 +48,22 @@ $userExist=$result->num_rows;
                     <input type="hidden" name="id" value="<?=$row["id"]?>">
 
                     <div class="mb-3">
-                        <label for="article_title">標題</label>
-                        <input id="article_title" type="text" name="article_title" class="form-control" value="<?=$row["article_title"]?>">
+                        <label for="title">標題</label>
+                        <input id="title" type="text" name="title" class="form-control" value="<?=$row["title"]?>">
                     </div>
 
                     <div class="mb-3">
-                        <label for="article_content">內文</label>
-                        <textarea id="article_content" type="text" name="article_content" class="form-control"  rows="6"><?=$row["article_content"]?></textarea>
+                        <label for="content">內文</label>
+                        <textarea id="content" type="text" name="content" class="form-control"  rows="6"><?=$row["content"]?></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="article_cate">類別</label>
-<!--                        <input id="article_cate" type="text" name="article_cate" class="form-control" value="--><?//=$row["article_cate"]?><!--">-->
-                        <select class="form-select" aria-label="Default select example"  name="article_cate" id="article_cate" required>
-                            <option value="飲食保健" <?php if($row["article_cate"] == '飲食保健') echo"selected"; ?>>飲食保健</option>
-                            <option value="醫療症狀" <?php if($row["article_cate"] == '醫療症狀') echo"selected"; ?>>醫療症狀</option>
-                            <option value="生活分享" <?php if($row["article_cate"] == '生活分享') echo"selected"; ?>>生活分享</option>
-                            <option value="其他" <?php if($row["article_cate"] == '其他') echo"selected"; ?>>其他</option>
+                        <label for="category">類別</label>
+                        <select class="form-select" aria-label="Default select example"  name="category" id="article_cate" required>
+                            <option value="1" <?php if($row["category"] == '飲食保健') echo"selected"; ?>>飲食保健</option>
+                            <option value="2" <?php if($row["category"] == '醫療症狀') echo"selected"; ?>>醫療症狀</option>
+                            <option value="3" <?php if($row["category"] == '生活分享') echo"selected"; ?>>生活分享</option>
+                            <option value="4" <?php if($row["category"] == '其他') echo"selected"; ?>>其他</option>
                         </select>
                     </div>
 
