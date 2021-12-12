@@ -56,6 +56,7 @@
     background: var(--mao-cat-oranger);
     color: #fff;
 }
+
 /*使用者資料編輯頁面*/
 .passwordErr, .nameErr, .mobileErr, .zipErr{
     color: red;
