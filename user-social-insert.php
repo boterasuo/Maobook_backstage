@@ -1,4 +1,3 @@
-
 <?php
 if(isset($_GET["id"])){
     $id=$_GET["id"];
@@ -10,7 +9,8 @@ $sql="SELECT * FROM social_forum ";
 $result=$conn->query($sql);
 $userExist=$result->num_rows;
 
-
+require_once("style.php");
+require_once("main-nav.php");
 ?>
 
 <!doctype html>
@@ -46,18 +46,18 @@ $userExist=$result->num_rows;
                     <input type="hidden" name="id" value="<?=$row["id"]?>">
 
                     <div class="mb-3">
-                        <label for="article_title">標題</label>
-                        <input id="article_title" type="text" name="article_title" class="form-control">
+                        <label for="title">標題</label>
+                        <input id="title" type="text" name="title" class="form-control">
                     </div>
 
                     <div class="mb-3">
-                        <label for="article_content">內文</label>
-                        <textarea id="article_content" type="text" name="article_content" class="form-control"  rows="6"></textarea>
+                        <label for="content">內文</label>
+                        <textarea id="content" type="text" name="content" class="form-control"  rows="6"></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="article_cate">類別</label>
-                        <select class="form-select" aria-label="Default select example" name="article_cate" id="article_cate" required>
+                        <label for="category">類別</label>
+                        <select class="form-select" aria-label="Default select example" name="category" id="article_cate" required>
                             <option selected>請選擇文章類別</option>
                             <option value="1" >飲食保健</option>
                             <option value="2" >醫療症狀</option>
@@ -68,10 +68,10 @@ $userExist=$result->num_rows;
 
 
                 <!--------------- 新增文章圖片 ----------------->
-                    <div class="mb-3">
-                        <label for="formFileMultiple" class="form-label">上傳圖片</label>
-                        <input class="form-control" type="file" id="formFileMultiple" multiple>
-                    </div>
+<!--                    <div class="mb-3">-->
+<!--                        <label for="formFileMultiple" class="form-label">上傳圖片</label>-->
+<!--                        <input class="form-control" type="file" id="formFileMultiple" multiple>-->
+<!--                    </div>-->
 
 
 <!--        BUTTON            -->
