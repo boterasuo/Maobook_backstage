@@ -180,10 +180,10 @@ session_start();
 <div id="layoutSidenav_content">
     <div class="container px-0">
         <main class="main px-5">
-            <ol class="breadcrumb mb-2 mt-4">
+            <ol class="breadcrumb mb-2 mt-2">
                 <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
-                <li class="breadcrumb-item "><a href="order-list.php">訂單查詢</a></li>
-                <li class="breadcrumb-item active">訂單編輯</li>
+                <li class="breadcrumb-item "><a href="order-detail.php?id=<?= $id ?>">訂單管理</a></li>
+                <li class="breadcrumb-item active">修改訂單</li>
             </ol>
             <h3 class="h2 mb-3 d-inline-block me-2">修改訂單</h3>
             <small class="text-muted me-2 d-inline-block" title="訂單編號：<?= $id ?>">( 訂單編號：<?= $id ?> )</small>
@@ -195,8 +195,11 @@ session_start();
                 <div class="col-8 d-inline-block ">
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between" title="訂單編號： <?= $id ?>">
-                            <a class="text-muted"><i class="fas fa-edit me-1 end-0"></i>
+                            <a class="text-muted"><i class="fas fa-table me-1 end-0"></i>
                                 訂單內容</a>
+                            <a href="order-edit.php?id=<?= $id ?>">
+                                <i class="fas fa-turn-up me-1 end-0 text-muted" title="查看會員資料"></i>
+                            </a>
                         </div>
                         <div class="card-body">
                             <!--    本頁 內容    -->
@@ -215,12 +218,11 @@ session_start();
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     <?php
                                     $total = 0;
-                                    $orderDetailsCount=count($rows);
-                                    $_SESSION["orderDetailsCount"]=$orderDetailsCount;
-                                    for($i=0; $i<count($rows); $i++): ?>
+                                    $orderDetailsCount = count($rows);
+                                    $_SESSION["orderDetailsCount"] = $orderDetailsCount;
+                                    for ($i = 0; $i < count($rows); $i++): ?>
                                         <tr>
                                             <td>
                                                 <a href="http://localhost/pj_maobook/cart-product-detial.php?name=
@@ -235,7 +237,7 @@ session_start();
                                             <td class="text-end"><?= $rows[$i]["price"] ?>
                                                 <input type="hidden" name="price" value="<?= $rows[$i]["price"] ?>">
                                             </td>
-                                            <td class="text-center"><input name="amount<?=$i?>" type="number"
+                                            <td class="text-center"><input name="amount<?= $i ?>" type="number"
                                                                            class="= my-0 col-5"
                                                                            value="<?= $rows[$i]["amount"] ?>">
                                             </td>
@@ -251,35 +253,33 @@ session_start();
                                                 <input type="hidden" name value="<?= $subtotal ?>">
                                             </td>
                                             <!-- 刪除按鈕-->
-                                            <td class="text-center"><a
-                                                        href="order-detail-doUpdate.php?id=<?= $id ?>&amount=0"> <i
-                                                            class="fas fa-trash-alt"></i></a></td>
+                                            <td class="text-center">
+                                                <a href="order-detail-doUpdate.php?id=<?=$id?>&amount=0">
+                                                    <i class="fas fa-trash-alt"></i></a></td>
                                         </tr>
                                         <!-- POST-->
                                         <!-- 1.product_id 商品編號-->
-<!--                                        <td><input type="hidden" name="product_id" value="-->
-<!--                                        --><?//= $rows[$i]["product_id"] ?><!--">-->
-<!--                                        </td>-->
+                                        <!--                                        <td><input type="hidden" name="product_id" value="-->
+                                        <!--                                        --><? //= $rows[$i]["product_id"] ?><!--">-->
+                                        <!--                                        </td>-->
                                         <!-- 2.訂單細節編號 -->
                                         <td>
-                                            <input type="hidden" name="order_detail_id<?=$i?>" value="
+                                            <input type="hidden" name="order_detail_id<?= $i ?>" value="
                                             <?= $rows[$i]["id"] ?>">
                                         </td>
                                         <!-- 3.user_id 訂購人ID -->
-<!--                                        <td>-->
-<!--                                            <input type="hidden" name="order_id" value="-->
-<!--                                            --><?//= $rowOrder["user_id"] ?><!--">-->
-<!--                                        </td>-->
+                                        <!--                                        <td>-->
+                                        <!--                                            <input type="hidden" name="order_id" value="-->
+                                        <!--                                            --><? //= $rowOrder["user_id"] ?><!--">-->
+                                        <!--                                        </td>-->
                                         <!--4.order_detail.order_id = user_order.id-->
                                         <td><input type="hidden" name="id" value="<?= $id ?>"></td>
-
-
                                     <?php endfor; ?>
 
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td class="text-end h3 bg-mao-primary " colspan="12">總計: <?= $total ?></td>
+                                        <td class="text-end h3 bg-mao-primary" colspan="12">總計: <?= $total ?></td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -296,19 +296,8 @@ session_start();
                     </div>
                 </div>
                 <!-- 左側col end -->
-                <!--取消訂單-->
-                <div id="showarea2">
-                    <div id="showBox2">
-                        <div class="text">確認取消該筆訂單?</div>
-                        <div>
-                            <a href="order-doCancel.php?id=<?= $statusRow["id"] ?>"
-                               class=" btn btn-danger d-inline-flex">確定</a>
-                            <a id="closeBtn2" href="user-edit.php?id=<?= $rowOrder["user_id"] ?>"
-                               class="btn btn-secondary d-inline-flex ">取消</a>
-                        </div>
-                    </div>
-                </div>
-                <!--取消訂單 end-->
+
+
                 <!-- 右側col -->
                 <div class="col-4  d-inline-block">
                     <!--  user_order修改   -->
@@ -354,18 +343,23 @@ session_start();
                                         </div>
                                     </div>
                                     <div class="text-end">
-                                        <?php if ($statusRow["status"]!=1)?>
-                                        <div id="showBtn2" class="d-inline-block cursor-pointer">
-                                            <a href="#" class="btn mt-2 text-end btn btn-secondary">
-                                                取消訂單
-                                            </a>
-                                        </div>
-
                                         <button id="statusSubmitBtn" class="btn mt-2 text-end btn-info" type="submit">
                                             儲存
                                         </button>
+                                        <?php if ($statusRow["status"] != 5): ?>
+                                            <div id="showBtn2" class="d-inline-block cursor-pointer">
+                                                <a href="#" class="btn mt-2 text-end btn btn-secondary">
+                                                    取消訂單
+                                                </a>
+                                            </div>
+                                        <?php elseif ($statusRow["status"] == 5): ?>
+                                            <div id="showBtn2" class="d-inline-block cursor-pointer">
+                                                <a href="#" class="btn mt-2 text-end btn btn-danger">
+                                                    刪除訂單
+                                                </a>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
-
                         </form>
                     </div>
                 </div>
@@ -376,22 +370,29 @@ session_start();
                 <div>
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
-                            <a><i class="fas fa-user-edit me-1 end-0"></i>客戶資訊</a>
-                            <a href="user-edit.php?id=<?= $rowOrder["user_id"] ?>">
-                                <i class="fas fa-external-link-alt me-1 end-0 text-muted" title="查看會員資料"></i>
-                            </a>
+                            <a><i class="fas fa-user-edit me-1 end-0"></i>買家資訊</a>
+                            <!--                            <a href="user-edit.php?id=-->
+                            <? //= $rowOrder["user_id"] ?><!--">-->
+                            <!--                                <i class="fas fa-edit me-1 end-0 text-muted" title="編輯會員資料"></i>-->
+                            <!--                            </a>-->
                         </div>
                         <div class="card-body ">
-                            <!--            頭貼-->
+                            <!--頭貼-->
                             <?php if ($rowUser != NULL): ?>
-                                <img class="avatar rounded-circle float-start me-2" src="<?= $rowUser["image"] ?>"
-                                     alt="">
+                            <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家">
+                                <img class="avatar rounded-circle float-start me-2"
+                                     href="user.php?id=<?= $rowOrder["user_id"] ?>"
+                                     src="images/<?= $rowUser["image"] ?>" alt=""></a>
                             <?php else: ?>
-                                <img class="avatar rounded-circle float-start me-2" src="images/default_avatar.png"
-                                     alt="">
+                                <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家">
+                                <img class="avatar rounded-circle float-start me-2"
+
+                                     src="images/default_avatar.png"
+                                     alt=""></a>
                             <?php endif; ?>
-                            訂購人: <a href="user.php?id=<?= $rowOrder["user_id"] ?>"
-                                    title="查看【<?= $orderUserRow["name"] ?>】的會員資料"><?= $orderUserRow["name"] ?></a>
+                            訂購人: <a href="user.php?id=<?= $rowOrder["user_id"] ?>">
+                                <?= $orderUserRow["name"] ?>
+                            </a>
                             <p><?php if ($rowUser != NULL): ?>
                                     <?= $rowUser["mailing_email"] ?><?php else:{
                                 } endif; ?></p>
@@ -405,9 +406,9 @@ session_start();
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <a><i class="fas fa-truck me-1 end-0"></i>宅配資訊</a>
-                                <a href="user-edit.php?id=<?= $id ?>">
-                                    <i class="fas fa-edit me-1 end-0 text-muted"></i>
-                                </a>
+                                <!--                                <a href="user-edit.php?id=--><? //= $id ?><!--">-->
+                                <!--                                    <i class="fas fa-edit me-1 end-0 text-muted"></i>-->
+                                <!--                                </a>-->
                             </div>
                             <div class="card-body ">
                                 <p>
@@ -428,15 +429,44 @@ session_start();
                     <!--   本頁內容 end  -->
                 </div>
             </div>
-
+            <?php if ($statusRow["status"] != 5): ?>
+                <!--取消訂單-->
+                <div id="showarea2">
+                    <div id="showBox2">
+                        <div class="text">確認取消該筆訂單?</div>
+                        <div>
+                            <a href="order-doCancel.php?id=<?= $statusRow["id"] ?>"
+                               class=" btn btn-success d-inline-flex">確定</a>
+                            <a id="closeBtn2"
+                               class="btn btn-secondary d-inline-flex ">取消</a>
+                        </div>
+                    </div>
+                </div>
+                <!--取消訂單 end-->
+            <?php elseif ($statusRow["status"] == 5): ?>
+                <!--刪除訂單-->
+                <div id="showarea2">
+                    <div id="showBox2">
+                        <div class="text">確認刪除該筆訂單?<br>此操作將
+                            <mark>無法恢復</mark>
+                            已刪除資料。
+                        </div>
+                        <div>
+                            <a href="order-doDelete.php?id=<?= $statusRow["id"] ?>"
+                               class=" btn btn-danger d-inline-flex">確定</a>
+                            <a id="closeBtn2"
+                               class="btn btn-secondary d-inline-flex ">取消</a>
+                        </div>
+                    </div>
+                </div>
+                <!--刪除訂單 end-->
+            <?php endif; ?>
             <!--   本頁內容 end  -->
-
         </main><!-- 主要內容end -->
 
     </div>
     <!--    --><?php //require_once("footer.php");
     ?>
-
 </div>
 <?php require_once("JS.php"); ?>
 <script>
