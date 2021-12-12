@@ -15,7 +15,7 @@ if($password!==$RePassword){
         密碼不一致</div>';
     exit();
 }
-$crPassword=md5($password);
+//$crPassword=md5($password);
 //echo "$crPassword<br>";
 $sqlCheck="SELECT * FROM users WHERE account=? ";
 $stmtCheck=$db_host->prepare($sqlCheck);
