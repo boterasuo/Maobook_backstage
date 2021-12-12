@@ -47,8 +47,8 @@
             <div class="">
                 <img class="logo" src="images/logo.png" alt="">
                 <div class="form-floating input-up">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
-                    <label for="floatingInput">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" required>
+                    <label for="email">Email</label>
                   </div>
                   <div class="form-floating input-bottom">
                     <input type="password" class="form-control" id="password" placeholder="name@example.com" name="password" required>
@@ -56,7 +56,7 @@
                   </div>
                   <div class="d-grid gap-2 mb-5 mt-3">
                       <button class="btn btn-warning text-white" type="submit" >爪爪日記 &nbsp;&nbsp; 歡迎您</button>
-                      <button class="btn btn-outline-warning text-warning" href="create-user.php">還沒有日記本嗎？ &nbsp;&nbsp; 請點我</button>
+                      <button class="btn btn-outline-warning text-warning" onclick="window.location.href='create-user.php'" type="button">還沒有日記本嗎？ &nbsp;&nbsp; 請點我</button>
                   </div>
                   <div class="text-muted">© maobook 2021</div>
             </div>
