@@ -1,8 +1,13 @@
 <?php
 //連線到本地資料庫
 require_once("pdo-connect.php");
+$cartCount = 0;
+foreach ($_SESSION["cart"] as $key => $value1) {
+$cartCount+=$value1["num"];
+}
 
-if(isset($_POST["account"])) {
+
+if(isset($_POST["account"]) && $cartCount>0) {
     $account = $_POST["account"];
     $name = $_POST["name"];
     $phone = $_POST["phone"];
@@ -10,8 +15,6 @@ if(isset($_POST["account"])) {
     $email = $_POST["email"];
 
     $now = date("Y-m-d H:i:s");
-
-//插入使用者資料
 
 //修改使用者資料
     $sql = "UPDATE users SET mailing_name='$name',mailing_phone='$phone',mailing_email='$email',mailing_address='$address'WHERE  account='$account'";
@@ -60,8 +63,7 @@ if(isset($_POST["account"])) {
     };
 
     //清除購物車
-    session_start();
-    ob_start();//清空緩存必須啓動的項
+
     unset($_SESSION['cart']);
 
     echo "<script> alert('訂單送出成功!');

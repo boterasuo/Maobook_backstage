@@ -2,24 +2,23 @@
 //連線到本地資料庫
 require_once("pdo-connect.php");
 $URL = $_SERVER['PHP_SELF'];//取得當前取得當前php檔名，傳入清空購物車
-////右上購物車總數判斷
+//購物車商品數量總數計算
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
-    $cartCount = 0; //購物車預設0;
+    $cartCount = 0;
 }
-if (empty($_SESSION['cart'])) {
-    $cartCount = 0; //購物車預設0;
-} else {
-    $cartCount = count($_SESSION['cart']);
+else{
+    $cartCount = 0;
+    foreach ($_SESSION["cart"] as $key => $value1) {
+        $cartCount+=$value1["num"];
+    }
 }
 
 //搜尋使用者資料
-
 $account = "user";
 $useraccount="useraccount";
 if (isset($_POST["useraccount"])) {
     $useraccount = $_POST["useraccount"];
-
 }
 $sql = "SELECT * FROM users WHERE account=?  ";  //AND valid=1
 $stmt = $db_host->prepare($sql);
@@ -39,9 +38,6 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-//if (isset($useraccount) && $useraccount === $account) {
-//    $a = "yes"; //測試用~~~~~~~~
-//}
 
 ?>
 <!DOCTYPE html>
@@ -64,7 +60,6 @@ try {
     <?php require_once("style.php"); ?>
     <!--  板模end  -->
 
-    <!-- 此處新增css檔 -->
     <style>
         .title {
             text-shadow: 3px 3px 3px #3335;
@@ -111,8 +106,6 @@ try {
         }
 
     </style>
-    <!-- Css檔 end   -->
-
 
 </head>
 <body class="sb-nav-fixed">
@@ -147,14 +140,12 @@ try {
                     $totalPrice = 0;
                     $deliveryFee = 60; //運費
                     if (!empty($_SESSION["cart"])):
-                        $cart = array();
-                        $cart = $_SESSION["cart"];
-                        foreach ($cart as $key => $value): ?>
+                        foreach ($_SESSION["cart"] as $key => $value): ?>
                             <?php
                             $totalPrice += $value["price"] * $value["num"];
                             ?>
                             <tr>
-                                <td class="align-middle"><?= $value["name"] ?></td>
+                                <td class="align-middle"><a href="cart-product-detial.php?name=<?= $value["name"] ?>"><?= $value["name"] ?></a></td>
                                 <td class="text-end align-middle"><?= $value["price"] ?></td>
                                 <td class="text-end align-middle"><?= $value["num"] ?></td>
                                 <td class="text-end align-middle"><?= $value["price"] * $value["num"] ?></td>
@@ -181,20 +172,15 @@ try {
                             <div>
                                 <label  for="useraccount" class="text-danger">請輸入會員帳號</label>
                                 <input  name="useraccount" type="text" class="form-control form-control" required>
-                                <button  class="btn btn-mao-primary mt-2"  type="submit" name="Submit">確認
-                                </button>
-
-
+                                <button  class="btn btn-mao-primary mt-2"  type="submit" name="Submit">確認</button>
                             </div>
                         </form>
                         <form class="d-grid gap-3" action="cartSendOder.php" method="post" name="form2">
                             <?php if (isset($useraccount) && $useraccount === $account): ?>
                                 <div>
-                                    <?php if (isset($useraccount) && $useraccount === $account): ?>
                                         <label for="account">會員</label>
                                         <input id="okaccount" name="account" type="text" class=" form-control form-control"
                                                value="<?= $account ?>" readonly>
-                                    <?php endif; ?>
                                 </div>
                                 <div>
                                     <label for="name">聯絡人</label>
@@ -258,8 +244,7 @@ try {
 <?php require_once("JS.php"); ?>
 
 <script>
-    //let userkeyin='<?//=$useraccount?>//';
-    //let account='<?//=$account?>//';
+
 
     let count = <?php echo $cartCount ?>;//接住php變數
     let cleanAll = document.querySelector("#cleanAll");
@@ -270,19 +255,21 @@ try {
     //刪除購物車確認警示
     function doClean(){
         if(count===0 ){
-            alert('購物車沒有商品');
+            alert('購物車"沒有"商品 ! ');
         }
-        else if(confirm('確定要清空購物車嗎?')===true) {
+        else if(confirm('確定要清空購物車嗎 ? ')===true) {
             document.location.href = "cartCleanAll.php?url=" + location.href;
         }
             return false;
         }
     //訂單送出時，確認購物車是否有東西
     function sendCheck() {
-        if (!okaccount) {
-            alert('請確認是否輸入會員帳號');
-        }else
-        if (count === 0) {alert('購物車為0，');}
+        if (!okaccount) {alert('請確認是否輸入"會員帳號" ! ');}
+        else if (count === 0) {alert('購物車"沒有"商品 ! ');}
+        else if(confirm('確定要送出訂單嗎 ? ')===true) {
+            document.location.href ="cartSendOder.php";
+        }
+
     }
 
 

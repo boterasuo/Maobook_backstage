@@ -1,8 +1,17 @@
 <?php
 //連線到本地資料庫
 require_once ("pdo-connect.php");
-$cartCount=count( $_SESSION['cart']); //右上購物車總數
+//購物車商品數量總數計算
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+    $cartCount = 0;
 
+}else{
+    $cartCount = 0;
+    foreach ($_SESSION["cart"] as $key => $value1) {
+        $cartCount+=$value1["num"];
+    }
+}
 //讀取商品
 if(isset($_GET["name"])){
     $name=$_GET["name"];
@@ -20,43 +29,53 @@ try {
 }
 
 //加入購物車，重新讀取商品，直接覆蓋上面$result
-if(isset($_GET["id"])){
-    $id=$_GET["id"];
-}else{
-    $id=0;
+if(isset($_GET["id"])) {
+    $id = $_GET["id"];
+}else {
+    $id = 0;
 }
-$sql="SELECT * FROM products WHERE id=? AND valid=1";//從資料庫讀取id=$id商品資料
-$stmt1= $db_host->prepare($sql);
-try {
-    $stmt1->execute([$id]);
-    $idExist=$stmt1->rowCount(); //確認是否有get到id
-    if($idExist>0) {  //如果大於0才執行以下
-        $result = $stmt1->fetch(); //抓出商品id=$id全部資訊存入關聯式陣列
-        $item=[  //取出需要的資料存成新的關聯式陣列
-            "id"=>$result["id"],
-            "num"=>1,
-            "name"=>$result["name"],
-            "price"=>$result["price"]
-        ];
+    $sql="SELECT * FROM products WHERE id=? AND valid=1";//從資料庫讀取id=$id商品資料
+    $stmt1= $db_host->prepare($sql);
+    try {
+        $stmt1->execute([$id]);
+        $idExist = $stmt1->rowCount(); //確認是否有get到id
 
-        if (isset($_SESSION['cart'][$id])) { //判斷是否有重複品項，若直接對數量+1
-            $countAmount=$_SESSION['cart'][$id];
-            $countAmount["num"]=$countAmount["num"]+1;
-            $_SESSION['cart'][$id]=$countAmount;
+        if ($idExist > 0) {  //如果大於0才執行以下
+            $result = $stmt1->fetch(); //抓出商品id=$id全部資訊存入關聯式陣列
+            $stock = $result["stock_num"];
+            $item = [  //取出需要的資料存成新的關聯式陣列
+                "id" => $result["id"],
+                "num" => 1,
+                "name" => $result["name"],
+                "price" => $result["price"]
+            ];
+            if (isset($_SESSION['cart'][$id])) { //判斷是否有重複品項，若直接對數量+1
+                $product = $_SESSION['cart'][$id];
+                $productStock = $product["num"];
+                if (($stock - $productStock) > 0) { //判斷庫存，不可為0，因為還為加入商品
+                    $product["num"] = $product["num"] + 1;
+                    $_SESSION['cart'][$id] = $product;
+                    $cartCount+=1;
+                    echo "<script> alert('已加入購物車');</script> ";
+                } else {
+                    echo "<script> alert('!!!!庫存不足!!!!');</script> ";
+                }
+            } else {//若沒有則直接存入第二陣列
+                if ($stock - 1 >= 0) {
+                    $_SESSION['cart'][$id] = $item;
+                    $cartCount+=1;
+                    echo "<script> alert('!!!!已加入購物車!!!!');</script> ";
+                } else {
+                    echo "<script> alert('!!!!庫存不足!!!!');</script> ";
+                }
+            }
+            //$a = implode(",", $_SESSION['cart'][1]);//測試是否有存入用
         }
-        else{  //若有則直接存入第二陣列
-            $_SESSION['cart'][$id] = $item;
-
-        }
-        $cartCount=count( $_SESSION['cart']); //重新計算購物車總數
-//        $a = implode(",", $_SESSION['cart'][1]);//測試是否有存入用
     }
-
-}catch(PDOException $e){
-    echo $e->getMessage();
-}
-
-
+    catch
+        (PDOException $e){
+            echo $e->getMessage();
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,7 +150,9 @@ try {
                     <div class="col-md-6 px-5 py-5">
                         <h1 class="fs-4"><?=$result["name"]?></h1>
                         <div class="fs-5 my-5">NT$<?=$result["price"]?></div>
-                        <div class="fs-6 my-3 text-danger fw-bold">庫存：<?=$result["stock_num"]?></div>
+                        <div class="fs-6 my-3 text-danger fw-bold">
+                            庫存：<?php if($result["stock_num"]>=0) {echo $result["stock_num"];} else echo "0"?>
+                        </div> <!--庫存檢查-->
                         <a class="btn btn-mao-primary" href="cart-product-detial.php?id=<?=$result["id"]?>">加入購物車</a>
 
                         <p class="fs-6 my-5 fw-bold">
