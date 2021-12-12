@@ -1,6 +1,6 @@
 <?php
 require_once("pdo-connect.php");
-$sql = "SELECT id, account, name, created_at, valid FROM users WHERE valid!=9";
+$sql = "SELECT id, account, name, created_at FROM users WHERE valid!=9";
 $stmt=$db_host->prepare($sql);
 try{
     $stmt->execute();
@@ -54,13 +54,10 @@ for ($i=0; $i<count($rows); $i++){
             width: 7%;
         }
         #th-account{
-            width: 15%;
+            width: 17%;
         }
         #th-created-at{
-            width: 20%;
-        }
-        #th-valid{
-            width: 8%;
+            width: 22%;
         }
         #th-dog-count, #th-cat-count{
             width: 10%;
@@ -83,7 +80,17 @@ for ($i=0; $i<count($rows); $i++){
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
                     <li class="breadcrumb-item active">會員列表</li>
                 </ol>
-<!--                <div>--><?//=var_dump($rows)?><!--</div>-->
+
+                <div class="py-2 d-flex justify-content-end" >
+                <button class="col-auto mb-3 col-2 btn btn-outline-warning text-white" role="button" onclick="window.location.href='user-add.php'">新 增 會 員</button>
+                </div>
+
+<!--                <div class="btn-group" role="group" aria-label="Basic outlined example">-->
+<!--                    <button type="button" class="btn btn-outline-warning text-white">新增會員</button>-->
+<!--                    <button type="button" class="btn btn-outline-warning text-white">刪除會員</button>-->
+<!--                </div>-->
+
+                <!--                <div>--><?//=var_dump($rows)?><!--</div>-->
 
                 <!-- 副標題 end -->
                 <div class="card mb-4">
@@ -102,7 +109,6 @@ for ($i=0; $i<count($rows); $i++){
                                 <th id="th-account">帳號</th>
                                 <th>名稱</th>
                                 <th id="th-created-at">建立時間</th>
-                                <th id="th-valid">狀態</th>
                                 <th id="th-dog-count">狗狗數</th>
                                 <th id="th-cat-count">貓貓數</th>
                                 <th>其他操作</th>
@@ -115,7 +121,6 @@ for ($i=0; $i<count($rows); $i++){
                                 <th>帳號</th>
                                 <th>名稱</th>
                                 <th>建立時間</th>
-                                <th>狀態</th>
                                 <th>狗狗數</th>
                                 <th>貓貓數</th>
                                 <th>其他操作</th>
@@ -130,13 +135,6 @@ for ($i=0; $i<count($rows); $i++){
                                         <td><?= $user["account"] ?></td>
                                         <td><?= $user["name"] ?></td>
                                         <td><?= $user["created_at"] ?></td>
-                                        <td>
-                                            <?php if($user["valid"]==1): ?>
-                                            一般
-                                            <?php else: ?>
-                                            封鎖中
-                                            <?php endif; ?>
-                                        </td>
                                         <td>
                                             <?php if(isset($user["dogs"])): ?>
                                                 <img class="pet-icon me-1" src="images/dog.png" alt="">
