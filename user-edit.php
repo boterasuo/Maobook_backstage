@@ -258,7 +258,7 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
         submitBtn=document.querySelector("#submitBtn");
 
     const regEmail=/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    const regPassword=/.*[A-Z]+.*[0-9]+.*/;
+    const regPassword=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     const regMobile=/^09\d{8}$/;
 
 
@@ -277,7 +277,7 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
                 passwordErr.innerText="密碼不能留空!"
                 password.style.border="1px solid red";
             } else if (!regPassword.test(password.value)){
-                passwordErr.innerText="密碼請至少包含一個以上的數字和大寫字母!"
+                passwordErr.innerText="密碼請至少輸入六的字元，並包含數字和英文字母!"
                 password.style.border="1px solid red";
             }
             if (repassword.value === ""){
@@ -308,6 +308,10 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
         })
 </script>
 <script>
+    $("#password").keydown(function(){
+        $("#repassword").val("");
+    })
+
     $("#fileUpload").change(function(e){
        var fileData = e.target.files[0]
         var reader = new FileReader();
