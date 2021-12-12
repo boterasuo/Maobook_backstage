@@ -98,55 +98,18 @@ endif;
     <!--    <link rel="stylesheet" href="css/anun-style.css">-->
     <!-- Css檔 end   -->
     <style>
-        #showarea,#showareaCancel{
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.678);
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 999999;
-            visibility: hidden;
-        }
-
-
-        #showBox, #showBoxCancel {
-            width: 300px;
-            max-height: 300px;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: end;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-
-        }
-
         .text {
             font-weight: 600;
             margin-bottom: 15px;
         }
 
-        .closeBtn {
-            width: 60px;
-            height: 30px;
-            font-size: 14pt;
-            /*text-align: center;*/
-            line-height: 30px;
-            transition: .4s;
-
+        .pointer{
+            cursor: pointer;
         }
-
         /*訂購人資訊 頭像*/
         .avatar {
             width: 60px;
         }
-
 
     </style>
 </head>
@@ -176,10 +139,12 @@ endif;
                 <!-- 左側col -->
                 <div class="col-8 ">
                     <div class="card mb-4">
-                        <div class="card-header d-flex justify-content-between"
-                        " title="新增訂單">
+                        <div class="card-header d-flex justify-content-between">
                         <a><i class="fas fa-table me-1 end-0"></i>
                             訂單明細</a>
+                        <a href="order-edit.php?id=<?= $id ?>">
+                            <i class="fas fa-edit me-1 end-0 text-muted" title="修改訂單"></i>
+                        </a>
                     </div>
                     <div class="card-body">
                         <!--    本頁 內容    -->
@@ -200,9 +165,10 @@ endif;
                             foreach ($rows as $value): ?>
                                 <tr>
                                     <td><a href="cart-product-detial.php?name=<?= $value["name"] ?>"
-                                           title="<?= $value["name"] ?>"><img
-                                                    src="images/product_images/<?= $value["img"] ?>" alt=""
-                                                    width="100px"></a></td><!-- 商品圖片 -->
+                                           title="<?= $value["name"] ?>">
+                                            <img src="images/product_images/<?= $value["img"] ?>" alt=""
+                                                    width="100px">
+                                        </a></td><!-- 商品圖片 -->
                                     <td><?= $value["name"] ?></td> <!-- 訂購人名稱 -->
 
                                     <td class="text-end"><?= $value["price"] ?></td>
@@ -223,7 +189,10 @@ endif;
                             </tr>
                             </tfoot>
                         </table>
+                        <div class="text-end">
+                            <a href="order-edit.php?id=<?= $rowOrder["user_id"] ?>" class="btn btn-warning">修改數量</a>
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -232,70 +201,29 @@ endif;
             <!-- 右側col -->
             <div class="col-4 ">
 
-                <!--  訂單操作   -->
-                <div>
-                    <div class="card">
-                        <div class="card-header"
-                        ">
-                        <a><i class="fas fa-cog me-1 end-0 "></i>
-                            訂單操作</a>
-                    </div>
-                    <div class="card-body d-flex justify-content-evenly ">
-
-                        <?php if ($statusRow["status"] == 5): ?>
-
-                            <div class="d-inline-block text-center">
-                                <a href="order-edit.php?id=<?= $id ?>" title="修改訂單">
-                                    <i class="fas fa-edit me-1 end-0"></i><br>修改訂單&nbsp;&nbsp;</a>
-                            </div>
-
-<!--                            <div class="d-inline-block text-center">-->
-<!--                                <a href="order-doDelete.php?id=--><?// //= $statusRow["id"] ?><!--"-->
-<!--                                   onClick="return checkDelete()" title="刪除該筆資料">-->
-<!--                                    <i class="fas fa-trash me-1 end-0"></i><br>刪除訂單&nbsp;&nbsp;</a>-->
-<!--                            </div>-->
-
-                            <div id="showBtn" class="d-inline-block text-center pointer">
-                                <a href="#" title="刪除訂單">
-                                    <i class="fas fa-heart-broken me-1 end-0"></i><br>刪除訂單&nbsp;&nbsp;</a>
-                            </div>
-                        <?php elseif ($statusRow["status"] != 5 && $statusRow["status"] != 0): ?>
-                            <div class="d-inline-block text-center">
-                                <a href="order-edit.php?id=<?= $id ?>" title="修改訂單">
-                                    <i class="fas fa-edit me-1 end-0"></i><br>修改訂單&nbsp;&nbsp;</a>
-                            </div>
-                            <!--                            <div class="d-inline-block text-center">-->
-                            <!--                                <a href="order-doCancel.php?id=--><? //= $statusRow["id"] ?><!--"  title="取消訂單">-->
-                            <!--                                    <i class="fas fa-heart-broken me-1 end-0"></i><br>取消訂單&nbsp;&nbsp;</a>-->
-                            <!--                            </div>-->
-                            <div id="showBtn" class="d-inline-block text-center pointer">
-                                <a href="#" title="取消訂單">
-                                    <i class="fas fa-heart-broken me-1 end-0"></i><br>取消訂單&nbsp;&nbsp;</a>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                <!--  訂單操作  end  -->
-                <br>
                 <!--  客戶資訊   -->
                 <div>
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <a><i class="fas fa-user-tag me-1 end-0"></i>客戶資訊</a>
-                            <a href="order-doUpdate.php">
+                            <a href="order-detail-doUpdate.php">
                                 <i class="fas fa-external-link-alt me-1 end-0 text-muted" title="查看會員資料"></i>
                             </a>
                         </div>
                         <div class="card-body ">
                             <!--頭貼-->
-                            <img class="avatar rounded-circle float-start me-2" src="<?= $rowUser["image"] ?>" alt="">
+                            <?php if ($rowUser != NULL): ?>
+                                <img class="avatar rounded-circle float-start me-2" src="<?= $rowUser["image"] ?>"
+                                     alt="">
+                            <?php else: ?>
+                                <img class="avatar rounded-circle float-start me-2" src="images/default_avatar.png"
+                                     alt="">
+                            <?php endif; ?>
                             訂購人: <a href="user.php?id=<?= $rowOrder["user_id"] ?>"
                                     title="查看【<?= $orderUserRow["name"] ?>】的會員資料"><?= $orderUserRow["name"] ?></a>
                             <p><?php if($rowUser != NULL):?>
                                 <?= $rowUser["mailing_email"] ?><?php else:{ } endif;?></p>
-
                             <br>
-
                         </div>
                     </div>
                     <!--  客戶資訊  end  -->
@@ -325,35 +253,7 @@ endif;
                         <!--   本頁內容 end  -->
                     </div>
                 </div>
-                <?php if($statusRow["status"] ==5):?>
-                <!--刪除訂單-->
-                <div id="showarea">
-                    <div id="showBox">
-                        <div class="text"> <strong>警告：確認刪除訂單? 刪除後的資料將無法進行恢復。</strong></div>
-                        <div>
-                            <a href="order-doDelete.php?id=<?= $statusRow["id"] ?>"
-                               class=" btn btn-danger d-inline-flex">確定</a>
-                            <a id="closeBtn" onclick="openWindow()" class="btn btn-secondary d-inline-flex">取消</a>
-                        </div>
-                    </div>
-                </div>
-                <!--刪除訂單 end-->
 
-                <?php elseif ($statusRow["status"] != 5 && $statusRow["status"] != 0): ?>
-                <!--取消訂單-->
-                <div id="showarea">
-                    <div id="showBox">
-                        <div class="text">確認取消該筆訂單?</div>
-                        <div>
-                            <a href="order-doCancel.php?id=<?= $statusRow["id"] ?>"
-                               class=" btn btn-danger d-inline-flex" title="取消訂單">確定</a>
-                            <a id="closeBtn" onclick="openWindow()" class="btn btn-secondary d-inline-flex "
-                               title="前往會員管理中心~">取消</a>
-                        </div>
-                    </div>
-                </div>
-                <!--取消訂單 end-->
-    <?php endif; ?>
         </main><!-- 主要內容end -->
         <!--    --><?php //require_once("footer.php"); ?>
     </div>
@@ -363,7 +263,6 @@ endif;
         function openWindow() {
             window.open("http://localhost/pj_maobook/user-list.php", "_self");
         }
-
         // function checkDelete() {
         //     if (!confirm('確認刪除該筆訂單嗎 ? 已刪除內容資料庫將無法保存')) {
         //         return false;
@@ -386,10 +285,7 @@ endif;
             Box.style.visibility = "hidden";
         }
 
-
-
     </script>
-
 
 </body>
 </html>
