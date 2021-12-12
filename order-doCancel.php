@@ -11,7 +11,7 @@ $stmtOrder=$db_host->prepare($sqlOrder);
 try{
     $stmtOrder->execute([$id]);
 //    echo "使用者刪除成功<br>";
-    echo "<script> alert('已取消訂單!'); window.location.href='order-list.php'</script>";
+    echo "<script> alert('已取消訂單!'); window.location.href='order-edit.php?id=$id'</script>";
 //    header("location: user-list.php");
 }catch(PDOException $e){
     echo $e->getMessage();
