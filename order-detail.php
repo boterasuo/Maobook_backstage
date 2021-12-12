@@ -140,119 +140,119 @@ endif;
                 <div class="col-8 ">
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between">
-                        <a><i class="fas fa-table me-1 end-0"></i>
-                            訂單明細</a>
-                        <a href="order-edit.php?id=<?= $id ?>">
-                            <i class="fas fa-edit me-1 end-0 text-muted" title="修改訂單"></i>
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <!--    本頁 內容    -->
+                            <a><i class="fas fa-table me-1 end-0"></i>
+                                訂單明細</a>
+                            <a href="order-edit.php?id=<?= $id ?>">
+                                <i class="fas fa-edit me-1 end-0 text-muted" title="修改訂單"></i>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <!--    本頁 內容    -->
 
-                        <table class="table table-bordered table-sm"><!-- id="datatablesSimple" -->
-                            <thead>
-                            <tr>
-                                <th>產品名稱</th>
-                                <th>產品名稱</th>
-                                <th>單價</th>
-                                <th>數量</th>
-                                <th>小計</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            $total = 0;
-                            foreach ($rows as $value): ?>
+                            <table class="table table-bordered table-sm"><!-- id="datatablesSimple" -->
+                                <thead>
                                 <tr>
-                                    <td><a href="cart-product-detial.php?name=<?= $value["name"] ?>"
-                                           title="<?= $value["name"] ?>">
-                                            <img src="images/product_images/<?= $value["img"] ?>" alt=""
-                                                    width="100px">
-                                        </a></td><!-- 商品圖片 -->
-                                    <td><?= $value["name"] ?></td> <!-- 訂購人名稱 -->
-
-                                    <td class="text-end"><?= $value["price"] ?></td>
-                                    <td class="text-end"><?= $value["amount"] ?></td>
-                                    <td class="text-end"><?php
-                                        $subtotal = $value["amount"] * $value["price"];
-                                        echo $subtotal;
-                                        //                            $total=$total+$subtotal;
-                                        $total += $subtotal;
-
-                                        ?></td>
+                                    <th>產品名稱</th>
+                                    <th>產品名稱</th>
+                                    <th>單價</th>
+                                    <th>數量</th>
+                                    <th>小計</th>
                                 </tr>
-                            <?php endforeach; ?>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td class="text-end h3 bg-mao-primary " colspan="12">總計: <?= $total ?></td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                        <div class="text-end">
-                            <a href="order-edit.php?id=<?= $rowOrder["user_id"] ?>" class="btn btn-warning">修改數量</a>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $total = 0;
+                                foreach ($rows as $value): ?>
+                                    <tr>
+                                        <td><a href="cart-product-detial.php?name=<?= $value["name"] ?>"
+                                               title="<?= $value["name"] ?>">
+                                                <img src="images/product_images/<?= $value["img"] ?>" alt=""
+                                                     width="100px">
+                                            </a></td><!-- 商品圖片 -->
+                                        <td><?= $value["name"] ?></td> <!-- 訂購人名稱 -->
 
+                                        <td class="text-end"><?= $value["price"] ?></td>
+                                        <td class="text-end"><?= $value["amount"] ?></td>
+                                        <td class="text-end"><?php
+                                            $subtotal = $value["amount"] * $value["price"];
+                                            echo $subtotal;
+                                            //                            $total=$total+$subtotal;
+                                            $total += $subtotal;
+
+                                            ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td class="text-end h3 bg-mao-primary " colspan="12">總計: <?= $total ?></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <div class="text-end">
+                                <a href="order-edit.php?id=<?= $rowOrder["user_id"] ?>" class="btn btn-warning">修改數量</a>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- 左側col end -->
+                <!-- 左側col end -->
 
-            <!-- 右側col -->
-            <div class="col-4 ">
+                <!-- 右側col -->
+                <div class="col-4 ">
 
-                <!--  客戶資訊   -->
-                <div>
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between">
-                            <a><i class="fas fa-user-tag me-1 end-0"></i>客戶資訊</a>
-                            <a href="order-detail-doUpdate.php">
-                                <i class="fas fa-external-link-alt me-1 end-0 text-muted" title="查看會員資料"></i>
-                            </a>
-                        </div>
-                        <div class="card-body ">
-                            <!--頭貼-->
-                            <?php if ($rowUser != NULL): ?>
-                                <img class="avatar rounded-circle float-start me-2" src="<?= $rowUser["image"] ?>"
-                                     alt="">
-                            <?php else: ?>
-                                <img class="avatar rounded-circle float-start me-2" src="images/default_avatar.png"
-                                     alt="">
-                            <?php endif; ?>
-                            訂購人: <a href="user.php?id=<?= $rowOrder["user_id"] ?>"
-                                    title="查看【<?= $orderUserRow["name"] ?>】的會員資料"><?= $orderUserRow["name"] ?></a>
-                            <p><?php if($rowUser != NULL):?>
-                                <?= $rowUser["mailing_email"] ?><?php else:{ } endif;?></p>
-                            <br>
-                        </div>
-                    </div>
-                    <!--  客戶資訊  end  -->
-                    <br>
-                    <!--  宅配地址   -->
+                    <!--  客戶資訊   -->
                     <div>
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
-                                <a><i class="fas fa-truck me-1 end-0"></i>宅配資訊</a>
-                                <a href="user-edit.php?id=<?= $id ?>">
-                                    <i class="fas fa-edit me-1 end-0 text-muted"></i>
+                                <a><i class="fas fa-user-tag me-1 end-0"></i>客戶資訊</a>
+                                <a href="user.php?id=<?=$rowOrder["user_id"]?>">
+                                    <i class="fas fa-external-link-alt me-1 end-0 text-muted" title="查看會員資料"></i>
                                 </a>
                             </div>
                             <div class="card-body ">
-                                <p>
-                                    <?php if($rowUser != NULL):?>
-                                    收件人:　<?= $rowUser["mailing_name"] ?><br>
-                                    地址：　<?= $rowUser["mailing_address"] ?><br>
-                                    手機：　<?= $rowUser["mailing_phone"] ?><br>
-                                    信箱：　<?= $rowUser["mailing_email"] ?></p>
-                                <?php else:{ echo "未登錄資訊";} endif;?>
+                                <!--頭貼-->
+                                <?php if ($rowUser != NULL): ?>
+                                    <img class="avatar rounded-circle float-start me-2" src="<?= $rowUser["image"] ?>"
+                                         alt="">
+                                <?php else: ?>
+                                    <img class="avatar rounded-circle float-start me-2" src="images/default_avatar.png"
+                                         alt="">
+                                <?php endif; ?>
+                                訂購人: <a href="user.php?id=<?= $rowOrder["user_id"] ?>"
+                                        title="查看【<?= $orderUserRow["name"] ?>】的會員資料"><?= $orderUserRow["name"] ?></a>
+                                <p><?php if($rowUser != NULL):?>
+                                        <?= $rowUser["mailing_email"] ?><?php else:{ } endif;?></p>
+                                <br>
                             </div>
                         </div>
-                        <!--  宅配地址  end  -->
+                        <!--  客戶資訊  end  -->
+                        <br>
+                        <!--  宅配地址   -->
+                        <div>
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <a><i class="fas fa-truck me-1 end-0"></i>宅配資訊</a>
+<!--                                    <a href="user-edit.php?id=--><?//= $id ?><!--">-->
+<!--                                        <i class="fas fa-edit me-1 end-0 text-muted"></i>-->
+<!--                                    </a>-->
+                                </div>
+                                <div class="card-body ">
+                                    <p>
+                                        <?php if($rowUser != NULL):?>
+                                        收件人:　<?= $rowUser["mailing_name"] ?><br>
+                                        地址：　<?= $rowUser["mailing_address"] ?><br>
+                                        手機：　<?= $rowUser["mailing_phone"] ?><br>
+                                        信箱：　<?= $rowUser["mailing_email"] ?></p>
+                                    <?php else:{ echo "未登錄資訊";} endif;?>
+                                </div>
+                            </div>
+                            <!--  宅配地址  end  -->
 
-                        <!-- 右側col end -->
-                        <!--   本頁內容 end  -->
+                            <!-- 右側col end -->
+                            <!--   本頁內容 end  -->
+                        </div>
                     </div>
-                </div>
 
         </main><!-- 主要內容end -->
         <!--    --><?php //require_once("footer.php"); ?>
@@ -274,6 +274,7 @@ endif;
                 return false;
             }
         }
+
 
         let showbtn = document.querySelector("#showBtn");
         let closebtn = document.querySelector("#closeBtn");
