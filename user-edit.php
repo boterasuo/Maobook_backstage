@@ -210,8 +210,8 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
                                 <img class="cover-fit" src="images/avatar_user.png" alt="">
                             <?php endif; ?>
                             <figure id="show" class="user-avatar ratio ratio-1x1 figure-preview">
-                                <input id="no-avatar-pic" type="hidden" name="noAvatarPic" value="">
                             </figure>
+                            <input id="no-avatar-pic" type="hidden" name="noAvatarPic" value="">
                             <div class="avatar-edit">
                                 <div class="edit-font">
                                     <label for="fileUpload" class="custom-upload-btn">
@@ -317,6 +317,7 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
         var reader = new FileReader();
        reader.readAsDataURL(fileData);
         $("#show").empty();
+        $("#no-avatar-pic").val("");
 
        reader.addEventListener("load", function(event){
            $("#show").append(`<img class="cover-fit" src="${event.target.result}">`);
@@ -325,6 +326,7 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
     })
 
     $("#delete-avatar-btn").click(function(){
+        $("#show").empty();
         $("#show").append(`<img class="cover-fit" src="images/avatar_user.png">`);
         $("#no-avatar-pic").val("avatar_user.png");
     })

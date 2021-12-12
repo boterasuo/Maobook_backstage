@@ -64,6 +64,16 @@ try{
     echo $e->getMessage();
 }
 
+//var_dump($_POST["noAvatarPic"]);
+
+if ($_POST["noAvatarPic"]=="avatar_user.png"){
+    $_FILES["myFile"]["error"]=1;
+    echo $_FILES["myFile"]["error"];
+}else{
+    echo "fail!";
+}
+
+
 if ($_FILES["myFile"]["error"] === 0){
 //    echo $_FILES["myFile"]["name"];
     $fileExt=pathinfo($_FILES["myFile"]["name"], PATHINFO_EXTENSION);
