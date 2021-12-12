@@ -193,15 +193,17 @@ $petCount=$stmtOtherPet->rowCount();
                             <td>
                                 <?=$rowUser["account"]?>
                                 <?php if($rowUser["valid"]==0): ?>
-                                <div class="data-time d-inline-block">封鎖中</div>
+                                    <div class="data-time d-inline-block ms-1">封鎖中</div>
                                 <?php endif; ?>
-                                <a class="btn btn-mao-primary btn-sm ms-3"
+                                <a class="btn btn-mao-primary btn-sm ms-1"
                                    href="user.php?id=<?=$rowUser["id"]?>">檢視會員資料</a>
                             </td>
                         </tr>
                         <tr>
                             <th>奴才姓名</th>
-                            <td><?=$rowUser["name"]?></td>
+                            <td>
+                                <?=$rowUser["name"]?>
+                            </td>
                         </tr>
                     </table>
                 </div>
