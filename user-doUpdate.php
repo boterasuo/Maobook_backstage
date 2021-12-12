@@ -2,6 +2,7 @@
 require_once("pdo-connect.php"); //連線到遠端資料庫
 
 $id=$_POST["id"];
+$email=$_POST["email"];
 $password=$_POST["password"];
 $name=$_POST["name"];
 $mobile=$_POST["mobile"];
@@ -52,11 +53,11 @@ if(isset($_POST["address"])){
 }
 
 
-$sqlUser="UPDATE users SET password=?, name=?, gender=?, birthday=?, mobile=?, zip_code=?, county=?, address=?, valid=?
+$sqlUser="UPDATE users SET email=?, password=?, name=?, gender=?, birthday=?, mobile=?, zip_code=?, county=?, address=?, valid=?
 WHERE id=?";
 $stmtUser=$db_host->prepare($sqlUser);
 try{
-    $stmtUser->execute([$password, $name, $gender, $birthday, $mobile, $zip, $county, $address, $valid, $id]);
+    $stmtUser->execute([$email, $password, $name, $gender, $birthday, $mobile, $zip, $county, $address, $valid, $id]);
 //    echo "修改資料完成<br>";
 //    header("location: user.php?id=$id");
 }catch(PDOException $e){
@@ -64,6 +65,7 @@ try{
 }
 
 if ($_FILES["myFile"]["error"] === 0){
+//    echo $_FILES["myFile"]["name"];
     $fileExt=pathinfo($_FILES["myFile"]["name"], PATHINFO_EXTENSION);
     if (move_uploaded_file($_FILES["myFile"]["tmp_name"], "images/".$id."-".time().".".$fileExt)){
         $file_name=$id."-".time().".".$fileExt;
@@ -81,5 +83,12 @@ if ($_FILES["myFile"]["error"] === 0){
         echo "upload failed";
     }
 }else{
+    if(isset($_POST["noAvatarPic"])){
+        $noAvatarPic=null;
+        $sqlPic="UPDATE users SET image=? WHERE id=? ";
+        $stmtPic=$db_host->prepare($sqlPic);
+        $stmtPic->execute([$noAvatarPic, $id]);
+        echo "<script> alert('修改成功!'); window.location.href='user.php?id=$id'</script>";
+    }
     echo "<script> alert('修改成功!'); window.location.href='user.php?id=$id'</script>";
 }

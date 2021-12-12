@@ -36,6 +36,12 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
 
     <!-- 此處新增css檔 -->
     <link rel="stylesheet" href="css/ou-style.css?time=<?=time()?>">
+    <style>
+        .delete-avatar-btn{
+            display: inline-block;
+            cursor: pointer;
+        }
+    </style>
     <!-- Css檔 end   -->
 
 
@@ -65,7 +71,15 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
                             <label for="account" class="col-3 col-form-label">奴才帳號</label>
                             <div class="col-9">
                                 <input id="account" name="account" type="text" class="form-control"
-                                value="<?=$rowUser["email"]?>" readonly>
+                                value="<?=$rowUser["account"]?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label for="email" class="col-3 col-form-label">奴才email</label>
+                            <div class="col-9">
+                                <input id="email" name="email" type="text" class="form-control"
+                                       value="<?=$rowUser["email"]?>">
+                                <div id="emailErr" class="emailErr">  </div>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -196,13 +210,17 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
                                 <img class="cover-fit" src="images/avatar_user.png" alt="">
                             <?php endif; ?>
                             <figure id="show" class="user-avatar ratio ratio-1x1 figure-preview">
+                                <input id="no-avatar-pic" type="hidden" name="noAvatarPic" value="">
                             </figure>
                             <div class="avatar-edit">
                                 <div class="edit-font">
                                     <label for="fileUpload" class="custom-upload-btn">
                                         <input id="fileUpload" type="file" class="edit-button" name="myFile">
-                                        <i class="edit-icon fas fa-edit"></i>
+                                        <i class="edit-icon fas fa-edit me-3"></i>
                                     </label>
+                                    <div id="delete-avatar-btn" class="delete-avatar-btn">
+                                        <i class="edit-icon fas fa-trash-alt"></i>
+                                    </div>
                                 </div>
                             </div>
                         </figure>
@@ -225,6 +243,8 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script>
     let form=document.querySelector("#form"),
+        email=document.querySelector("#email"),
+        emailErr=document.querySelector("#emailErr"),
         password=document.querySelector("#password"),
         passwordErr=document.querySelector("#passwordErr"),
         repassword=document.querySelector("#repassword"),
@@ -237,14 +257,22 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
         zipErr=document.querySelector("#zipErr"),
         submitBtn=document.querySelector("#submitBtn");
 
+    const regEmail=/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     const regPassword=/.*[A-Z]+.*[0-9]+.*/;
     const regMobile=/^09\d{8}$/;
 
 
         submitBtn.addEventListener("click", function(e){
             e.preventDefault();
-            passwordErr.innerText=repasswordErr.innerText=nameErr.innerText=mobileErr.innerText=zipErr.innerText="";
-            password.style.border=repassword.style.border=name.style.border=mobile.style.border=zip.style.border="";
+            emailErr.innerText=passwordErr.innerText=repasswordErr.innerText=nameErr.innerText=mobileErr.innerText=zipErr.innerText="";
+            email.style.border=password.style.border=repassword.style.border=name.style.border=mobile.style.border=zip.style.border="";
+            if (email.value === ""){
+                emailErr.innerText="email不能留空!"
+                email.style.border="1px solid red";
+            } else if (!regEmail.test(email.value)){
+                emailErr.innerText="email格式錯誤!"
+                email.style.border="1px solid red";
+            }
             if (password.value === ""){
                 passwordErr.innerText="密碼不能留空!"
                 password.style.border="1px solid red";
@@ -274,7 +302,7 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
                 zipErr.innerText = "郵遞區號應為3碼或5碼";
                 zip.style.border="1px solid red";
             }
-            if (passwordErr.innerText==="" && repasswordErr.innerText==="" && nameErr.innerText==="" && mobileErr.innerText==="" && zipErr.innerText===""){
+            if (emailErr.innerText==="" && passwordErr.innerText==="" && repasswordErr.innerText==="" && nameErr.innerText==="" && mobileErr.innerText==="" && zipErr.innerText===""){
                 form.submit();
             }
         })
@@ -287,8 +315,14 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
         $("#show").empty();
 
        reader.addEventListener("load", function(event){
-           $("#show").append(`<img class="cover-fit" src="${event.target.result}">`)
+           $("#show").append(`<img class="cover-fit" src="${event.target.result}">`);
+           $("#show").css("background", "#ccc");
        })
+    })
+
+    $("#delete-avatar-btn").click(function(){
+        $("#show").append(`<img class="cover-fit" src="images/avatar_user.png">`);
+        $("#no-avatar-pic").val("avatar_user.png");
     })
 </script>
 
