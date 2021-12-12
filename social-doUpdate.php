@@ -1,17 +1,15 @@
 <?php
 
-$article_title=$_POST["article_title"];
-$article_content=$_POST["article_content"];
-$article_cate=$_POST["article_cate"];
+$title=$_POST["title"];
+$content=$_POST["content"];
+$category=$_POST["category"];
+$now=date("Y-m-d H:i:s");
+
+require_once ("db-connect.php");
+
 $id=$_POST["id"];
 
-require_once ("../db-connect.php");
-
-
-$sql="UPDATE social_forum SET 
-                        article_title='$article_title', 
-                        article_content='$article_content', 
-                        article_cate='$article_cate' WHERE id='$id'";
+$sql="UPDATE social_forum SET title='$title', content='$content', category='$category' WHERE id='$id'";
 //echo $sql;
 //exit();
 
