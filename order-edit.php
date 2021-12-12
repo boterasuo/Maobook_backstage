@@ -197,9 +197,7 @@ session_start();
                         <div class="card-header d-flex justify-content-between" title="訂單編號： <?= $id ?>">
                             <a class="text-muted"><i class="fas fa-table me-1 end-0"></i>
                                 訂單內容</a>
-                            <a href="order-edit.php?id=<?= $id ?>">
-                                <i class="fas fa-turn-up me-1 end-0 text-muted" title="查看會員資料"></i>
-                            </a>
+                           
                         </div>
                         <div class="card-body">
                             <!--    本頁 內容    -->
