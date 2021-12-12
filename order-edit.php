@@ -3,7 +3,7 @@
 require_once("pdo-connect.php");
 if (isset($_GET["id"])):
     $id = $_GET["id"]; //order id
-    $sqlOrder = "SELECT * FROM user_order WHERE id=?";//從訂單抓資料
+    $sqlOrder = "SELECT * FROM user_order WHERE id=? ";//從訂單抓資料
     $stmtOrder = $db_host->prepare($sqlOrder);
     try {
         $stmtOrder->execute([$id]);
@@ -231,8 +231,8 @@ endif;
                                             <td class="text-end"><?= $value["price"] ?>
                                                 <input type="hidden" name="price" value="<?= $value["price"] ?>">
                                             </td>
-                                            <td class="text-center"><input type="textbox" name="amount"
-                                                                           class="= my-0 col-4"
+                                            <td class="text-center"><input name="amount"  type="number"
+                                                                           class="= my-0 col-5"
                                                                            value="<?= $value["amount"] ?>">
                                             </td>
                                             <td class="text-end">
@@ -252,18 +252,18 @@ endif;
                                                             class="fas fa-trash-alt"></i></a></td>
                                         </tr>
 
+                                        <!-- POST-->
+                                        <!-- 1.product_id 商品編號-->
+
+                                        <input type="text" name="product_id" value="<?= $order_id ?>">
+                                        <!-- 2.產品數量 -->
+                                        <!--                                    <input type="hidden" name="amount" value="--><?//= $value["amount"] ?><!--">-->
+                                        <!-- 3.user_id 訂購人ID -->
+                                        <input type="text" name="order_id" value="<?= $rowOrder["user_id"] ?>">
+                                        <!--4.order_detail.order_id = user_order.id-->
+                                        <input type="text" name="id" value="<?= $id ?>">
                                     <?php endforeach; ?>
-                                    <!-- POST-->
-                                    <!-- 1.product_id 商品編號-->
-                                    <!-- 個位數-->
-                                    <?php $rowOrderDetailArr = sprintf("%01d", $rowOrderDetailArr); ?>
-                                    <input type="hidden" name="product_id" value="<?= $rowOrderDetailArr[$order_id] ?>">
-                                    <!-- 2.產品數量 -->
-                                    <input type="hidden" name="amount" value="<?= $value["amount"] ?>">
-                                    <!-- 3.user_id 訂購人ID -->
-                                    <input type="hidden" name="order_id" value="<?= $rowOrder["user_id"] ?>">
-                                    <!--4.order_detail.order_id = user_order.id-->
-                                    <input type="hidden" name="id" value="<?= $id ?>">
+
                                     </tbody>
                                     <tfoot>
                                     <tr>
@@ -274,7 +274,7 @@ endif;
                                 <!--表格end-->
 
                                 <div class="text-end">
-                                    <a class="btn btn-secondary">放棄修改</a>
+                                    <a href="order-detail.php?id=<?=$rowOrder["user_id"]?>" class="btn btn-secondary">放棄修改</a>
                                     <button id="submitBtn" href="order-detail-doUpdate.php" class="btn btn-warning"
                                             type="submit">儲存
                                     </button>
@@ -285,15 +285,13 @@ endif;
                 </div>
                 <!-- 左側col end -->
                 <!--取消訂單-->
-
                 <div id="showarea2">
                     <div id="showBox2">
                         <div class="text">確認取消該筆訂單?</div>
                         <div>
                             <a href="order-doCancel.php?id=<?= $statusRow["id"] ?>"
-                               class=" btn btn-danger d-inline-flex" title="取消訂單">確定</a>
-                            <a id="closeBtn2" onclick="openWindow()" class="btn btn-secondary d-inline-flex "
-                               title="前往會員管理中心~">取消</a>
+                               class=" btn btn-danger d-inline-flex" >確定</a>
+                            <a id="closeBtn2"  href="user-edit.php?id=<?=$rowOrder["user_id"]?>" class="btn btn-secondary d-inline-flex ">取消</a>
                         </div>
                     </div>
                 </div>
