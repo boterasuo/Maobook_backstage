@@ -27,17 +27,17 @@
                data-bs-toggle="dropdown"
                aria-expanded="false"><i class="fas fa-user fa-fw  "></i>使用者</a>
             <ul class="dropdown-menu dropdown-menu-end mt-2 " aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">使用者設定</a></li>
+<!--                 <li><a class="dropdown-item" href="#!">使用者設定</a></li> -->
                 <li>
                     <hr class="dropdown-divider"/>
                 </li>
-                <li><a class="dropdown-item" href="fontawesome.php">FontAwesome</a></li>
-                <li><a class="dropdown-item" href="empty-file.php">板模</a></li>
-                <li>
-                    <hr class="dropdown-divider"/>
-                </li>
-                <li><a class="dropdown-item" href="#!">說明文件</a></li>
-                <li><a class="dropdown-item" href="#!">活動紀錄</a></li>
+<!--                 <li><a class="dropdown-item" href="fontawesome.php">FontAwesome</a></li> -->
+<!--                 <li><a class="dropdown-item" href="empty-file.php">板模</a></li> -->
+<!--                 <li> -->
+<!--                     <hr class="dropdown-divider"/> -->
+<!--                 </li> -->
+<!--                 <li><a class="dropdown-item" href="#!">說明文件</a></li> -->
+<!--                 <li><a class="dropdown-item" href="#!">活動紀錄</a></li> -->
                 <li>
                     <hr class="dropdown-divider"/>
                 </li>
@@ -72,7 +72,7 @@
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="order-list.php"  title="oder-list.php">訂單查詢</a>
-                            <a class="nav-link" href="lost-cart.php" title="lost-cart.php">新增訂單</a>
+                            <a class="nav-link" href="lost-cart.php" title="order-add.php">新增訂單</a>
 
                         </nav>
                     </div>
@@ -94,7 +94,7 @@
                             <a class="nav-link" href="product_add.php" title="product_add.php">新增商品</a>
 <!--                    <a class="nav-link" href="product-inventory.php" title="product-inventory.php">庫存管理</a>-->
 <!--                    <a class="nav-link" href="product-detail.php" title="product-detail.php">商品描述模板</a>-->
-                            <a class="nav-link" href="product-category.php" title="product-category.php">分類管理</a>
+<!--                             <a class="nav-link" href="product-category.php" title="product-category.php">分類管理</a> -->
 
                         </nav>
                     </div>
