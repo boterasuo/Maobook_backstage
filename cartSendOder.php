@@ -1,5 +1,6 @@
 <?php
 //連線到本地資料庫
+session_start();
 require_once("pdo-connect.php");
 $cartCount = 0;
 foreach ($_SESSION["cart"] as $key => $value1) {

@@ -1,4 +1,5 @@
 <?php
+session_start();
 //連線到本地資料庫
 require_once("pdo-connect.php");
 $URL = $_SERVER['PHP_SELF'];//取得當前php檔名，傳入清空購物車

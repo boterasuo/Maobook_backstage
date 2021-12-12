@@ -1,5 +1,6 @@
 <?php
 //連線到本地資料庫
+session_start();
 require_once("pdo-connect.php");
 //購物車商品數量總數計算
 if (!isset($_SESSION['cart'])) {
