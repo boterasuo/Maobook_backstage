@@ -63,13 +63,14 @@ if (isset($_GET["id"])):
 
 
 //選擇訂單總金額、產品名稱、產品價格、產品圖片從[order-detail]加入到[products]參考ON在order_detail.product_id = products.id
-    $sql = "SELECT order_detail.amount, products.name, products.price, products.img FROM order_detail
-JOIN products ON order_detail.product_id = products.id
+    $sql = "SELECT order_detail.id, order_detail.amount, order_detail.product_id, products.name, products.price, products.img FROM order_detail JOIN products ON order_detail.product_id = products.id
 WHERE order_detail.order_id = ?";
     $stmt = $db_host->prepare($sql);
     try {
         $stmt->execute([$id]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//        var_dump(count($rows));
+
 //    $rowOrder=$stmtOrder->fetch();
     } catch (PDOException $e) {
         echo "取得訂單細節錯誤<br>";
@@ -105,7 +106,7 @@ WHERE user_order.id = ?";
 
 endif;
 //if結束
-
+session_start();
 //var_dump($rowOrderList);
 //echo $statusRows;
 ?>
@@ -217,27 +218,30 @@ endif;
 
                                     <?php
                                     $total = 0;
-                                    foreach ($rows as $value): ?>
+                                    $orderDetailsCount=count($rows);
+                                    $_SESSION["orderDetailsCount"]=$orderDetailsCount;
+                                    for($i=0; $i<count($rows); $i++): ?>
                                         <tr>
                                             <td>
-                                                <a href="http://localhost/pj_maobook/cart-product-detial.php?name=<?= $value["name"] ?>"
-                                                   title="<?= $value["name"] ?>">
-                                                    <img src="images/product_images/<?= $value["img"] ?>" alt=""
+                                                <a href="http://localhost/pj_maobook/cart-product-detial.php?name=
+                                                <?= $rows[$i]["name"] ?>"
+                                                   title="<?= $rows[$i]["name"] ?>">
+                                                    <img src="images/product_images/<?= $rows[$i]["img"] ?>" alt=""
                                                          width="100px"></a>
                                             </td><!-- 商品圖片 -->
-                                            <td><?= $value["name"] ?></td> <!-- 商品名稱 -->
-                                            <input type="hidden" name="price" value="<?= $value["img"] ?>">
+                                            <td><?= $rows[$i]["name"] ?></td> <!-- 商品名稱 -->
+                                            <input type="hidden" name="price" value="<?= $rows[$i]["img"] ?>">
 
-                                            <td class="text-end"><?= $value["price"] ?>
-                                                <input type="hidden" name="price" value="<?= $value["price"] ?>">
+                                            <td class="text-end"><?= $rows[$i]["price"] ?>
+                                                <input type="hidden" name="price" value="<?= $rows[$i]["price"] ?>">
                                             </td>
-                                            <td class="text-center"><input name="amount"  type="number"
+                                            <td class="text-center"><input name="amount<?=$i?>" type="number"
                                                                            class="= my-0 col-5"
-                                                                           value="<?= $value["amount"] ?>">
+                                                                           value="<?= $rows[$i]["amount"] ?>">
                                             </td>
                                             <td class="text-end">
                                                 <?php
-                                                $subtotal = $value["amount"] * $value["price"];
+                                                $subtotal = $rows[$i]["amount"] * $rows[$i]["price"];
                                                 echo $subtotal;
                                                 //                            $total=$total+$subtotal;
                                                 $total += $subtotal;
@@ -251,18 +255,26 @@ endif;
                                                         href="order-detail-doUpdate.php?id=<?= $id ?>&amount=0"> <i
                                                             class="fas fa-trash-alt"></i></a></td>
                                         </tr>
-
                                         <!-- POST-->
                                         <!-- 1.product_id 商品編號-->
-
-                                        <input type="text" name="product_id" value="<?= $order_id ?>">
-                                        <!-- 2.產品數量 -->
-                                        <!--                                    <input type="hidden" name="amount" value="--><?//= $value["amount"] ?><!--">-->
+<!--                                        <td><input type="hidden" name="product_id" value="-->
+<!--                                        --><?//= $rows[$i]["product_id"] ?><!--">-->
+<!--                                        </td>-->
+                                        <!-- 2.訂單細節編號 -->
+                                        <td>
+                                            <input type="hidden" name="order_detail_id<?=$i?>" value="
+                                            <?= $rows[$i]["id"] ?>">
+                                        </td>
                                         <!-- 3.user_id 訂購人ID -->
-                                        <input type="text" name="order_id" value="<?= $rowOrder["user_id"] ?>">
+<!--                                        <td>-->
+<!--                                            <input type="hidden" name="order_id" value="-->
+<!--                                            --><?//= $rowOrder["user_id"] ?><!--">-->
+<!--                                        </td>-->
                                         <!--4.order_detail.order_id = user_order.id-->
-                                        <input type="text" name="id" value="<?= $id ?>">
-                                    <?php endforeach; ?>
+                                        <td><input type="hidden" name="id" value="<?= $id ?>"></td>
+
+
+                                    <?php endfor; ?>
 
                                     </tbody>
                                     <tfoot>
@@ -274,7 +286,7 @@ endif;
                                 <!--表格end-->
 
                                 <div class="text-end">
-                                    <a href="order-detail.php?id=<?=$rowOrder["user_id"]?>" class="btn btn-secondary">放棄修改</a>
+                                    <a href="order-detail.php?id=<?= $rowOrder["user_id"] ?>" class="btn btn-secondary">放棄修改</a>
                                     <button id="submitBtn" href="order-detail-doUpdate.php" class="btn btn-warning"
                                             type="submit">儲存
                                     </button>
@@ -290,8 +302,9 @@ endif;
                         <div class="text">確認取消該筆訂單?</div>
                         <div>
                             <a href="order-doCancel.php?id=<?= $statusRow["id"] ?>"
-                               class=" btn btn-danger d-inline-flex" >確定</a>
-                            <a id="closeBtn2"  href="user-edit.php?id=<?=$rowOrder["user_id"]?>" class="btn btn-secondary d-inline-flex ">取消</a>
+                               class=" btn btn-danger d-inline-flex">確定</a>
+                            <a id="closeBtn2" href="user-edit.php?id=<?= $rowOrder["user_id"] ?>"
+                               class="btn btn-secondary d-inline-flex ">取消</a>
                         </div>
                     </div>
                 </div>
@@ -341,7 +354,7 @@ endif;
                                         </div>
                                     </div>
                                     <div class="text-end">
-
+                                        <?php if ($statusRow["status"]!=1)?>
                                         <div id="showBtn2" class="d-inline-block cursor-pointer">
                                             <a href="#" class="btn mt-2 text-end btn btn-secondary">
                                                 取消訂單
@@ -364,7 +377,7 @@ endif;
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <a><i class="fas fa-user-edit me-1 end-0"></i>客戶資訊</a>
-                            <a href="user-edit.php?id=<?=$rowOrder["user_id"]?>">
+                            <a href="user-edit.php?id=<?= $rowOrder["user_id"] ?>">
                                 <i class="fas fa-external-link-alt me-1 end-0 text-muted" title="查看會員資料"></i>
                             </a>
                         </div>
