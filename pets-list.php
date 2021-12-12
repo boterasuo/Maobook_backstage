@@ -32,12 +32,13 @@ try{
     echo $e->getMessage();
 }
 
-$sqlUser="SELECT id, account, name FROM users WHERE valid!=9";
+$sqlUser="SELECT id, account, name, valid FROM users WHERE valid!=9";
 $stmtUser=$db_host->prepare($sqlUser);
 $stmtUser->execute();
 $userRows = $stmtUser->fetchAll(PDO::FETCH_ASSOC);
 $userAccount = array_column($userRows, "account", "id");
 $userName = array_column($userRows, "name", "id");
+$userValid = array_column($userRows, "valid", "id");
 
 $now=date("Y-m-d");
 $sqlPetCount="SELECT COUNT(id) AS pet_count FROM pets WHERE DATE(created_at)= ? ";
@@ -107,7 +108,7 @@ $totalPet=array_column($rowTotalPet, "pet_total_count", "category");
                                 <div class="pet-count-card">
                                     <div>今日新增毛孩數 <i class="fas fa-paw"></i></div>
                                 </div>
-                                <div class="px-3 fs-2"><?=$petCount["pet_count"]?></div>
+                                <div class="px-3 fs-2"><?=$petCount["pet_count"]?> <span class="fs-6">個</span></div>
                             </div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
                                 <a class="small text-white stretched-link" href="pets-list.php?petToday=<?=$now?>">
@@ -206,7 +207,12 @@ $totalPet=array_column($rowTotalPet, "pet_total_count", "category");
                                         <?php endif; ?>
                                     </td>
                                     <td><?= $userAccount[$pet["user_id"]] ?></td>
-                                    <td><?= $userName[$pet["user_id"]] ?></td>
+                                    <td>
+                                        <?= $userName[$pet["user_id"]] ?>
+                                        <?php if($userValid[$pet["user_id"]]==0): ?>
+                                        <div class="data-time d-inline-block">封鎖中</div>
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?= $pet["created_at"] ?></td>
                                     <td>
                                         <a class="btn btn-mao-primary" href="pet-info.php?id=<?=$pet["id"]?>"

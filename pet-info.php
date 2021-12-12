@@ -27,7 +27,7 @@ try{
     echo $e->getMessage();
 }
 
-$sqlUser="SELECT pets.id, users.id, users.account, users.name, users.image FROM pets
+$sqlUser="SELECT pets.id, users.id, users.account, users.name, users.image, users.valid FROM pets
 JOIN users ON pets.user_id = users.id
 WHERE pets.id=?";
 $stmtUser=$db_host->prepare($sqlUser);
@@ -39,7 +39,7 @@ try{
 }
 
 $user_id=$rowUser["id"];
-$sqlOtherPet="SELECT pets.id, pets.name, pets.img FROM pets WHERE user_id=? AND valid=1";
+$sqlOtherPet="SELECT id, name, img FROM pets WHERE user_id=? AND valid=1";
 $stmtOtherPet=$db_host->prepare($sqlOtherPet);
 try{
     $stmtOtherPet->execute([$user_id]);
@@ -192,6 +192,9 @@ $petCount=$stmtOtherPet->rowCount();
                             <th>奴才帳號</th>
                             <td>
                                 <?=$rowUser["account"]?>
+                                <?php if($rowUser["valid"]==0): ?>
+                                <div class="data-time d-inline-block">封鎖中</div>
+                                <?php endif; ?>
                                 <a class="btn btn-mao-primary btn-sm ms-3"
                                    href="user.php?id=<?=$rowUser["id"]?>">檢視會員資料</a>
                             </td>
