@@ -104,6 +104,9 @@ try {
             margin-top: 80px;
 
         }
+        .num{
+            width: 50px;
+        }
 
     </style>
 
@@ -146,16 +149,14 @@ try {
                             ?>
                             <tr>
                                 <td class="align-middle"><a href="cart-product-detial.php?name=<?= $value["name"] ?>"><?= $value["name"] ?></a></td>
-                                <td class="text-end align-middle"><?= $value["price"] ?></td>
-                                <td class="text-end align-middle"><?= $value["num"] ?></td>
-                                <td class="text-end align-middle"><?= $value["price"] * $value["num"] ?></td>
-
-                                <td class="text-end"><a href="cartCleanItem.php?id=<?= $value["id"] ?>"><i
-                                                class="far fa-2x fa-trash-alt"></i></a></td>
+                                <td class=" text-end align-middle"><?= $value["price"] ?></td>
+                                <td class="text-end align-middle"><?= $value["num"]?></td>
+                                <td class=" text-end align-middle"><?= $value["price"] * $value["num"] ?></td>
+                                <td class="text-end"><a href="cartCleanItem.php?id=<?= $value["id"] ?>"><i class="far fa-2x fa-trash-alt"></i></a></td>
                             </tr>
                         <?php endforeach; ?>
                         <tr>
-                            <td colspan="4" class="text-end">總計：<?= $totalPrice ?></td>
+                            <td colspan="4" class=" text-end">總計：<?= $totalPrice ?></td>
                         </tr>
                     <?php else: ?>
                         <tr>
@@ -271,7 +272,15 @@ try {
         }
 
     }
+    //接住php變數
+    function sendCheck() {
+        if (!okaccount) {alert('請確認是否輸入"會員帳號" ! ');}
+        else if (count === 0) {alert('購物車"沒有"商品 ! ');}
+        else if(confirm('確定要送出訂單嗎 ? ')===true) {
+            document.location.href ="cartSendOder.php";
+        }
 
+    }
 
 
 

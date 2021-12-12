@@ -6,11 +6,10 @@ $URL = $_SERVER['PHP_SELF'];//取得當前php檔名，傳入清空購物車
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
     $cartCount = 0;
-}
-else{
+} else {
     $cartCount = 0;
     foreach ($_SESSION["cart"] as $key => $value1) {
-        $cartCount+=$value1["num"];
+        $cartCount += $value1["num"];
     }
 }
 
@@ -44,20 +43,20 @@ if (isset($_GET["id"])) {
                 "price" => $row2["price"]
             ];
             if (isset($_SESSION['cart'][$id])) { //判斷是否有重複品項，若直接對數量+1
-                $product= $_SESSION['cart'][$id];
-                $productStock=$product["num"];
-                if(($stock-$productStock)>0) { //判斷庫存，不可為0，因為還為加入商品
+                $product = $_SESSION['cart'][$id];
+                $productStock = $product["num"];
+                if (($stock - $productStock) > 0) { //判斷庫存，不可為0，因為還為加入商品
                     $product["num"] = $product["num"] + 1;
                     $_SESSION['cart'][$id] = $product;
-                    $cartCount+=1;
+                    $cartCount += 1;
                     echo "<script> alert('已加入購物車');</script> ";
-                }else{
+                } else {
                     echo "<script> alert('!!!!庫存不足!!!!');</script> ";
                 }
-            }else {//若沒有則直接存入第二陣列
+            } else {//若沒有則直接存入第二陣列
                 if ($stock - 1 >= 0) {
                     $_SESSION['cart'][$id] = $item;
-                    $cartCount+=1;
+                    $cartCount += 1;
                     echo "<script> alert('已加入購物車');</script> ";
                 } else {
                     echo "<script> alert('!!!!庫存不足!!!!');</script> ";
@@ -73,7 +72,6 @@ if (isset($_GET["id"])) {
 } else {
     $id = 0;
 }
-
 
 
 //<!--做分頁-->
@@ -173,7 +171,9 @@ if (isset($_GET["id"])) {
             </div>
             <main>
                 <div class="row">
-                    <?php foreach ($row1 as $value): ?>
+                    <?php foreach ($row1
+
+                    as $value): ?>
                     <div class="col-md-3 mb-5">
                         <div class="card"
                         ">
@@ -211,11 +211,8 @@ if (isset($_GET["id"])) {
 
 <script>
     let count = <?=$cartCount?>; //接住php變數
-    //let stock = <?//=$stock?>//;
-    // let addcart = document.querySelector("#addcart");
 
     //安全檢查刪除購物車
-
     function doClean() {
         if (count === 0) {
             alert('購物車"沒有"商品 ! ');
