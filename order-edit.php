@@ -288,7 +288,7 @@ session_start();
 
                                 <div class="text-end">
                                     <a href="order-detail.php?id=<?= $rowOrder["user_id"] ?>" onClick="return checkLeave()" class="btn btn-secondary">放棄修改</a>
-                                    <button id="submitBtn" href="order-detail-doUpdate.php" class="btn btn-warning"
+                                    <button id="submitBtn" onClick="return checkSave()" href="order-detail-doUpdate.php" class="btn btn-warning"
                                             type="submit">儲存
                                     </button>
                                 </div>
@@ -493,6 +493,11 @@ session_start();
     }
     function checkLeave(){
         if(!confirm('放棄所有變更?')){
+            return false;
+        }
+    }
+    function checkSave() {
+        if (!confirm('確定儲存變更 ?')) {
             return false;
         }
     }
