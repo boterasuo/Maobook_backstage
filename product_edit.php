@@ -159,6 +159,8 @@ try{
                     <div class="mb-3">
                         <label for="img">商品圖片</label>
                         <input id="img" type="text" name="img" class="form-control" value="<?=$row["img"]?>">
+                        <br>
+                        <img class="img-responsive" src="./images/product_images/<?=$row["img"]?>" alt="" width="250px" height="250px">
                     </div>
 
                     <button class="btn btn-primary" type="submit">送出</button>
