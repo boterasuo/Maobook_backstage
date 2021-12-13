@@ -94,7 +94,7 @@ if ($_FILES["myFile"]["error"] === 0){
         echo "upload failed";
     }
 }else{
-    if(isset($_POST["noAvatarPic"])){
+    if(isset($_POST["noAvatarPic"]) && $_POST["noAvatarPic"]=="avatar_user.png"){
         $noAvatarPic=null;
         $sqlPic="UPDATE users SET image=? WHERE id=? ";
         $stmtPic=$db_host->prepare($sqlPic);
