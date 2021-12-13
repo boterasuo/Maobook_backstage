@@ -281,7 +281,7 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
                 password.style.border="1px solid red";
             }
             if (repassword.value === ""){
-                repasswordErr.innerText="密碼不能留空!"
+                repasswordErr.innerText="確認密碼不能留空!"
                 repassword.style.border="1px solid red";
             } else if (password.value !== repassword.value){
                 repasswordErr.innerText="密碼不一致!"

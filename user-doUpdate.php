@@ -65,7 +65,8 @@ try{
 }
 
 //var_dump($_POST["noAvatarPic"]);
-
+//69~74判斷最後一次對大頭貼的編輯動作為何(上傳新圖 or 刪除)
+//因只要有修改圖片(上傳)$_FILES["myFile"]["error"]就是0, 即使再按刪除鍵還是一樣, 故要再加判斷修改error值
 if ($_POST["noAvatarPic"]=="avatar_user.png"){
     $_FILES["myFile"]["error"]=1;
     echo $_FILES["myFile"]["error"];
