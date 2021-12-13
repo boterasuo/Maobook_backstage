@@ -5,7 +5,7 @@ $content=$_POST["content"];
 $category=$_POST["category"];
 $now=date("Y-m-d H:i:s");
 
-require_once ("db-connect.php");
+require_once ("pdo-connect.php");
 
 $id=$_POST["id"];
 
