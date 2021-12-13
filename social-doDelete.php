@@ -2,7 +2,7 @@
 
 $id = $_GET["id"];
 
-require_once("db-connect.php");
+require_once("pdo-connect.php");
 
 require_once("style.php");
 require_once("main-nav.php");
