@@ -2,6 +2,7 @@
 
 require_once("style.php");
 require_once("main-nav.php");
+require_once("JS.php");
 
 ?>
 

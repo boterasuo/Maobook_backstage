@@ -9,6 +9,7 @@ if(isset($_GET["id"])){
 require_once ("pdo-connect.php");
 require_once("style.php");
 require_once("main-nav.php");
+require_once("JS.php");
 
 $sql="SELECT * FROM products WHERE id=?";
 $stmt=$db_host->prepare($sql);
