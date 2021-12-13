@@ -251,11 +251,11 @@ session_start();
                                                 <input type="hidden" name value="<?= $subtotal ?>">
                                             </td>
                                             <!-- 刪除按鈕-->
-                                            <td class="text-center">
+                                            <td class="text-center" title="刪除此項商品">
                                                 <a href="order-detail-event-doDelete.php?
                                                         order_id=<?=$id?>&
                                                         order_detail_id=<?=$rows[$i]["id"]?>"
-                                                   onClick="return checkDel()">
+                                                   onClick="return checkDel()" >
                                                     <i class="fas fa-trash-alt"></i></a></td>
                                         </tr>
                                         <!-- POST-->
@@ -380,7 +380,7 @@ session_start();
                         <div class="card-body ">
                             <!--頭貼-->
                             <?php if ($rowUser != NULL): ?>
-                                <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家">
+                                <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家" TARGET="_blank">
                                     <img class="avatar rounded-circle float-start me-2"
                                          href="user.php?id=<?= $rowOrder["user_id"] ?>"
                                          src="images/<?= $rowUser["image"] ?>" alt=""></a>
@@ -391,7 +391,7 @@ session_start();
                                          src="images/default_avatar.png"
                                          alt=""></a>
                             <?php endif; ?>
-                            訂購人: <a href="user.php?id=<?= $rowOrder["user_id"] ?>">
+                            訂購人: <a href="user-order.php?id=<?= $rowOrder["user_id"] ?>" title="查看【<?= $orderUserRow["name"] ?>】的所有訂單" target="_blank">
                                 <?= $orderUserRow["name"] ?>
                             </a>
                             <p><?php if ($rowUser != NULL): ?>
