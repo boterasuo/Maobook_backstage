@@ -5,7 +5,7 @@ if(isset($_GET["id"])){
 }else{
     $id=0;
 }
-require_once ("db-connect.php");
+require_once ("pdo-connect.php");
 $sql="SELECT * FROM social_forum WHERE id='$id' AND valid=1";
 $result=$conn->query($sql);
 $userExist=$result->num_rows;
