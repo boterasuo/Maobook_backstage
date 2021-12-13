@@ -56,6 +56,7 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
                 <h1 class="mt-4">編輯<?=$rowUser["name"]?>的個人資料</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
+                    <li class="breadcrumb-item"><a href="user-list.php">會員列表</a></li>
                     <li class="breadcrumb-item"><a href="user.php?id=<?=$rowUser["id"]?>">會員資料</a></li>
                     <li class="breadcrumb-item active">編輯會員資料</li>
                 </ol>

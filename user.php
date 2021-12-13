@@ -57,6 +57,7 @@ $petTotalCount=$stmtTotalPet->rowCount();
                 <h1 class="mt-4"><?=$rowUser["name"]?>的個人資料</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
+                    <li class="breadcrumb-item"><a href="user-list.php">會員列表</a></li>
                     <li class="breadcrumb-item active">會員資料</li>
                 </ol>
 
