@@ -27,17 +27,20 @@
                data-bs-toggle="dropdown"
                aria-expanded="false"><i class="fas fa-user fa-fw  "></i>使用者</a>
             <ul class="dropdown-menu dropdown-menu-end mt-2 " aria-labelledby="navbarDropdown">
-                <!--                 <li><a class="dropdown-item" href="#!">使用者設定</a></li> -->
-                <li>
-                    <hr class="dropdown-divider"/>
-                </li>
-                <!--                 <li><a class="dropdown-item" href="fontawesome.php">FontAwesome</a></li> -->
-                <!--                 <li><a class="dropdown-item" href="empty-file.php">板模</a></li> -->
-                <!--                 <li> -->
-                <!--                     <hr class="dropdown-divider"/> -->
-                <!--                 </li> -->
-                <!--                 <li><a class="dropdown-item" href="#!">說明文件</a></li> -->
-                <!--                 <li><a class="dropdown-item" href="#!">活動紀錄</a></li> -->
+<!--                                 <li><a class="dropdown-item" href="#!">使用者設定</a></li>-->
+<!--                <li>-->
+<!--                    <hr class="dropdown-divider"/>-->
+<!--                </li>-->
+<!--                                 <li><a class="dropdown-item" href="fontawesome.php">FontAwesome</a></li>-->
+<!--        <li><a class="dropdown-item" href="empty-file.php">板模</a></li>-->
+        <li><a class="dropdown-item" href="sign-in.php" >登入</a></li>
+        <li><a class="dropdown-item " href="sign-up.php">註冊</a></li>
+
+<!--                         <li>-->
+<!--                                     <hr class="dropdown-divider"/>-->
+<!--                                 </li>-->
+<!--                                 <li><a class="dropdown-item" href="#!">說明文件</a></li>-->
+<!--                                 <li><a class="dropdown-item" href="#!">活動紀錄</a></li>-->
                 <li>
                     <hr class="dropdown-divider"/>
                 </li>
