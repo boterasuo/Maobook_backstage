@@ -34,7 +34,8 @@ $sql="INSERT INTO users( account , name , email, mobile , password , valid , cre
 
 $stmt=$db_host->prepare($sql);
 try{
-    $stmt->execute([$account, $name, $email, $mobile, $crPassword, $valid, $now]);
+    $stmt->execute([$account, $name, $email, $mobile, $password, $valid, $now]);
+    echo "<script> alert('註 冊 成 功'); window.location.href='user.php?id=$id'</script>";
     header("location: sign-in.php");
 }catch(PDOException $e){
     echo $e->getMessage();
