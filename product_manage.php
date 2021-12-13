@@ -1,9 +1,6 @@
 <?php
 
 require_once ("pdo-connect.php");
-require_once("style.php");
-require_once("main-nav.php");
-
 
 $sql_Brand="SELECT * FROM brand_category";
 $stmt_Brand=$db_host->prepare($sql_Brand);
@@ -45,41 +42,93 @@ $productCount=$stmt->rowCount();
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Product Edit</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="Description" content="MaoBook小組專題報告"/>
+    <meta name="Content-Language" content="zh-TW">
+    <meta name="author" content="Team MaoBook"/>
+    <!--  網站圖示  -->
+    <link rel="apple-touch-icon" type="image/png" href="images/logo-nbg.png"/>
+    <link rel="shortcut icon" type="image/png" href="images/logo-nbg.png"/>
+    <link rel="mask-icon" type="image/png" href="images/logo-nbg.png"/>
+
+    <title>商品資料管理</title>
+
+    <?php
+    require_once("style.php");
+    require_once("main-nav.php");
+    ?>
 
 </head>
 
 <style>
+
+    table {
+        table-layout: fixed;
+        word-wrap:break-word;
+        text-align:center
+    }
+    #th-id{
+        width: 4%;
+    }
+    #th-name{
+        width: 9%;
+    }
+    #th-description{
+        width: 35%;
+    }
+    #th-price{
+        width: 4.5%;
+    }
+    #th-stock{
+        width: 3.5%;
+    }
+    #th-product, #th-pet, #th-brand{
+        width: 4%;
+    }
+    #th-time{
+        width: 5%;
+    }
+    #th-img{
+        width:22%;
+    }
+
 </style>
+
 <body>
 
 <div class="container">
-    <div class="row align-items-center">
-    <h1 class="text-center">商品資料管理</h1>
-    <p class="text-center">目前共<?php echo $productCount;?>筆資料　<a class="btn btn-primary" role="button" href="product_add.php">新增商品資料</a></p>
+    <div class="container px-0">
+        <main class="main px-5">
+            <div class="container-fluid px-0 ">
+    <h1 class="mt-4">商品資料管理</h1>
+                <ol class="breadcrumb my-4 ">
+                    <li class="breadcrumb-item"><a href="home.php">首頁</a></li>
+                    <li class="breadcrumb-item active">商品資料管理</li>
+                </ol>
+
+    <p class="text">目前共<?php echo $productCount;?>筆資料　<a class="btn btn-primary" role="button" href="product_add.php">新增商品資料</a></p>
     </div>
+    </div>
+
 
     <table class="table table-bordered table-sm">
         <thead class="table-light">
         <tr>
-            <th>商品編號</th>
-            <th>商品名稱</th>
-            <th>價格</th>
-            <th>描述</th>
+            <th id="th-id">商品編號</th>
+            <th id="th-name">商品名稱</th>
+            <th id="th-price">價格</th>
+            <th id="th-description">描述</th>
 <!--            <th>是否上架</th>-->
-            <th>品牌分類</th>
-            <th>產品分類</th>
-            <th>寵物分類</th>
-            <th>庫存</th>
-            <th>圖片</th>
-            <th>建立時間</th>
-            <th>功能</th>
+            <th id="th-brand">品牌分類</th>
+            <th id="th-product">產品分類</th>
+            <th id="th-pet">寵物分類</th>
+            <th id="th-stock">庫存</th>
+            <th id="th-img">圖片</th>
+            <th id="th-time">建立時間</th>
+            <th id="th-function">功能</th>
         </tr>
         </thead>
 
@@ -92,12 +141,12 @@ $productCount=$stmt->rowCount();
             echo "<td>".$row_result["id"]."</td>";
             echo "<td>".$row_result["name"]."</td>";
             echo "<td>".$row_result["price"]."</td>";
-            echo "<td>".$row_result["description"]."</td>";
+            echo "<td align='left'>".$row_result["description"]."</td>";
 
 
-            echo "<td>".$Brand_categoryArr[$row_result["brand_category"]]."</td>";
-            echo "<td>".$Product_categoryArr[$row_result["product_category"]]."</td>";
-            echo "<td>".$Pet_categoryArr[$row_result["pet_category"]]."</td>";
+            echo "<td align='left'>".$Brand_categoryArr[$row_result["brand_category"]]."</td>";
+            echo "<td align='left'>".$Product_categoryArr[$row_result["product_category"]]."</td>";
+            echo "<td align='left'>".$Pet_categoryArr[$row_result["pet_category"]]."</td>";
 
 
             echo "<td>".$row_result["stock_num"]."</td>";

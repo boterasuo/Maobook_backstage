@@ -26,13 +26,21 @@ try{
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Product Edit</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="Description" content="MaoBook小組專題報告"/>
+    <meta name="Content-Language" content="zh-TW">
+    <meta name="author" content="Team MaoBook"/>
+    <!--  網站圖示  -->
+    <link rel="apple-touch-icon" type="image/png" href="images/logo-nbg.png"/>
+    <link rel="shortcut icon" type="image/png" href="images/logo-nbg.png"/>
+    <link rel="mask-icon" type="image/png" href="images/logo-nbg.png"/>
+
+
+    <title>修改商品資料</title>
 
 </head>
 <body>
