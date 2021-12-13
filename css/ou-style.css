@@ -58,7 +58,7 @@
 }
 
 /*使用者資料編輯頁面*/
-.passwordErr, .nameErr, .mobileErr, .zipErr{
+.emailErr, .passwordErr, .nameErr, .mobileErr, .zipErr{
     color: red;
     font-size: 12px;
 }
