@@ -168,6 +168,7 @@ session_start();
         /*訂購人資訊 頭像*/
         .avatar {
             width: 60px;
+            height: 60px;
         }
 
     </style>
@@ -322,7 +323,7 @@ session_start();
                                             <!-- 3.status-->
                                             <select name="status" id="status" class="align-bottom"
                                                     form="form-user-order">
-                                                <option class="text-muted" value='<?= $statusRow["status"]; ?>'
+                                                <option class="text-muted"  value='<?= $statusRow["status"]; ?>'
                                                 ><?= $statusRow["name"] ?></option>
                                                 <option value="1">訂單成立</option>
                                                 <option value="2">已結帳</option>
@@ -379,24 +380,19 @@ session_start();
                         </div>
                         <div class="card-body ">
                             <!--頭貼-->
-                            <?php if ($rowUser != NULL): ?>
-                                <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家" TARGET="_blank">
-                                    <img class="avatar rounded-circle float-start me-2"
-                                         href="user.php?id=<?= $rowOrder["user_id"] ?>"
-                                         src="images/<?= $rowUser["image"] ?>" alt=""></a>
-                            <?php else: ?>
+                            <?php if (is_null($rowUser)): ?>
                                 <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家">
-                                    <img class="avatar rounded-circle float-start me-2"
-
+                                    <img class="avatar cover-fit rounded-circle float-start me-2"
                                          src="images/default_avatar.png"
                                          alt=""></a>
+                            <?php else: ?>
+                                <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家" TARGET="_blank">
+                                    <img class=" avatar cover-fit rounded-circle float-start me-2" src="images/<?=$rowUser["image"]?>" alt=""></a>
                             <?php endif; ?>
                             訂購人: <a href="user-order.php?id=<?= $rowOrder["user_id"] ?>" title="查看【<?= $orderUserRow["name"] ?>】的所有訂單" target="_blank">
                                 <?= $orderUserRow["name"] ?>
                             </a>
-                            <p><?php if ($rowUser != NULL): ?>
-                                    <?= $rowUser["mailing_email"] ?><?php else:{
-                                } endif; ?></p>
+                            <p> <?=$rowUser["mailing_email"]?></p>
                             <br>
                         </div>
                     </div>
@@ -413,15 +409,12 @@ session_start();
                             </div>
                             <div class="card-body ">
                                 <p>
-                                    <?php if ($rowUser != NULL): ?>
+                                    <?php if(isset($rowUser["mailing_name"])):?>
                                     收件人:　<?= $rowUser["mailing_name"] ?><br>
                                     地址：　<?= $rowUser["mailing_address"] ?><br>
                                     手機：　<?= $rowUser["mailing_phone"] ?><br>
                                     信箱：　<?= $rowUser["mailing_email"] ?></p>
-                                <?php else:{
-                                    echo "未登錄資訊";
-                                }
-                                endif; ?>
+                                <?php else: echo "未登錄資訊"; endif;?>
                             </div>
                         </div>
                         <!--  宅配地址  end  -->
