@@ -142,8 +142,8 @@ endif;
                         <div class="card-header d-flex justify-content-between">
                             <a><i class="fas fa-table me-1 end-0"></i>
                                 訂單明細</a>
-                            <a href="order-edit.php?id=<?= $id ?>">
-                                <i class="fas fa-edit me-1 end-0 text-muted" title="修改訂單"></i>
+                            <a href="order-edit.php?id=<?= $id ?>" title="修改訂單">
+                                <i class="fas fa-edit me-1 end-0 " ></i>
                             </a>
                         </div>
                         <div class="card-body">
@@ -206,21 +206,23 @@ endif;
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <a><i class="fas fa-user-tag me-1 end-0"></i>客戶資訊</a>
-                                <a href="user.php?id=<?=$rowOrder["user_id"]?>">
-                                    <i class="fas fa-external-link-alt me-1 end-0 text-muted" title="查看會員資料"></i>
+                                <a href="user.php?id=<?=$rowOrder["user_id"]?>" title="查看會員資料" target="_blank">
+                                    <i class="fas fa-external-link-alt me-1 end-0 text-muted" ></i>
                                 </a>
                             </div>
                             <div class="card-body ">
                                 <!--頭貼-->
-                                <?php if ($rowUser != NULL): ?>
-                                    <img class="avatar rounded-circle float-start me-2" src="<?= $rowUser["image"] ?>"
-                                         alt="">
+                                <?php if (is_null($rowUser["image"])): ?>
+                                    <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家">
+                                        <img class="avatar cover-fit rounded-circle float-start me-2"
+                                             src="images/default_avatar.png"
+                                             alt=""></a>
                                 <?php else: ?>
-                                    <img class="avatar rounded-circle float-start me-2" src="images/default_avatar.png"
-                                         alt="">
+                                    <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家" target="_blank">
+                                        <img class=" avatar cover-fit rounded-circle float-start me-2" src="images/<?=$rowUser["image"]?>" alt=""></a>
                                 <?php endif; ?>
                                 訂購人: <a href="user.php?id=<?= $rowOrder["user_id"] ?>"
-                                        title="查看【<?= $orderUserRow["name"] ?>】的會員資料"><?= $orderUserRow["name"] ?></a>
+                                        title="查看【<?= $orderUserRow["name"] ?>】的會員資料" target="_blank"><?= $orderUserRow["name"] ?></a>
                                 <p><?php if($rowUser != NULL):?>
                                         <?= $rowUser["mailing_email"] ?><?php else:{ } endif;?></p>
                                 <br>
@@ -239,12 +241,12 @@ endif;
                                 </div>
                                 <div class="card-body ">
                                     <p>
-                                        <?php if($rowUser != NULL):?>
+                                        <?php if(isset($rowUser["mailing_name"])):?>
                                         收件人:　<?= $rowUser["mailing_name"] ?><br>
                                         地址：　<?= $rowUser["mailing_address"] ?><br>
                                         手機：　<?= $rowUser["mailing_phone"] ?><br>
                                         信箱：　<?= $rowUser["mailing_email"] ?></p>
-                                    <?php else:{ echo "未登錄資訊";} endif;?>
+                                    <?php else: echo "未登錄資訊"; endif;?>
                                 </div>
                             </div>
                             <!--  宅配地址  end  -->
