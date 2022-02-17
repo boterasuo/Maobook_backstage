@@ -212,15 +212,17 @@ endif;
                             </div>
                             <div class="card-body ">
                                 <!--頭貼-->
-                                <?php if ($rowUser["image"] != NULL): ?>
-                                    <img class="avatar rounded-circle float-start me-2" src="images/<?= $rowUser["image"]?>"
-                                         alt="" >
+                                <?php if (is_null($rowUser["image"])): ?>
+                                    <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家">
+                                        <img class="avatar cover-fit rounded-circle float-start me-2"
+                                             src="images/default_avatar.png"
+                                             alt=""></a>
                                 <?php else: ?>
-                                    <img class="avatar rounded-circle float-start me-2" src="images/default_avatar.png"
-                                         alt="">
+                                    <a href="user.php?id=<?= $rowOrder["user_id"] ?>" title="檢視買家" target="_blank">
+                                        <img class=" avatar cover-fit rounded-circle float-start me-2" src="images/<?=$rowUser["image"]?>" alt=""></a>
                                 <?php endif; ?>
                                 訂購人: <a href="user.php?id=<?= $rowOrder["user_id"] ?>"
-                                        title="查看【<?= $orderUserRow["name"] ?>】的會員資料"><?= $orderUserRow["name"] ?></a>
+                                        title="查看【<?= $orderUserRow["name"] ?>】的會員資料" target="_blank"><?= $orderUserRow["name"] ?></a>
                                 <p><?php if($rowUser != NULL):?>
                                         <?= $rowUser["mailing_email"] ?><?php else:{ } endif;?></p>
                                 <br>
