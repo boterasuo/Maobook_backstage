@@ -34,7 +34,7 @@
 .main-user, .sub-pet{
     width: 100px;
 }
-.pet-info-userIcon, .pet-info-petIcon{
+.pet-info-userIcon, .pet-info-petIcon, .pet-deleteIcon{
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -58,7 +58,7 @@
 }
 
 /*使用者資料編輯頁面*/
-.passwordErr, .nameErr, .mobileErr, .zipErr{
+.emailErr, .passwordErr, .nameErr, .mobileErr, .zipErr{
     color: red;
     font-size: 12px;
 }
@@ -131,5 +131,8 @@ input[type="file"]{
     position: absolute;
     top: 0;
     width: 200px;
+}
+.pet-deleteIcon{
+    cursor: pointer;
 }
 

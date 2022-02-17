@@ -16,4 +16,5 @@ try{
     echo "error: ".$e->getMessage();
 }
 
+//$conn=new mysqli($servername, $username, $password, $dbname);
 ?>

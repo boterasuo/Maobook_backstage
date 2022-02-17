@@ -56,68 +56,72 @@ $productCount=$stmt->rowCount();
 </head>
 
 <style>
+    .product-list{
+        width: auto;
+    }
+    .product-list th{
+        width: 20px;
+    }
 </style>
 <body>
 
 <div class="container">
     <div class="row align-items-center">
-    <h1 class="text-center">商品資料管理</h1>
-    <p class="text-center">目前共<?php echo $productCount;?>筆資料　<a class="btn btn-primary" role="button" href="product_add.php">新增商品資料</a></p>
+        <h1 class="text-center">商品資料管理</h1>
+        <div class="text-center">目前共<?=$productCount;?>筆資料 
+        <a class="btn btn-primary" role="button" href="product_add.php">新增商品資料</a></div>
     </div>
+        <table class="product-list table table-bordered table-sm">
+            <thead class="table-light">
+            <tr>
+                <th>商品編號</th>
+                <th>商品名稱</th>
+                <th>價格</th>
+                <th>描述</th>
+                <th>品牌分類</th>
+                <th>產品分類</th>
+                <th>寵物分類</th>
+                <th>庫存</th>
+                <th>圖片</th>
+                <th>建立時間</th>
+                <th>功能</th>
+            </tr>
+            </thead>
 
-    <table class="table table-bordered table-sm">
-        <thead class="table-light">
-        <tr>
-            <th>商品編號</th>
-            <th>商品名稱</th>
-            <th>價格</th>
-            <th>描述</th>
-<!--            <th>是否上架</th>-->
-            <th>品牌分類</th>
-            <th>產品分類</th>
-            <th>寵物分類</th>
-            <th>庫存</th>
-            <th>圖片</th>
-            <th>建立時間</th>
-            <th>功能</th>
-        </tr>
-        </thead>
+            <tbody>
 
-        <tbody>
+            <?php
+            while($row_result=$stmt->fetch(PDO::FETCH_ASSOC)): ?>
 
-        <?php
-        while($row_result=$stmt->fetch(PDO::FETCH_ASSOC)){
-
-            echo "<tr>";
-            echo "<td>".$row_result["id"]."</td>";
-            echo "<td>".$row_result["name"]."</td>";
-            echo "<td>".$row_result["price"]."</td>";
-            echo "<td>".$row_result["description"]."</td>";
+            <tr>
+                <td><?=$row_result["id"]?></td>
+                <td><?=$row_result["name"]?></td>
+                <td><?=$row_result["price"]?></td>
+                <td><?=$row_result["description"]?></td>
 
 
-            echo "<td>".$Brand_categoryArr[$row_result["brand_category"]]."</td>";
-            echo "<td>".$Product_categoryArr[$row_result["product_category"]]."</td>";
-            echo "<td>".$Pet_categoryArr[$row_result["pet_category"]]."</td>";
+                <td><?=$Brand_categoryArr[$row_result["brand_category"]]?></td>
+                <td><?=$Product_categoryArr[$row_result["product_category"]]?></td>
+                <td><?=$Pet_categoryArr[$row_result["pet_category"]]?></td>
 
 
-            echo "<td>".$row_result["stock_num"]."</td>";
-//            echo "<td>".$row_result["img"]."</td>";
+                <td><?=$row_result["stock_num"]?></td>
 
-            echo $row_result["img"]==''?'<td>商品圖片</td>':'<td><img src="./images/product_images/'.$row_result["img"].'" class="img-responsive" width="250px" height="250px"></td>';
+                <td><img src="./images/product_images/<?=$row_result["img"]?>" class="img-responsive" width="250px" height="250px"></td>';
 
-            echo "<td>".$row_result["created_at"]."</td>";
+                <td><?=$row_result["created_at"]?></td>
 
-            echo "<td><a class='btn btn-primary' href='product_edit.php?id=".$row_result["id"]."'>修改</a>";
-            echo "　<br>　";
-            echo "<a class='btn btn-primary' href='product_doDelete.php?id=".$row_result["id"]."'>刪除</a> </td>";
-//            echo "<a href='product_doDelete.php?id=".$row_result["id"]."'>上傳/修改圖片</a> </td>";
-            echo "</td>";
+                <td>
+                    <a class='btn btn-primary' href='product_edit.php?id=<?=$row_result["id"]?>'>修改</a>
+                    <a class='btn btn-primary' href='product_doDelete.php?id=<?=$row_result["id"]?>'>刪除</a> 
+                </td>
+            </tr>
+            <?php endwhile; ?>
 
-        }
-        ?>
+            </tbody>
+            </table>
 
-        </tbody>
-        </table>
+    
 </div>
 
 

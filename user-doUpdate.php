@@ -94,7 +94,7 @@ if ($_FILES["myFile"]["error"] === 0){
         echo "upload failed";
     }
 }else{
-    if(isset($_POST["noAvatarPic"])){
+    if(isset($_POST["noAvatarPic"]) && $_POST["noAvatarPic"]=="avatar_user.png"){
         $noAvatarPic=null;
         $sqlPic="UPDATE users SET image=? WHERE id=? ";
         $stmtPic=$db_host->prepare($sqlPic);
@@ -103,3 +103,21 @@ if ($_FILES["myFile"]["error"] === 0){
     }
     echo "<script> alert('修改成功!'); window.location.href='user.php?id=$id'</script>";
 }
+
+$petId = $_POST["pet_id"];
+$sqlPet="UPDATE pets SET valid=9 WHERE id=?";
+$stmtPet=$db_host->prepare($sqlPet);
+try{
+    $stmtPet -> execute([$petId]);
+    $data = [
+        "status" => 1,
+    ];
+}catch(PDOException $e){
+    echo $e->getMessage();
+    $data = [
+        "status" => 0,
+        "message" => "失敗啦!"
+    ];
+}
+
+echo json_encode($data);

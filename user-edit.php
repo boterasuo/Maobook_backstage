@@ -10,6 +10,13 @@ try{
     echo $e->getMessage();
 }
 
+$sqlPets="SELECT * FROM pets WHERE user_id = ? AND valid = 1";
+$stmtPets=$db_host->prepare($sqlPets);
+$stmtPets->execute([$id]);
+$rowPets=$stmtPets->fetchAll(PDO::FETCH_ASSOC);
+$petsCount=$stmtPets->rowCount();
+
+
 session_start();
 $_SESSION["user-original-psw"]=$rowUser["password"];
 
@@ -227,6 +234,36 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
                         </figure>
 
                     </div>
+                    <div>
+                        <h4>目前服侍毛孩</h4>
+                        <?php if($petsCount==0): ?>
+                            <p class="text-secondary">尚無服侍毛孩</p>
+<!--                        <div id="petsEdit">-->
+                            <?php elseif($petsCount>0): ?>
+                                <div class="d-flex flex-wrap" id="petsEdit">
+                                    <?php foreach($rowPets as $eachPet): ?>
+                                        <div class="position-relative me-3">
+                                            <a class="pet-deleteIcon" data-delete="<?=$eachPet["id"]?>">
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                            <figure  class="sub-pet ratio ratio-1x1">
+                                                <a href="pet-info.php?id=<?=$eachPet["id"]?>">
+                                                    <?php if($eachPet["img"]!==""): ?>
+                                                        <img  class="cover-fit" src="images/<?=$eachPet["img"]?>"
+                                                              alt="">
+                                                    <?php else: ?>
+                                                        <img  class="cover-fit" src="images/avatar_pet.png" alt="">
+                                                    <?php endif; ?>
+                                                </a>
+                                            </figure>
+                                            <p class="text-center"><?=$eachPet["name"]?></p>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+<!--                        </div>-->
+
+                    </div>
                 </div>
             </div>
             </form>
@@ -241,7 +278,7 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
 
 </div>
 <?php //require_once("JS.php"); ?>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
     let form=document.querySelector("#form"),
         email=document.querySelector("#email"),
@@ -331,6 +368,32 @@ $_SESSION["user-original-psw"]=$rowUser["password"];
         $("#show").append(`<img class="cover-fit" src="images/avatar_user.png">`);
         $("#no-avatar-pic").val("avatar_user.png");
     })
+
+    $("#petsEdit").on("click", ".pet-deleteIcon", function(){
+        let petId = $(this).data("delete");
+        // console.log(petId);
+        $.ajax({
+            method: "POST",
+            url: "user-doUpdate.php",
+            data: { pet_id: petId },
+            dataType: "json"
+        })
+            .done(function( response ) {
+                if(response.status === 1){
+
+                }else{
+                    alert( response.message );
+                }
+
+            })
+            .fail(function(error) {
+                console.log(error);
+            })
+            .always(function() {
+
+            });
+    })
+
 </script>
 
 
