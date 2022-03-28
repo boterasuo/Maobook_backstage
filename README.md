@@ -4,7 +4,7 @@
 <img width="959" alt="image" src="https://user-images.githubusercontent.com/95270388/160313982-943daa91-2413-4954-84c7-e364383d9b6a.png">
 
 ### 技術
-主要使用 PHP 製作的傳統換頁式動態網站
+主要使用 PHP 製作的傳統換頁式動態網站  
 使用語言: `PHP`、`MySQL`、`HTML`、`CSS3`、`jQuery`  
 連線方式: new PDO  
 資料庫: MariaDB (XAMPP) 
