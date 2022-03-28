@@ -5,9 +5,9 @@
 
 ### 技術
 主要使用 PHP 製作的傳統換頁式動態網站
-使用語言: `PHP`、`MySQL`、`HTML`、`CSS3`、`jQuery`
-連線方式: new PDO
-資料庫: MariaDB (XAMPP)
+使用語言: `PHP`、`MySQL`、`HTML`、`CSS3`、`jQuery` 
+連線方式: new PDO 
+資料庫: MariaDB (XAMPP) 
 
 ### 分工
 組員共 6 人，個人 (boterasuo) 主要負責頁面:
