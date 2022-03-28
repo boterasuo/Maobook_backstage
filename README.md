@@ -1,5 +1,5 @@
 # Maobook_backstage
-資展國際期中小組專題
+資展國際期中小組專題  
 **Maobook 寵物管家後台**
 <img width="959" alt="image" src="https://user-images.githubusercontent.com/95270388/160313982-943daa91-2413-4954-84c7-e364383d9b6a.png">
 
@@ -16,6 +16,7 @@
 - 會員資料修改 / 刪除: user-edit.php, user-doUpdate.php / user-doDelete.php
 - 毛孩管理: pet-list.php
 - 毛孩資料檢視: pet-info.php
+
 其他功能:
 - 會員登入 / 註冊: 玉婷
 - 訂單管理: 俊農
